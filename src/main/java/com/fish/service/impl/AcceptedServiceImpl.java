@@ -1,10 +1,8 @@
 package com.fish.service.impl;
 
-import com.fish.common.Result;
 import com.fish.entity.pojo.Accepted;
 import com.fish.mapper.AcceptedMapper;
 import com.fish.service.AcceptedService;
-import com.fish.utils.ResultUtil;
 import com.mybatisflex.spring.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
@@ -17,15 +15,15 @@ public class AcceptedServiceImpl extends ServiceImpl<AcceptedMapper, Accepted> i
         return mapper.insert(accepted);
     }
     @Override
-    public Result<ArrayList<Accepted>> getAccepts() {
-        return ResultUtil.success((ArrayList<Accepted>) mapper.selectAll());
+    public ArrayList<Accepted> getAccepts() {
+        return (ArrayList<Accepted>) mapper.selectAll();
     }
     @Override
-    public Result<ArrayList<Accepted>> getMyAccepts(String userId) {
-        return ResultUtil.success(mapper.getMyAccepts(userId));
+    public ArrayList<Accepted> getMyAccepts(String userId) {
+        return mapper.getMyAccepts(userId);
     }
     @Override
-    public Result<ArrayList<Accepted>> getTopicAccepts(Long topicId) {
-        return ResultUtil.success(mapper.getTopicAccepts(topicId));
+    public ArrayList<Accepted> getTopicAccepts(Long topicId) {
+        return mapper.getTopicAccepts(topicId);
     }
 }

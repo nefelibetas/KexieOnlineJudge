@@ -10,5 +10,4 @@ import com.mybatisflex.core.BaseMapper;
  * @since 2023-11-14
  */
 public interface LabelMapper extends BaseMapper<Label> {
-
 }

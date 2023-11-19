@@ -52,7 +52,7 @@ public class JWTLoginFilter extends OncePerRequestFilter {
             return;
         }
         UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(account.getUsername(), account.getAccount().getUserId(), account.getAuthorities());
+                new UsernamePasswordAuthenticationToken(account, account.getAccount().getUserId(), account.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         filterChain.doFilter(request, response);
     }

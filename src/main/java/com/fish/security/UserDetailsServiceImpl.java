@@ -31,7 +31,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return new LoginAccount(account, getRoles(account.getRoleId()));
     }
     protected ArrayList<SystemAuthority> getRoles(Long roleId) {
-        Role role = roleMapper.getRole(roleId);
+        Role role = roleMapper.getRoleById(roleId);
         SystemAuthority simpleGrantedAuthority = new SystemAuthority(role.getRoleName());
         ArrayList<SystemAuthority> authorities = new ArrayList<>();
         authorities.add(simpleGrantedAuthority);

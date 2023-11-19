@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fish.mapper.AccountMapper">
+    <update id="updateAccountInformation" parameterType="AccountDTO">
+        update oj_account
+        <set>
+            <if test="nickname != null">`nickname` = #{nickname},</if>
+            <if test="email != null">`email` = #{email},</if>
+            <if test="password != null">`password` = #{password},</if>
+            <if test="gender != null">`gender` = #{gender},</if>
+            <if test="avatar != null">`avater` = #{avater},</if>
+            <if test="specialty != null">`specialty` = #{specialty},</if>
+            <if test="qq != null">`qq` = #{qq},</if>
+            <if test="blogAddress != null">`blogAddress` = #{blogAddress},</if>
+            <if test="githubAddress != null">`githubAddress` = #{githubAddress},</if>
+        </set>
+        where `user_id` = #{userId} and `enabled` = true
+    </update>
+</mapper>

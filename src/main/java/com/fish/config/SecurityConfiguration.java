@@ -24,13 +24,15 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(registry -> {
-            registry.requestMatchers("/", "/index", "/login", "/register").permitAll()
-                    .requestMatchers("/user/**").hasAnyRole("ROOT", "ADMIN", "USER")
-                    .requestMatchers("/admin/**").hasAnyRole("ROOT", "ADMIN")
-                    .requestMatchers("/root/**").hasRole("ROOT")
-                    .anyRequest().authenticated();
+            // registry.requestMatchers("/login", "/register").permitAll()
+            //         .requestMatchers("/label/**").permitAll()
+            //         .requestMatchers("/column/**").permitAll()
+            //         .requestMatchers("/user/**").hasAnyRole("ROOT", "ADMIN", "USER")
+            //         .requestMatchers("/admin/**").hasAnyRole("ROOT", "ADMIN")
+            //         .requestMatchers("/root/**").hasRole("ROOT")
+            //         .anyRequest().authenticated();
             // 开发环境使用，接口测试方便调用
-            // registry.requestMatchers("/**").permitAll();
+            registry.requestMatchers("/**").permitAll();
         });
         http.addFilterBefore(jwtLoginFilter, UsernamePasswordAuthenticationFilter.class);
         http.csrf(AbstractHttpConfigurer::disable);

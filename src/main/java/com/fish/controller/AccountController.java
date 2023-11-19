@@ -3,7 +3,9 @@ package com.fish.controller;
 import com.fish.common.Result;
 import com.fish.entity.dto.AccountDTO;
 import com.fish.entity.pojo.Account;
+import com.fish.exception.ServiceExceptionEnum;
 import com.fish.service.AccountService;
+import com.fish.utils.ResultUtil;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
@@ -33,9 +35,14 @@ public class AccountController {
     public Result<?> deleteAccount(@PathVariable String userId){
         return accountService.deleteAccount(userId);
     }
-    @GetMapping("/admin/gets")
-    public Result<ArrayList<Account>> getAccounts() {
-        return accountService.getAccounts();
+    @GetMapping("/admin/gets/{operate}")
+    public Result<ArrayList<Account>> getAccounts(@PathVariable String operate) {
+        if ("1".equals(operate))
+            return accountService.getAccounts();
+        else if ("2".equals(operate))
+            return accountService.getAdmins();
+        else
+            return ResultUtil.failure(ServiceExceptionEnum.OPERATE_ERROR);
     }
     @PutMapping("/admin/changeRole/{userId}/{roleId}")
     public Result<?> changeAccountRole(@PathVariable @NotBlank String userId, @PathVariable @NotNull Long roleId) {

@@ -48,7 +48,6 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
     private RedisUtil redisUtil;
     @Value("${jwt.year}")
     private String year;
-    private static final SecurityContext context = SecurityContextHolder.getContext();
     @Override
     public Result<HashMap<String,Object>> login(AccountDTO accountDTO) {
         if (checkInformation(accountDTO.getEmail(), accountDTO.getPassword(), null))
@@ -94,10 +93,15 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
         else
             throw new ServiceException(ServiceExceptionEnum.OPERATE_ERROR);
     }
+    /**
+     * 删除前首先要确认执行删除的人是否有权限删除, ADMIN不能删除ROOT
+     * @param userId 要删除的用户的id
+     * @return 结果
+     */
     @Transactional
     @Override
     public Result<?> deleteAccount(String userId) {
-        if (checkRole(userId))
+        if (checkRole(userId, null))
             throw new ServiceException(ServiceExceptionEnum.INSUFFICIENT_PERMISSIONS);
         int i = accountMapper.deleteAccount(userId);
         if (i > 0)
@@ -108,6 +112,10 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
     @Override
     public Result<ArrayList<Account>> getAccounts() {
         return ResultUtil.success(accountMapper.getCustomAccounts());
+    }
+    @Override
+    public Result<ArrayList<Account>> getAdmins() {
+        return ResultUtil.success(accountMapper.getAdmins());
     }
     /**
      * <div>先检查当前用户是否有权限修改权限信息再进行修改</div>
@@ -124,7 +132,7 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
     @Transactional
     @Override
     public Result<?> changeAccountRole(String userId, Long roleId) {
-        if (checkRole(userId) || checkRole(roleId))
+        if (checkRole(userId, roleId))
             throw new ServiceException(ServiceExceptionEnum.INSUFFICIENT_PERMISSIONS);
         int i = accountMapper.changeAccountRole(userId, roleId);
         if (i > 0)
@@ -142,32 +150,21 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
         return nickname + "_" + userId + "_" + year;
     }
     /**
-     * 判断执行修改的用户是否足够权限更改对应权限
+     * <div>判断当前用户是否有足够权限</div>
+     * @param userId 用户id
      * @param roleId 角色id
      * @return 是否有足够权限
      */
-    protected boolean checkRole(Long roleId) {
-        if (roleId == 3)
-            return true;
-        Authentication authentication = context.getAuthentication();
-        ArrayList<SystemAuthority> authorities = new ArrayList<>();
-        authentication.getAuthorities().forEach(grantedAuthority -> {authorities.add((SystemAuthority) grantedAuthority);});
-        String authority = authorities.get(0).getAuthority();
-        Role role = roleMapper.getRole(authority);
-        return role.getRoleId() > roleId;
-    }
-    /**
-     * <div>判断当前用户是否有权修改该用户的权限</div>
-     * @param userId 用户id
-     * @return 是否有足够权限
-     */
-    protected boolean checkRole(String userId) {
-        Authentication authentication = context.getAuthentication();
-        ArrayList<SystemAuthority> authorities = new ArrayList<>();
-        authentication.getAuthorities().forEach(grantedAuthority -> {authorities.add((SystemAuthority) grantedAuthority);});
-        String authority = authorities.get(0).getAuthority();
-        Role role = roleMapper.getRole(authority);
+    protected boolean checkRole(String userId, Long roleId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        LoginAccount loginAccount = (LoginAccount) authentication.getPrincipal();
         Account account = accountMapper.getAccount(userId);
-        return role.getRoleId() > account.getRoleId();
+        if (loginAccount.getAccount().getUserId().equals(account.getUserId()))
+            throw new ServiceException(ServiceExceptionEnum.OPERATE_ERROR);
+        if(Objects.isNull(roleId)) {
+            return loginAccount.getAccount().getRoleId() > account.getRoleId();
+        } else {
+            return loginAccount.getAccount().getRoleId() > roleId;
+        }
     }
 }

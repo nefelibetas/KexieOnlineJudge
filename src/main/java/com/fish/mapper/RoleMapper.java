@@ -13,7 +13,7 @@ import org.apache.ibatis.annotations.Select;
  */
 public interface RoleMapper extends BaseMapper<Role> {
     @Select("select * from oj_role where role_id = #{role_id}")
-    Role getRole(@Param("role_id") Long roleId);
+    Role getRoleById(@Param("role_id") Long roleId);
     @Select("select * from oj_role where role_name = #{roleName}")
-    Role getRole(@Param("roleName")String roleName);
+    Role getRoleByName(@Param("roleName")String roleName);
 }

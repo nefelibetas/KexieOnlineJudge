@@ -7,7 +7,6 @@ import com.fish.entity.vo.AccountVO;
 import com.fish.exception.ServiceException;
 import com.fish.exception.ServiceExceptionEnum;
 import com.fish.mapper.AccountMapper;
-import com.fish.mapper.RoleMapper;
 import com.fish.security.LoginAccount;
 import com.fish.service.AccountService;
 import com.fish.utils.JwtUtil;

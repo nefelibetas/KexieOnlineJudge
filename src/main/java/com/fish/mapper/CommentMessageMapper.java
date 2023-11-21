@@ -1,6 +1,6 @@
 package com.fish.mapper;
 
-import com.fish.entity.pojo.CommonMessage;
+import com.fish.entity.pojo.CommentMessage;
 import com.mybatisflex.core.BaseMapper;
 
 /**
@@ -9,6 +9,6 @@ import com.mybatisflex.core.BaseMapper;
  * @author fish
  * @since 2023-11-14
  */
-public interface CommonMessageMapper extends BaseMapper<CommonMessage> {
+public interface CommentMessageMapper extends BaseMapper<CommentMessage> {
 
 }

@@ -22,10 +22,8 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Table(value = "oj_topic_label")
 public class TopicLabel implements Serializable {
-
     @Id
     private Long labelId;
-
     @Id
     private Long topicId;
 

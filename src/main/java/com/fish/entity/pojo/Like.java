@@ -23,23 +23,18 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Table(value = "oj_like")
 public class Like implements Serializable {
-
     @Id(keyType = KeyType.Auto)
     private Long likeId;
-
     /**
      * 题解id
      */
     private Long solutionId;
-
     /**
      * 评论id
      */
     private Long commentId;
-
     /**
      * 点赞的用户
      */
     private String userId;
-
 }

@@ -25,11 +25,11 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(value = "oj_common_message")
-public class CommonMessage implements Serializable {
+@Table(value = "oj_comment_message")
+public class CommentMessage implements Serializable {
 
     @Id(keyType = KeyType.Auto)
-    private Long commonId;
+    private Long commentId;
 
     private String content;
     @JsonSerialize(using = LocalDateTimeSerializer.class)

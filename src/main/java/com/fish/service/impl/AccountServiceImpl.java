@@ -1,7 +1,6 @@
 package com.fish.service.impl;
 
 import com.fish.common.Result;
-import com.fish.entity.dto.AccountDTO;
 import com.fish.entity.pojo.Account;
 import com.fish.entity.vo.AccountVO;
 import com.fish.exception.ServiceException;
@@ -22,7 +21,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,8 +31,6 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
     @Resource
     private AuthenticationManager authenticationManager;
     @Resource
-    private AccountMapper accountMapper;
-    @Resource
     private PasswordEncoder passwordEncoder;
     @Resource
     private JwtUtil jwtUtil;
@@ -43,11 +39,9 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
     @Value("${jwt.year}")
     private String year;
     @Override
-    public Result<HashMap<String,Object>> login(AccountDTO accountDTO) {
-        if (checkInformation(accountDTO.getEmail(), accountDTO.getPassword(), null))
-            throw new ServiceException(ServiceExceptionEnum.KEY_ARGUMENT_NOT_INPUT);
+    public Result<HashMap<String,Object>> login(Account account) {
         UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(accountDTO.getEmail(), accountDTO.getPassword());
+                new UsernamePasswordAuthenticationToken(account.getEmail(), account.getPassword());
         Authentication authentication = authenticationManager.authenticate(authenticationToken);
         if (Objects.isNull(authentication)) {
             throw new ServiceException(ServiceExceptionEnum.ACCOUNT_NOT_FOUND);
@@ -63,11 +57,9 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
     }
     @Transactional
     @Override
-    public Result<?> register(AccountDTO accountDTO) {
-        if (checkInformation(accountDTO.getEmail(), accountDTO.getPassword(), accountDTO.getNickname()))
-            throw new ServiceException(ServiceExceptionEnum.KEY_ARGUMENT_NOT_INPUT);
-        accountDTO.setPassword(passwordEncoder.encode(accountDTO.getPassword()));
-        int i = accountMapper.addAccount(accountDTO);
+    public Result<?> register(Account account) {
+        account.setPassword(passwordEncoder.encode(account.getPassword()));
+        int i = mapper.insert(account);
         if (i > 0)
             return ResultUtil.success();
         else
@@ -75,17 +67,14 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
     }
     @Transactional
     @Override
-    public Result<?> updateAccountInformation(AccountDTO accountDTO) {
-        if (Objects.isNull(accountDTO.getUserId()))
-            throw new ServiceException(ServiceExceptionEnum.KEY_ARGUMENT_NOT_INPUT);
+    public Result<?> updateAccountInformation(Account account, String userId) {
         String credentials = (String) SecurityContextHolder.getContext().getAuthentication().getCredentials();
-        if (!credentials.equals(accountDTO.getUserId()))
+        if (!credentials.equals(userId))
             throw new ServiceException(ServiceExceptionEnum.AUTHENTICATION_FAILURE);
-        int i = accountMapper.updateAccountInformation(accountDTO);
+        int i = mapper.update(account);
         if (i > 0)
             return ResultUtil.success();
-        else
-            throw new ServiceException(ServiceExceptionEnum.OPERATE_ERROR);
+        throw new ServiceException(ServiceExceptionEnum.OPERATE_ERROR);
     }
     /**
      * 删除前首先要确认执行删除的人是否有权限删除, ADMIN不能删除ROOT
@@ -97,7 +86,7 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
     public Result<?> deleteAccount(String userId) {
         if (checkRole(userId, null))
             throw new ServiceException(ServiceExceptionEnum.INSUFFICIENT_PERMISSIONS);
-        int i = accountMapper.deleteAccount(userId);
+        int i = mapper.deleteAccount(userId);
         if (i > 0)
             return ResultUtil.success();
         else
@@ -105,11 +94,11 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
     }
     @Override
     public Result<ArrayList<Account>> getAccounts() {
-        return ResultUtil.success(accountMapper.getCustomAccounts());
+        return ResultUtil.success(mapper.getCustomAccounts());
     }
     @Override
     public Result<ArrayList<Account>> getAdmins() {
-        return ResultUtil.success(accountMapper.getAdmins());
+        return ResultUtil.success(mapper.getAdmins());
     }
     /**
      * <div>先检查当前用户是否有权限修改权限信息再进行修改</div>
@@ -128,17 +117,11 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
     public Result<?> changeAccountRole(String userId, Long roleId) {
         if (checkRole(userId, roleId))
             throw new ServiceException(ServiceExceptionEnum.INSUFFICIENT_PERMISSIONS);
-        int i = accountMapper.changeAccountRole(userId, roleId);
+        int i = mapper.changeAccountRole(userId, roleId);
         if (i > 0)
             return ResultUtil.success();
         else
             throw new ServiceException(ServiceExceptionEnum.OPERATE_ERROR);
-    }
-    protected boolean checkInformation(String email, String password, String nickname) {
-        if (Objects.isNull(nickname))
-            return (!StringUtils.hasLength(email) && !StringUtils.hasLength(password));
-        else
-            return (!StringUtils.hasLength(email) && !StringUtils.hasLength(password) && !StringUtils.hasLength(nickname));
     }
     protected String makeKey(String userId, String nickname) {
         return nickname + "_" + userId + "_" + year;
@@ -152,7 +135,7 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
     protected boolean checkRole(String userId, Long roleId) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         LoginAccount loginAccount = (LoginAccount) authentication.getPrincipal();
-        Account account = accountMapper.getAccount(userId);
+        Account account = mapper.getAccount(userId);
         if (loginAccount.getAccount().getUserId().equals(account.getUserId()))
             throw new ServiceException(ServiceExceptionEnum.OPERATE_ERROR);
         if(Objects.isNull(roleId)) {

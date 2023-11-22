@@ -1,4 +1,4 @@
-package com.fish.service;
+package com.fish.service.topic;
 
 import com.fish.common.Result;
 import com.fish.entity.pojo.Topic;

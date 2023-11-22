@@ -1,8 +1,8 @@
-package com.fish.service.impl;
+package com.fish.service.other.impl;
 
 import com.fish.entity.pojo.Accepted;
 import com.fish.mapper.AcceptedMapper;
-import com.fish.service.AcceptedService;
+import com.fish.service.other.AcceptedService;
 import com.mybatisflex.spring.service.impl.ServiceImpl;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;

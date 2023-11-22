@@ -1,4 +1,4 @@
-package com.fish.service;
+package com.fish.service.column;
 
 import com.fish.common.Result;
 import com.fish.entity.pojo.ColumnTopic;

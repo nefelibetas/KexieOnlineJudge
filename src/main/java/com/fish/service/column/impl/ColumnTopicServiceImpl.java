@@ -5,7 +5,7 @@ import com.fish.entity.pojo.ColumnTopic;
 import com.fish.entity.vo.ColumnVO;
 import com.fish.exception.ServiceException;
 import com.fish.exception.ServiceExceptionEnum;
-import com.fish.mapper.TopicColumnMapper;
+import com.fish.mapper.ColumnTopicMapper;
 import com.fish.service.column.ColumnTopicService;
 import com.fish.utils.ResultUtil;
 import com.mybatisflex.core.query.QueryWrapper;
@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static com.fish.entity.pojo.table.ColumnTableDef.COLUMN;
 import static com.fish.entity.pojo.table.ColumnTopicTableDef.COLUMN_TOPIC;
@@ -23,7 +22,7 @@ import static com.fish.entity.pojo.table.TopicLabelTableDef.TOPIC_LABEL;
 import static com.fish.entity.pojo.table.TopicTableDef.TOPIC;
 
 @Service
-public class ColumnTopicServiceImpl extends ServiceImpl<TopicColumnMapper, ColumnTopic> implements ColumnTopicService {
+public class ColumnTopicServiceImpl extends ServiceImpl<ColumnTopicMapper, ColumnTopic> implements ColumnTopicService {
     @Transactional
     @Override
     public Result<?> addRow(ColumnTopic columnTopic) {

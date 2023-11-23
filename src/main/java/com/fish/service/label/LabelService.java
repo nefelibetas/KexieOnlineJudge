@@ -1,4 +1,4 @@
-package com.fish.service.topic;
+package com.fish.service.label;
 
 import com.fish.common.Result;
 import com.fish.entity.pojo.Label;

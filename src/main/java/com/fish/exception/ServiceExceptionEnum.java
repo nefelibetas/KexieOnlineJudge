@@ -14,6 +14,7 @@ public enum ServiceExceptionEnum {
     KEY_ARGUMENT_NOT_INPUT(-207, "关键信息未输入完整"),
     TOKEN_ERROR(-208, "Token异常"),
     NOT_FOUND(-209, "未找到目标"),
+    UN_LOGIN(-210, "还没有登录"),
     METHOD_NOT_SUPPORT(-2000, "方法不支持"),
     UNKNOWN_ERROR(-2001, "未知异常"),
     MYBATIS_SYSTEM_ERROR(-2002, "数据库出现错误"),

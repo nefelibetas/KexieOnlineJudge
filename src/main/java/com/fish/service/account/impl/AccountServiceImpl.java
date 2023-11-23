@@ -1,6 +1,8 @@
 package com.fish.service.account.impl;
 
 import com.fish.common.Result;
+import com.fish.entity.dto.LoginAccountDTO;
+import com.fish.entity.dto.RegisterAccountDTO;
 import com.fish.entity.pojo.Account;
 import com.fish.entity.vo.AccountVO;
 import com.fish.exception.ServiceException;
@@ -39,9 +41,9 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
     @Value("${jwt.year}")
     private String year;
     @Override
-    public Result<HashMap<String,Object>> login(Account account) {
+    public Result<HashMap<String,Object>> login(LoginAccountDTO loginAccountDTO) {
         UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(account.getEmail(), account.getPassword());
+                new UsernamePasswordAuthenticationToken(loginAccountDTO.getEmail(), loginAccountDTO.getPassword());
         Authentication authentication = authenticationManager.authenticate(authenticationToken);
         if (Objects.isNull(authentication)) {
             throw new ServiceException(ServiceExceptionEnum.ACCOUNT_NOT_FOUND);
@@ -57,9 +59,9 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
     }
     @Transactional
     @Override
-    public Result<?> register(Account account) {
-        account.setPassword(passwordEncoder.encode(account.getPassword()));
-        int i = mapper.insert(account);
+    public Result<?> register(RegisterAccountDTO registerAccountDTO) {
+        registerAccountDTO.setPassword(passwordEncoder.encode(registerAccountDTO.getPassword()));
+        int i = mapper.addAccount(registerAccountDTO);
         if (i > 0)
             return ResultUtil.success();
         else
@@ -76,11 +78,6 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
             return ResultUtil.success();
         throw new ServiceException(ServiceExceptionEnum.OPERATE_ERROR);
     }
-    /**
-     * 删除前首先要确认执行删除的人是否有权限删除, ADMIN不能删除ROOT
-     * @param userId 要删除的用户的id
-     * @return 结果
-     */
     @Transactional
     @Override
     public Result<?> deleteAccount(String userId) {
@@ -94,24 +91,13 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
     }
     @Override
     public Result<ArrayList<Account>> getAccounts() {
+
         return ResultUtil.success(mapper.getCustomAccounts());
     }
     @Override
     public Result<ArrayList<Account>> getAdmins() {
         return ResultUtil.success(mapper.getAdmins());
     }
-    /**
-     * <div>先检查当前用户是否有权限修改权限信息再进行修改</div>
-     * <div>
-     *     比如：
-     *      <div>1. ROOT 能修改 ADMIN、USER</div>
-     *      <div>2. ADMIN 能修改 USER</div>
-     *      <div>3. USER 则无修改权限</div>
-     * </div>
-     * @param userId 要修改的用户id
-     * @param roleId 要修改成的角色id
-     * @return 响应操作结果
-     */
     @Transactional
     @Override
     public Result<?> changeAccountRole(String userId, Long roleId) {
@@ -136,8 +122,11 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         LoginAccount loginAccount = (LoginAccount) authentication.getPrincipal();
         Account account = mapper.getAccount(userId);
+        // 不能修改自己的角色
         if (loginAccount.getAccount().getUserId().equals(account.getUserId()))
             throw new ServiceException(ServiceExceptionEnum.OPERATE_ERROR);
+        // roleId为空说明请求来自删除用户,仅需要判断执行者的权限是否足够删除
+        // 否则说明请求来自修改角色，这时候直接判断执行者是否有权限赋予该角色
         if(Objects.isNull(roleId)) {
             return loginAccount.getAccount().getRoleId() > account.getRoleId();
         } else {

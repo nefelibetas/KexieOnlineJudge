@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.fish.entity.pojo.table.TopicTableDef.TOPIC;
+import static com.fish.entity.pojo.table.TopicLabelTableDef.TOPIC_LABEL;
+import static com.fish.entity.pojo.table.LabelTableDef.LABEL;
 
 @Service
 public class TopicServiceImpl extends ServiceImpl<TopicMapper, Topic> implements TopicService {
@@ -55,16 +57,26 @@ public class TopicServiceImpl extends ServiceImpl<TopicMapper, Topic> implements
     }
     @Override
     public Result<ArrayList<TopicVO>> getTopics() {
-        ArrayList<TopicVO> topicVOS = new ArrayList<>();
-        QueryWrapper wrapper = QueryWrapper.create().where(TOPIC.ENABLED.eq(true));
-        List<Topic> topics = mapper.selectListByQuery(wrapper);
-        topics.forEach(topic -> topicVOS.add(new TopicVO(topic)));
+        QueryWrapper wrapper = QueryWrapper.create()
+                .select()
+                .from(TOPIC)
+                .leftJoin(TOPIC_LABEL).on(TOPIC.TOPIC_ID.eq(TOPIC_LABEL.TOPIC_ID))
+                .leftJoin(LABEL).on(LABEL.LABEL_ID.eq(TOPIC_LABEL.LABEL_ID))
+                .where(TOPIC.ENABLED.eq(true));
+        ArrayList<TopicVO> topicVOS = (ArrayList<TopicVO>) mapper.selectListByQueryAs(wrapper, TopicVO.class);
         return ResultUtil.success(topicVOS);
     }
     @Override
     public Result<TopicVO> getTopic(Long topicId) {
-        QueryWrapper wrapper = QueryWrapper.create().select().from(TOPIC).where(TOPIC.TOPIC_ID.eq(topicId));
-        Topic topic = mapper.selectOneByQuery(wrapper);
-        return ResultUtil.success(new TopicVO(topic));
+        QueryWrapper wrapper = QueryWrapper.create()
+                .select()
+                .from(TOPIC)
+                .leftJoin(TOPIC_LABEL).on(TOPIC.TOPIC_ID.eq(TOPIC_LABEL.TOPIC_ID))
+                .leftJoin(LABEL).on(LABEL.LABEL_ID.eq(TOPIC_LABEL.LABEL_ID))
+                .where(TOPIC.ENABLED.eq(true))
+                .and(TOPIC.TOPIC_ID.eq(topicId));
+        TopicVO topicVO = mapper.selectOneByQueryAs(wrapper, TopicVO.class);
+        return ResultUtil.success(topicVO);
     }
+
 }

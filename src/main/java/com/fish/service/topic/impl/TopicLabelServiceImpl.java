@@ -1,7 +1,5 @@
 package com.fish.service.topic.impl;
 
-import static com.fish.entity.pojo.table.LabelTableDef.LABEL;
-import static com.fish.entity.pojo.table.TopicLabelTableDef.TOPIC_LABEL;
 import com.fish.common.Result;
 import com.fish.entity.pojo.Label;
 import com.fish.entity.pojo.TopicLabel;
@@ -18,6 +16,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+
+import static com.fish.entity.pojo.table.LabelTableDef.LABEL;
+import static com.fish.entity.pojo.table.TopicLabelTableDef.TOPIC_LABEL;
 
 @Service
 public class TopicLabelServiceImpl extends ServiceImpl<TopicLabelMapper, TopicLabel> implements TopicLabelService {

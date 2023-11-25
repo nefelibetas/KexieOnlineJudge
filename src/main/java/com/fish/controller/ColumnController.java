@@ -2,9 +2,11 @@ package com.fish.controller;
 
 import com.fish.common.Result;
 import com.fish.entity.pojo.Column;
+import com.fish.entity.pojo.ColumnTopic;
 import com.fish.entity.vo.ColumnVO;
 import com.fish.service.column.ColumnService;
 import com.fish.service.column.ColumnTopicService;
+import com.fish.utils.ResultUtil;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -24,9 +26,7 @@ public class ColumnController {
      * @return 响应code为200表示成功
      */
     @PostMapping("/admin/column/add")
-    public Result<?> addColumn(
-            @Valid
-            @RequestBody Column column) {
+    public Result<?> addColumn(@Valid @RequestBody Column column) {
         return columnService.addColumn(column);
     }
     /**
@@ -35,9 +35,7 @@ public class ColumnController {
      * @return 响应code为200表示成功
      */
     @PostMapping("/admin/column/adds")
-    public Result<?> addLabels(
-            @Valid
-            @RequestBody ArrayList<Column> columns) {
+    public Result<?> addLabels(@Valid @RequestBody ArrayList<Column> columns) {
         return columnService.addColumnBatch(columns);
     }
     /**

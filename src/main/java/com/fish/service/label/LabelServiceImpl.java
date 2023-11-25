@@ -1,6 +1,5 @@
 package com.fish.service.label;
 
-import static com.fish.entity.pojo.table.LabelTableDef.LABEL;
 import com.fish.common.Result;
 import com.fish.entity.pojo.Label;
 import com.fish.exception.ServiceException;
@@ -14,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Objects;
+
+import static com.fish.entity.pojo.table.LabelTableDef.LABEL;
 
 @Service
 public class LabelServiceImpl extends ServiceImpl<LabelMapper, Label> implements LabelService {

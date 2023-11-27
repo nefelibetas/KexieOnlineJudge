@@ -22,10 +22,10 @@ class LoginAccount @JsonCreator constructor(
         return grantedAuthorities
     }
     override fun getPassword(): String {
-        return account.password
+        return account.password!!
     }
     override fun getUsername(): String {
-        return account.email
+        return account.email!!
     }
     override fun isAccountNonExpired(): Boolean {
         return true
@@ -37,6 +37,6 @@ class LoginAccount @JsonCreator constructor(
         return true
     }
     override fun isEnabled(): Boolean {
-        return account.enabled
+        return account.enabled!!
     }
 }

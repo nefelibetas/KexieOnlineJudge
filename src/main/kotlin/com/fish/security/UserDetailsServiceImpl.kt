@@ -5,7 +5,6 @@ import com.fish.exception.ServiceExceptionEnum
 import com.fish.mapper.AccountMapper
 import com.fish.mapper.RoleMapper
 import jakarta.annotation.Resource
-import lombok.extern.slf4j.Slf4j
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.core.userdetails.UsernameNotFoundException
@@ -27,7 +26,7 @@ class UserDetailsServiceImpl : UserDetailsService {
     }
     private fun getRoles(roleId: Long?): ArrayList<SystemAuthority?> {
         val role = roleMapper!!.getRoleById(roleId)
-        val simpleGrantedAuthority = SystemAuthority(role.roleName)
+        val simpleGrantedAuthority = SystemAuthority(role.roleName!!)
         val authorities = ArrayList<SystemAuthority?>()
         authorities.add(simpleGrantedAuthority)
         return authorities

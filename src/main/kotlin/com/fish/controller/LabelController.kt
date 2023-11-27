@@ -42,14 +42,15 @@ class LabelController {
     fun getLabel(@PathVariable("labelId") labelId: @NotNull(message = "标签Id未填写") Long?): Result<Label> {
         return labelService!!.getLabel(labelId)
     }
+    /**
+     * 获取全部标签
+     * @return 全部标签
+     */
+    @GetMapping("/label/gets")
+    fun getLabels(): Result<ArrayList<Label>> {
+        return labelService!!.getLabels()
+    }
 
-    @get:GetMapping("/label/gets")
-    val labels: Result<ArrayList<Label>>
-        /**
-         * 获取全部标签
-         * @return 全部标签
-         */
-        get() = labelService!!.getLabels()
 
     /**
      * 修改标签

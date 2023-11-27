@@ -8,8 +8,6 @@ import com.mybatisflex.annotation.Id;
 import com.mybatisflex.annotation.KeyType;
 import com.mybatisflex.annotation.Table;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
@@ -21,19 +19,38 @@ import java.time.LocalDateTime;
  * @author fish
  * @since 2023-11-14
  */
-@Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(value = "oj_comment_message")
 public class CommentMessage implements Serializable {
-
     @Id(keyType = KeyType.Auto)
     private Long commentId;
-
     private String content;
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime sendTime;
 
+    public Long getCommentId() {
+        return commentId;
+    }
+
+    public void setCommentId(Long commentId) {
+        this.commentId = commentId;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public LocalDateTime getSendTime() {
+        return sendTime;
+    }
+
+    public void setSendTime(LocalDateTime sendTime) {
+        this.sendTime = sendTime;
+    }
 }

@@ -37,4 +37,36 @@ public class Like implements Serializable {
      * 点赞的用户
      */
     private String userId;
+
+    public Long getLikeId() {
+        return likeId;
+    }
+
+    public void setLikeId(Long likeId) {
+        this.likeId = likeId;
+    }
+
+    public Long getSolutionId() {
+        return solutionId;
+    }
+
+    public void setSolutionId(Long solutionId) {
+        this.solutionId = solutionId;
+    }
+
+    public Long getCommentId() {
+        return commentId;
+    }
+
+    public void setCommentId(Long commentId) {
+        this.commentId = commentId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 }

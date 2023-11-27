@@ -5,8 +5,6 @@ import com.mybatisflex.annotation.Id;
 import com.mybatisflex.annotation.Table;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
@@ -17,8 +15,6 @@ import java.io.Serializable;
  * @author fish
  * @since 2023-11-14
  */
-@Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(value = "oj_column_topic")
@@ -29,4 +25,20 @@ public class ColumnTopic implements Serializable {
     @Id
     @NotNull(message = "题目id不能为空")
     private Long topicId;
+
+    public Long getColumnId() {
+        return columnId;
+    }
+
+    public void setColumnId(Long columnId) {
+        this.columnId = columnId;
+    }
+
+    public Long getTopicId() {
+        return topicId;
+    }
+
+    public void setTopicId(Long topicId) {
+        this.topicId = topicId;
+    }
 }

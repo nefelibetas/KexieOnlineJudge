@@ -6,8 +6,6 @@ import com.mybatisflex.annotation.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
@@ -18,8 +16,6 @@ import java.io.Serializable;
  * @author fish
  * @since 2023-11-14
  */
-@Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(value = "oj_column")
@@ -33,4 +29,36 @@ public class Column implements Serializable {
     @Size(min = 1, max = 100, message = "1~100字符以内")
     private String columnDescribe;
     private Boolean enabled;
+
+    public Long getColumnId() {
+        return columnId;
+    }
+
+    public void setColumnId(Long columnId) {
+        this.columnId = columnId;
+    }
+
+    public String getColumnName() {
+        return columnName;
+    }
+
+    public void setColumnName(String columnName) {
+        this.columnName = columnName;
+    }
+
+    public String getColumnDescribe() {
+        return columnDescribe;
+    }
+
+    public void setColumnDescribe(String columnDescribe) {
+        this.columnDescribe = columnDescribe;
+    }
+
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
+    }
 }

@@ -7,8 +7,6 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer
 import com.mybatisflex.annotation.Id
 import com.mybatisflex.annotation.KeyType
 import com.mybatisflex.annotation.Table
-import lombok.AllArgsConstructor
-import lombok.NoArgsConstructor
 import java.io.Serializable
 import java.time.LocalDateTime
 
@@ -19,15 +17,14 @@ import java.time.LocalDateTime
  * @since 2023-11-14
  */
 @Table(value = "oj_message")
-class Message : Serializable {
-    @Id(keyType = KeyType.Auto)
-    var messageId: Long? = null
-    var commentId: Long? = null
-    var typeId: Long? = null
-    var content: String? = null
-    var sendTo: String? = null
+data class Message(
+    @Id(keyType = KeyType.Auto) var messageId: Long?,
+    var commentId: Long?,
+    var typeId: Long?,
+    var content: String?,
+    var sendTo: String?,
 
     @JsonSerialize(using = LocalDateTimeSerializer::class)
     @JsonDeserialize(using = LocalDateTimeDeserializer::class)
-    var sendTime: LocalDateTime? = null
-}
+    var sendTime: LocalDateTime?,
+) : Serializable

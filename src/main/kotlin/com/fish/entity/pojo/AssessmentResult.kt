@@ -3,8 +3,6 @@ package com.fish.entity.pojo
 import com.mybatisflex.annotation.Id
 import com.mybatisflex.annotation.KeyType
 import com.mybatisflex.annotation.Table
-import lombok.AllArgsConstructor
-import lombok.NoArgsConstructor
 import java.io.Serializable
 
 /**
@@ -14,15 +12,14 @@ import java.io.Serializable
  * @since 2023-11-14
  */
 @Table(value = "oj_assessment_result")
-class AssessmentResult : Serializable {
-    @Id(keyType = KeyType.Auto)
-    var resultId: Long? = null
-    var userId: String? = null
-    var topicId: Long? = null
-    var code: String? = null
-    var hash: String? = null
-    var examId: Long? = null
-    var score: Long? = null
-    var allTime: Long? = null
-    var status: String? = null
-}
+data class AssessmentResult(
+    @Id(keyType = KeyType.Auto) var resultId: Long?,
+    var userId: String?,
+    var topicId: Long?,
+    var code: String?,
+    var hash: String?,
+    var examId: Long?,
+    var score: Long?,
+    var allTime: Long?,
+    var status: String?,
+) : Serializable

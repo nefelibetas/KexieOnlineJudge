@@ -3,8 +3,6 @@ package com.fish.entity.pojo
 import com.mybatisflex.annotation.Id
 import com.mybatisflex.annotation.KeyType
 import com.mybatisflex.annotation.Table
-import lombok.AllArgsConstructor
-import lombok.NoArgsConstructor
 import java.io.Serializable
 
 /**
@@ -14,20 +12,18 @@ import java.io.Serializable
  * @since 2023-11-14
  */
 @Table(value = "oj_example")
-class Example : Serializable {
+data class Example(
     @Id(keyType = KeyType.Auto)
-    var exampleId: Long? = null
-    var topicId: Long? = null
-    var input: String? = null
-    var output: String? = null
-
+    var exampleId: Long?,
+    var topicId: Long?,
+    var input: String?,
+    var output: String?,
     /**
      * 是否展示
      */
-    var showed: Boolean? = null
-
+    var showed: Boolean?,
     /**
      * 是否参与测评
      */
-    var assessed: Boolean? = null
-}
+    var assessed: Boolean?,
+) : Serializable

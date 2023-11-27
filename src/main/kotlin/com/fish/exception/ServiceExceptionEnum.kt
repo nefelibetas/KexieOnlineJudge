@@ -1,9 +1,9 @@
-package com.fish.exception;
+package com.fish.exception
 
-import lombok.Getter;
+import lombok.Getter
 
 @Getter
-public enum ServiceExceptionEnum {
+enum class ServiceExceptionEnum(val code: Int, val msg: String) {
     AUTHENTICATION_FAILURE(-200, "认证失败"),
     INSUFFICIENT_PERMISSIONS(-201, "权限不足"),
     ACCOUNT_NOT_FOUND(-202, "用户不存在"),
@@ -20,11 +20,4 @@ public enum ServiceExceptionEnum {
     MYBATIS_SYSTEM_ERROR(-2002, "数据库出现错误"),
     ILLEGAL_ARGUMENT(-2003, "非法参数"),
     IO_ERROR(-2004, "IO出现错误")
-    ;
-    private final int code;
-    private final String msg;
-    ServiceExceptionEnum(int code, String msg) {
-        this.code = code;
-        this.msg = msg;
-    }
 }

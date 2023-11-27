@@ -5,8 +5,6 @@ import com.mybatisflex.annotation.Id;
 import com.mybatisflex.annotation.KeyType;
 import com.mybatisflex.annotation.Table;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
@@ -17,8 +15,6 @@ import java.io.Serializable;
  * @author fish
  * @since 2023-11-14
  */
-@Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(value = "oj_message_type")
@@ -31,4 +27,27 @@ public class MessageType implements Serializable {
 
     private String typeDescribe;
 
+    public Long getTypeId() {
+        return typeId;
+    }
+
+    public void setTypeId(Long typeId) {
+        this.typeId = typeId;
+    }
+
+    public String getTypeName() {
+        return typeName;
+    }
+
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
+    }
+
+    public String getTypeDescribe() {
+        return typeDescribe;
+    }
+
+    public void setTypeDescribe(String typeDescribe) {
+        this.typeDescribe = typeDescribe;
+    }
 }

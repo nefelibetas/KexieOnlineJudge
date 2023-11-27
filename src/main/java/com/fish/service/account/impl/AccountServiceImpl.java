@@ -91,7 +91,6 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
     }
     @Override
     public Result<ArrayList<Account>> getAccounts() {
-
         return ResultUtil.success(mapper.getCustomAccounts());
     }
     @Override

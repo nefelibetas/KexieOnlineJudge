@@ -51,9 +51,9 @@ public class LabelServiceImpl extends ServiceImpl<LabelMapper, Label> implements
     @Transactional
     @Override
     public Result<?> updateLabel(Label label) {
-        if (Objects.isNull(label.labelId))
+        if (Objects.isNull(label.getLabelId()))
             throw new ServiceException(ServiceExceptionEnum.KEY_ARGUMENT_NOT_INPUT);
-        QueryWrapper wrapper = QueryWrapper.create().select().from(LABEL).where(LABEL.LABEL_ID.eq(label.labelId));
+        QueryWrapper wrapper = QueryWrapper.create().select().from(LABEL).where(LABEL.LABEL_ID.eq(label.getLabelId()));
         int i = mapper.updateByQuery(label, wrapper);
         if (i > 0)
             return ResultUtil.success();

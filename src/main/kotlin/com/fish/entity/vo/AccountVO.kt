@@ -3,39 +3,40 @@ package com.fish.entity.vo
 import com.fish.entity.pojo.Account
 import java.io.Serializable
 
-class AccountVO(account: Account) : Serializable {
-    var userId: String?
+data class AccountVO(
+    val userId: String?,
     /**
      * 昵称
      */
-    private var nickname: String
+    val nickname: String?,
     /**
      * 头像
      */
-    private var avatar: String
+    val avatar: String?,
     /**
      * 性别
      */
-    private var gender: String
+    val gender: String?,
     /**
      * 专业
      */
-    private var specialty: String
+    val specialty: String?,
     /**
      * 博客地址
      */
-    private var blogAddress: String
+    val blogAddress: String?,
     /**
      * GitHub地址
      */
-    private var githubAddress: String
-    init {
-        userId = account.userId
-        nickname = account.nickname!!
-        avatar = account.avatar!!
-        gender = account.gender!!
-        specialty = account.specialty!!
-        blogAddress = account.blogAddress!!
-        githubAddress = account.githubAddress!!
-    }
+    val githubAddress: String?
+) : Serializable {
+    constructor(account: Account) : this(
+        account.userId,
+        account.nickname,
+        account.avatar,
+        account.gender,
+        account.specialty,
+        account.blogAddress,
+        account.githubAddress
+    )
 }

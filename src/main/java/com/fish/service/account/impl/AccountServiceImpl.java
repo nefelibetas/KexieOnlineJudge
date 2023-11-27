@@ -53,7 +53,7 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
         String token = jwtUtil.createToken(redisKey);
         HashMap<String, Object> map = new HashMap<>();
         map.put("token", token);
-        map.put("accountInfo", new AccountVO(principal.getAccount()));
+        map.put("account", new AccountVO(principal.getAccount()));
         redisUtil.set(redisKey, principal);
         return ResultUtil.success(map);
     }

@@ -17,14 +17,14 @@ import java.time.LocalDateTime
  * @since 2023-11-14
  */
 @Table(value = "oj_message")
-data class Message(
-    @Id(keyType = KeyType.Auto) var messageId: Long?,
-    var commentId: Long?,
-    var typeId: Long?,
-    var content: String?,
-    var sendTo: String?,
+class Message : Serializable {
+    @Id(keyType = KeyType.Auto) var messageId: Long? = null
+    var commentId: Long? = null
+    var typeId: Long? = null
+    var content: String? = null
+    var sendTo: String? = null
 
     @JsonSerialize(using = LocalDateTimeSerializer::class)
     @JsonDeserialize(using = LocalDateTimeDeserializer::class)
-    var sendTime: LocalDateTime?,
-) : Serializable
+    var sendTime: LocalDateTime? = null
+}

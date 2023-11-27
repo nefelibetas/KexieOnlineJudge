@@ -15,4 +15,6 @@ import java.io.Serializable
 data class Accepted(
     @Id var userId: @NotNull(message = "用户Id未填写") String?,
     @Id var topicId: @NotNull(message = "题目Id未填写") Long?
-) : Serializable
+) : Serializable {
+    constructor() : this(null, null)
+}

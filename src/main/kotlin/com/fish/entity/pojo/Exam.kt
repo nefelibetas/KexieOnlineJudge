@@ -17,41 +17,40 @@ import java.time.LocalDateTime
  * @since 2023-11-14
  */
 @Table(value = "oj_exam")
-data class Exam(
-    @Id(keyType = KeyType.Auto)
-    var examId: Long?,
-    var hostId: String?,
+class Exam: Serializable {
+    @Id(keyType = KeyType.Auto) var examId: Long? = null
+    var hostId: String? = null
 
     /**
      * 是否公布成绩
      */
-    var opened: Boolean?,
+    var opened: Boolean? = null
 
     /**
      * 是否进行排行
      */
-    var ranked: Boolean?,
-    var describe: String?,
+    var ranked: Boolean? = null
+    var describe: String? = null
 
     /**
      * 考试开始时间
      */
     @JsonSerialize(using = LocalDateTimeSerializer::class)
     @JsonDeserialize(using = LocalDateTimeDeserializer::class)
-    var startTime: LocalDateTime?,
+    var startTime: LocalDateTime? = null
 
     /**
      * 结束时间，默认为开始时间后七天
      */
     @JsonSerialize(using = LocalDateTimeSerializer::class)
     @JsonDeserialize(using = LocalDateTimeDeserializer::class)
-    var endTime: LocalDateTime?,
+    var endTime: LocalDateTime? = null
 
     /**
      * 该项考试创建时间，和enabled字段搭配实现复用
      */
     @JsonSerialize(using = LocalDateTimeSerializer::class)
     @JsonDeserialize(using = LocalDateTimeDeserializer::class)
-    var createTime: LocalDateTime?,
-    var enabled: Boolean?,
-) : Serializable
+    var createTime: LocalDateTime? = null
+    var enabled: Boolean? = null
+}

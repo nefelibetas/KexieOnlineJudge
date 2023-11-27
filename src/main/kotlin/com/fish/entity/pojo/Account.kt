@@ -15,67 +15,67 @@ import java.time.LocalDateTime
  * @since 2023-11-14
  */
 @Table(value = "oj_account")
-data class Account(
+class Account: Serializable {
     /**
      * 用户id
      */
-    @Id(keyType = KeyType.Auto) var userId: String?,
+    @Id(keyType = KeyType.Auto) val userId: String? = null
     /**
      * 身份id
      */
-    var roleId: Long?,
+    val roleId: Long? = null
     /**
      * 昵称
      */
-    var nickname: String?,
+    val nickname: String? = null
     /**
      * 头像
      */
-    var avatar: String?,
+    val avatar: String? = null
     /**
      * 学号
      */
-    var studentId: String?,
+    val studentId: String? = null
     /**
      * 姓名
      */
-    var username: String?,
+    val username: String? = null
     /**
      * 密码
      */
-    var password: String?,
+    val password: String? = null
     /**
      * 性别
      */
-    var gender: String?,
+    val gender: String? = null
     /**
      * 邮箱
      */
-    var email: String?,
+    val email: String? = null
     /**
      * 专业
      */
-    var specialty: String?,
+    val specialty: String? = null
     /**
      * QQ号
      */
-    var qq: String?,
+    val qq: String? = null
     /**
      * 博客地址
      */
-    var blogAddress: String?,
+    val blogAddress: String? = null
     /**
      * GitHub地址
      */
-    var githubAddress: String?,
+    val githubAddress: String? = null
     /**
      * 是否启用
      */
-    var enabled: Boolean?,
+    val enabled: Boolean? = null
     /**
      * 创建时间
      */
     @JsonSerialize(using = LocalDateTimeSerializer::class)
     @JsonDeserialize(using = LocalDateTimeDeserializer::class)
-    var createTime: LocalDateTime?,
-) : Serializable
+    val createTime: LocalDateTime? = null
+}

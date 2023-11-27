@@ -21,11 +21,11 @@ import java.time.LocalDateTime
  * @since 2023-11-14
  */
 @Table(value = "oj_topic")
-data class Topic(
+class Topic: Serializable {
     @Id(keyType = KeyType.Auto)
-    var topicId: Long?,
-    var uploadUserId: @NotBlank(message = "上传人id不能为空") String?,
-    var title: @NotBlank(message = "题目未填写") @Size(min = 2, max = 32, message = "题目要求在2~32字内") String?,
+    var topicId: Long? = null
+    var uploadUserId: @NotBlank(message = "上传人id不能为空") String? = null
+    var title: @NotBlank(message = "题目未填写") @Size(min = 2, max = 32, message = "题目要求在2~32字内") String? = null
 
     /**
      * 题面
@@ -34,18 +34,18 @@ data class Topic(
         min = 2,
         max = 1000,
         message = "题面要求在2~1000字内"
-    ) String?,
-    var difficulty: @Pattern(regexp = "^([低中高])$", message = "只能在低、中、高中选择") String?,
+    ) String? = null
+    var difficulty: @Pattern(regexp = "^([低中高])$", message = "只能在低、中、高中选择") String? = null
 
     /**
      * 限制内存
      */
-    var limitedMemory: @NotNull(message = "最大内存未填写") Long?,
+    var limitedMemory: @NotNull(message = "最大内存未填写") Long? = null
 
     /**
      * 限制时间
      */
-    var limitedTime: @NotNull(message = "最大时间未填写") Long?,
+    var limitedTime: @NotNull(message = "最大时间未填写") Long? = null
 
     /**
      * 输入描述
@@ -54,7 +54,7 @@ data class Topic(
         min = 2,
         max = 1000,
         message = "输入描述要求在2~1000字内"
-    ) String?,
+    ) String? = null
 
     /**
      * 输出描述
@@ -63,31 +63,31 @@ data class Topic(
         min = 2,
         max = 1000,
         message = "输出描述要求在2~1000字内"
-    ) String?,
+    ) String? = null
 
     /**
      * 是否开启题解
      */
-    var enabledSolution: Boolean?,
+    var enabledSolution: Boolean? = null
 
     /**
      * 题目创建时间
      */
     @JsonSerialize(using = LocalDateTimeSerializer::class)
     @JsonDeserialize(using = LocalDateTimeDeserializer::class)
-    var createTime: LocalDateTime?,
+    var createTime: LocalDateTime? = null
 
     /**
      * 题目更新时间
      */
     @JsonSerialize(using = LocalDateTimeSerializer::class)
     @JsonDeserialize(using = LocalDateTimeDeserializer::class)
-    var updateTime: LocalDateTime?,
+    var updateTime: LocalDateTime? = null
 
     /**
      * 注意事项
      */
-    var precautions: String?,
-    var from: String?,
-    var enabled: Boolean?,
-) : Serializable
+    var precautions: String? = null
+    var from: String? = null
+    var enabled: Boolean? = null
+}

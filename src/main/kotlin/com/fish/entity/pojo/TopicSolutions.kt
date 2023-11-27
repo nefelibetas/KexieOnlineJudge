@@ -17,19 +17,18 @@ import java.time.LocalDateTime
  * @since 2023-11-14
  */
 @Table(value = "oj_topic_solutions")
-data class TopicSolutions(
-    @Id(keyType = KeyType.Auto) var solutionId: Long?,
-    var topicId: Long?,
-    var title: String?,
-    var content: String?,
-
+class TopicSolutions : Serializable {
+    @Id(keyType = KeyType.Auto) var solutionId: Long? = null
+    var topicId: Long? = null
+    var title: String? = null
+    var content: String? = null
     /**
      * 置顶
      */
-    var pined: Boolean?,
-    var enabled: Boolean?,
+    var pined: Boolean? = null
+    var enabled: Boolean? = null
 
     @JsonSerialize(using = LocalDateTimeSerializer::class)
     @JsonDeserialize(using = LocalDateTimeDeserializer::class)
-    var createTime: LocalDateTime?,
-) : Serializable
+    var createTime: LocalDateTime? = null
+}

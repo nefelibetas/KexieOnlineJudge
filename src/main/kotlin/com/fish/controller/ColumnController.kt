@@ -38,13 +38,14 @@ class ColumnController {
         return columnService!!.addColumnBatch(columns)
     }
 
-    @get:GetMapping("/column/gets")
-    val columns: Result<ArrayList<ColumnVO>>
-        /**
-         * 获取全部栏目
-         * @return 全部栏目,包括栏目内的题目(题目包括其标签)
-         */
-        get() = columnService!!.getColumns()
+    /**
+     * 获取全部栏目
+     * @return 全部栏目,包括栏目内的题目(题目包括其标签)
+     */
+    @GetMapping("/column/gets")
+    fun getColumns(): Result<ArrayList<ColumnVO>> {
+        return columnService!!.getColumns()
+    }
 
     /**
      * 获取特定栏目

@@ -6,7 +6,7 @@ import jakarta.validation.constraints.Pattern
 import jakarta.validation.constraints.Size
 import java.io.Serializable
 
-class RegisterAccountDTO(
+data class RegisterAccountDTO(
     var nickname: @NotBlank(message = "昵称不能为空") @Size(min = 1, max = 32, message = "1~32字符") String? = null,
     var avatar: @Size(max = 128, message = "最多128位") String? = null,
     var studentId: @Size(max = 20, message = "请正确输入学号") String? = null,

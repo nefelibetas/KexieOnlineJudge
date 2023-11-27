@@ -3,8 +3,6 @@ package com.fish.entity.pojo
 import com.mybatisflex.annotation.Id
 import com.mybatisflex.annotation.KeyType
 import com.mybatisflex.annotation.Table
-import lombok.AllArgsConstructor
-import lombok.NoArgsConstructor
 import java.io.Serializable
 
 /**
@@ -14,9 +12,9 @@ import java.io.Serializable
  * @since 2023-11-14
  */
 @Table(value = "oj_message_type")
-class MessageType : Serializable {
+data class MessageType(
     @Id(keyType = KeyType.Auto)
-    var typeId: Long? = null
-    var typeName: String? = null
-    var typeDescribe: String? = null
-}
+    var typeId: Long?,
+    var typeName: String?,
+    var typeDescribe: String?,
+) : Serializable

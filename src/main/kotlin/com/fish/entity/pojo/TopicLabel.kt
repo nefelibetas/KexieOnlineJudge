@@ -2,8 +2,6 @@ package com.fish.entity.pojo
 
 import com.mybatisflex.annotation.Id
 import com.mybatisflex.annotation.Table
-import lombok.AllArgsConstructor
-import lombok.NoArgsConstructor
 import java.io.Serializable
 
 /**

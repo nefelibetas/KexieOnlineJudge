@@ -66,7 +66,7 @@ public class ColumnServiceImpl extends ServiceImpl<ColumnMapper, Column> impleme
     @Transactional
     @Override
     public Result<?> updateColumn(Column column) {
-        if (Objects.isNull(column.columnId))
+        if (Objects.isNull(column.getColumnId()))
             throw new ServiceException(ServiceExceptionEnum.KEY_ARGUMENT_NOT_INPUT);
         int i = mapper.update(column);
         if (i > 0)

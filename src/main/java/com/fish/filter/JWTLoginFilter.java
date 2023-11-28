@@ -48,7 +48,7 @@ public class JWTLoginFilter extends OncePerRequestFilter {
         String json = mapper.writeValueAsString(redisUtil.get(redisKey));
         LoginAccount account = mapper.readValue(json, LoginAccount.class);
         if (Objects.isNull(account)) {
-            ResultUtil.failure(response, ServiceExceptionEnum.UN_LOGIN);
+            ResultUtil.failure(response, ServiceExceptionEnum.IO_ERROR);
             return;
         }
         UsernamePasswordAuthenticationToken authenticationToken =

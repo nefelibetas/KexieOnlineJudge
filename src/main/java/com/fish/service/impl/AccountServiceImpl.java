@@ -3,12 +3,14 @@ package com.fish.service.impl;
 import com.fish.common.Result;
 import com.fish.entity.dto.AccountDTO;
 import com.fish.entity.pojo.Account;
+import com.fish.entity.pojo.Role;
 import com.fish.entity.vo.AccountVO;
 import com.fish.exception.ServiceException;
 import com.fish.exception.ServiceExceptionEnum;
 import com.fish.mapper.AccountMapper;
 import com.fish.mapper.RoleMapper;
 import com.fish.security.LoginAccount;
+import com.fish.security.SystemAuthority;
 import com.fish.service.AccountService;
 import com.fish.utils.JwtUtil;
 import com.fish.utils.RedisUtil;
@@ -19,6 +21,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -35,6 +38,8 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
     private AuthenticationManager authenticationManager;
     @Resource
     private AccountMapper accountMapper;
+    @Resource
+    private RoleMapper roleMapper;
     @Resource
     private PasswordEncoder passwordEncoder;
     @Resource

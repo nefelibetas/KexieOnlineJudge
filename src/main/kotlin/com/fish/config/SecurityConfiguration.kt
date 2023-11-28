@@ -4,20 +4,15 @@ import com.fish.exception.ServiceExceptionEnum
 import com.fish.filter.JwtLoginFilter
 import com.fish.utils.ResultUtil.failure
 import jakarta.annotation.Resource
-import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.security.access.AccessDeniedException
 import org.springframework.security.authentication.AuthenticationManager
-import org.springframework.security.config.Customizer
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
-import org.springframework.security.config.annotation.web.configurers.AuthorizeHttpRequestsConfigurer.AuthorizationManagerRequestMatcherRegistry
 import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer
 import org.springframework.security.config.annotation.web.configurers.ExceptionHandlingConfigurer
-import org.springframework.security.core.AuthenticationException
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.SecurityFilterChain
@@ -35,6 +30,7 @@ class SecurityConfiguration {
 //             registry.requestMatchers("/login", "/register").permitAll()
 //                     .requestMatchers("/label/**").permitAll()
 //                     .requestMatchers("/column/**").permitAll()
+//                     .requestMatchers("/topic/**").permitAll()
 //                     .requestMatchers("/user/**").hasAnyRole("ROOT", "ADMIN", "USER")
 //                     .requestMatchers("/admin/**").hasAnyRole("ROOT", "ADMIN")
 //                     .requestMatchers("/root/**").hasRole("ROOT")

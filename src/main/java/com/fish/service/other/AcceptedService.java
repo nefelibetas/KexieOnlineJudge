@@ -1,4 +1,4 @@
-package com.fish.service.accepted;
+package com.fish.service.other;
 
 import com.fish.entity.pojo.Accepted;
 import com.mybatisflex.core.service.IService;

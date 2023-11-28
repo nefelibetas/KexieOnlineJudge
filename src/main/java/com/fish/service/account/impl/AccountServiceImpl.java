@@ -122,18 +122,14 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
         LoginAccount loginAccount = (LoginAccount) authentication.getPrincipal();
         Account account = mapper.getAccount(userId);
         // 不能修改自己的角色
-        if (Objects.equals(loginAccount.getAccount().getUserId(), account.getUserId()))
+        if (loginAccount.getAccount().getUserId().equals(account.getUserId()))
             throw new ServiceException(ServiceExceptionEnum.OPERATE_ERROR);
         // roleId为空说明请求来自删除用户,仅需要判断执行者的权限是否足够删除
         // 否则说明请求来自修改角色，这时候直接判断执行者是否有权限赋予该角色
-        Long loginAccountRoleId = loginAccount.getAccount().getRoleId();
-        if (!Objects.isNull(loginAccountRoleId))
-            if(Objects.isNull(roleId) && !Objects.isNull(account.getRoleId())) {
-                return loginAccountRoleId > account.getRoleId();
-            } else {
-                return loginAccountRoleId > roleId;
-            }
-        // 如果连登陆都没有也不放行
-        return true;
+        if(Objects.isNull(roleId)) {
+            return loginAccount.getAccount().getRoleId() > account.getRoleId();
+        } else {
+            return loginAccount.getAccount().getRoleId() > roleId;
+        }
     }
 }

@@ -19,7 +19,8 @@ data class Account(
     /**
      * 用户id
      */
-    @Id(keyType = KeyType.Auto) var userId: String?,
+    @Id(keyType = KeyType.Auto)
+    var userId: String?,
     /**
      * 身份id
      */

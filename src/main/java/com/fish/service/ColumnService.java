@@ -13,5 +13,4 @@ public interface ColumnService extends IService<Column> {
     Result<Column> getColumn(Long columnId);
     Result<?> updateColumn(Column column);
     Result<?> deleteColumn(Long columnId);
-    Result<?> deleteColumnReality(Long columnId);
 }

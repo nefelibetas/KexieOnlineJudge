@@ -22,8 +22,11 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Table(value = "oj_column_topic")
 public class ColumnTopic implements Serializable {
+
     @Id
     private Long columnId;
+
     @Id
     private Long topicId;
+
 }

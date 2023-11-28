@@ -4,8 +4,6 @@ import com.fish.common.Result;
 import com.fish.entity.pojo.Column;
 import com.fish.service.ColumnService;
 import jakarta.annotation.Resource;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -15,15 +13,11 @@ public class ColumnController {
     @Resource
     private ColumnService columnService;
     @PostMapping("/admin/column/add")
-    public Result<?> addColumn(
-            @Valid
-            @RequestBody Column column) {
+    public Result<?> addColumn(Column column) {
         return columnService.addColumn(column);
     }
     @PostMapping("/admin/column/adds")
-    public Result<?> addLabels(
-            @Valid
-            @RequestBody ArrayList<Column> columns) {
+    public Result<?> addLabels(@RequestBody ArrayList<Column> columns) {
         return columnService.addColumnBatch(columns);
     }
     @GetMapping("/column/gets")
@@ -31,27 +25,15 @@ public class ColumnController {
         return columnService.getColumns();
     }
     @GetMapping("/column/get/{columnId}")
-    public Result<Column> getColumn(
-            @PathVariable("columnId")
-            @NotNull(message = "题目Id未填写") Long columnId) {
+    public Result<Column> getColumn(@PathVariable("columnId")Long columnId) {
         return columnService.getColumn(columnId);
     }
     @PutMapping("/admin/column/update")
-    public Result<?> updateColumn(
-            @Valid
-            @RequestBody Column column) {
+    public Result<?> updateColumn(Column column) {
         return columnService.updateColumn(column);
     }
     @DeleteMapping("/admin/column/delete/{columnId}")
-    public Result<?> deleteColumn(
-            @PathVariable("columnId")
-            @NotNull(message = "题目Id未填写") Long columnId) {
+    public Result<?> deleteColumn(@PathVariable Long columnId) {
         return columnService.deleteColumn(columnId);
-    }
-    @DeleteMapping("/root/column/delete/{columnId}")
-    public Result<?> deleteColumnReality(
-            @PathVariable("columnId")
-            @NotNull(message = "题目Id未填写") Long columnId) {
-        return columnService.deleteColumnReality(columnId);
     }
 }

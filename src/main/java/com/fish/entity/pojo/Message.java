@@ -28,13 +28,19 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Table(value = "oj_message")
 public class Message implements Serializable {
+
     @Id(keyType = KeyType.Auto)
     private Long messageId;
-    private Long commentId;
+
+    private Long commonId;
+
     private Long typeId;
+
     private String content;
+
     private String sendTo;
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime sendTime;
+
 }

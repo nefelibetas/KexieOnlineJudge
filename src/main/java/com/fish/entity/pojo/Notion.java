@@ -28,11 +28,16 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Table(value = "oj_notion")
 public class Notion implements Serializable {
+
     @Id(keyType = KeyType.Auto)
     private Long notionId;
+
     private String hostId;
+
     private String title;
+
     private String content;
+
     private Boolean enabled;
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)

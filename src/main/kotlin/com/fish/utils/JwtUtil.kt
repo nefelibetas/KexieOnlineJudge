@@ -21,7 +21,7 @@ class JwtUtil {
      * 应该大于等于 256位(长度32及以上的字符串)，并且是随机的字符串
      */
     @Value("\${jwt.secret}")
-    val SECRET: String? = null
+    val secret: String? = null
     /**
      * 过期时间(单位:秒)
      */
@@ -40,13 +40,13 @@ class JwtUtil {
             .subject(SUBJECT)
             .issuedAt(expireDate)
             .issuer(ISS)
-            .signWith(Keys.hmacShaKeyFor(SECRET!!.toByteArray()), ALGORITHM)
+            .signWith(Keys.hmacShaKeyFor(secret!!.toByteArray()), ALGORITHM)
             .compact()
     }
 
     private fun parseClaim(token: String): Jws<Claims> {
         return Jwts.parser()
-            .verifyWith(Keys.hmacShaKeyFor(SECRET!!.toByteArray()))
+            .verifyWith(Keys.hmacShaKeyFor(secret!!.toByteArray()))
             .build()
             .parseSignedClaims(token)
     }

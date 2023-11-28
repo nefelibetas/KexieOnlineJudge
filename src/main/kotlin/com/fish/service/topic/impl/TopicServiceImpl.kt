@@ -4,7 +4,9 @@ import com.fish.common.Result
 import com.fish.entity.pojo.Topic
 import com.fish.entity.pojo.table.LabelTableDef
 import com.fish.entity.pojo.table.TopicLabelTableDef
+import com.fish.entity.pojo.table.TopicLabelTableDef.TOPIC_LABEL
 import com.fish.entity.pojo.table.TopicTableDef
+import com.fish.entity.pojo.table.TopicTableDef.TOPIC
 import com.fish.entity.vo.TopicVO
 import com.fish.exception.ServiceException
 import com.fish.exception.ServiceExceptionEnum
@@ -41,7 +43,7 @@ class TopicServiceImpl : ServiceImpl<TopicMapper, Topic>(), TopicService {
 
     @Transactional
     override fun updateTopic(topicId: Long, topic: Topic): Result<*> {
-        val wrapper = QueryWrapper.create().where(TopicTableDef.TOPIC.TOPIC_ID.eq(topicId))
+        val wrapper = QueryWrapper.create().where(TOPIC.TOPIC_ID.eq(topicId))
         val i = mapper!!.updateByQuery(topic, wrapper)
         if (i > 0) return success<Any>()
         throw ServiceException(ServiceExceptionEnum.OPERATE_ERROR)
@@ -50,12 +52,12 @@ class TopicServiceImpl : ServiceImpl<TopicMapper, Topic>(), TopicService {
     override fun getTopics(): Result<ArrayList<TopicVO>> {
         val wrapper = QueryWrapper.create()
             .select()
-            .from(TopicTableDef.TOPIC)
-            .innerJoin<QueryWrapper>(TopicLabelTableDef.TOPIC_LABEL)
-            .on(TopicTableDef.TOPIC.TOPIC_ID.eq(TopicLabelTableDef.TOPIC_LABEL.TOPIC_ID))
-            .and(TopicTableDef.TOPIC.ENABLED.eq(true))
+            .from(TOPIC)
+            .innerJoin<QueryWrapper>(TOPIC_LABEL)
+            .on(TOPIC.TOPIC_ID.eq(TOPIC_LABEL.TOPIC_ID))
+            .and(TOPIC.ENABLED.eq(true))
             .innerJoin<QueryWrapper>(LabelTableDef.LABEL)
-            .on(LabelTableDef.LABEL.LABEL_ID.eq(TopicLabelTableDef.TOPIC_LABEL.LABEL_ID))
+            .on(LabelTableDef.LABEL.LABEL_ID.eq(TOPIC_LABEL.LABEL_ID))
         val topicVOS = mapper!!.selectListByQueryAs(wrapper, TopicVO::class.java) as ArrayList<TopicVO>
         return success(topicVOS)
     }
@@ -64,12 +66,12 @@ class TopicServiceImpl : ServiceImpl<TopicMapper, Topic>(), TopicService {
     override fun getTopic(topicId: Long): Result<TopicVO> {
         val wrapper = QueryWrapper.create()
             .select()
-            .from(TopicTableDef.TOPIC)
-            .innerJoin<QueryWrapper>(TopicLabelTableDef.TOPIC_LABEL)
-            .on(TopicTableDef.TOPIC.TOPIC_ID.eq(TopicLabelTableDef.TOPIC_LABEL.TOPIC_ID))
-            .and(TopicTableDef.TOPIC.ENABLED.eq(true)).and(TopicLabelTableDef.TOPIC_LABEL.TOPIC_ID.eq(topicId))
+            .from(TOPIC)
+            .innerJoin<QueryWrapper>(TOPIC_LABEL)
+            .on(TOPIC.TOPIC_ID.eq(TOPIC_LABEL.TOPIC_ID))
+            .and(TOPIC.ENABLED.eq(true)).and(TOPIC_LABEL.TOPIC_ID.eq(topicId))
             .innerJoin<QueryWrapper>(LabelTableDef.LABEL)
-            .on(LabelTableDef.LABEL.LABEL_ID.eq(TopicLabelTableDef.TOPIC_LABEL.LABEL_ID))
+            .on(LabelTableDef.LABEL.LABEL_ID.eq(TOPIC_LABEL.LABEL_ID))
         val topicVO = mapper!!.selectOneByQueryAs(wrapper, TopicVO::class.java)
         return success(topicVO)
     }

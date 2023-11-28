@@ -51,7 +51,7 @@ class AccountServiceImpl : ServiceImpl<AccountMapper, Account>(), AccountService
         val redisKey = makeKey(principal.account.userId, principal.account.nickname)
         val token = jwtUtil!!.createToken(redisKey)
         val map = HashMap<String, Any>()
-        map["token"] = token
+        map["Authorization"] = token
         map["account"] = AccountVO(principal.account)
         redisUtil!!.set(redisKey, principal)
         return success(map)
@@ -61,13 +61,14 @@ class AccountServiceImpl : ServiceImpl<AccountMapper, Account>(), AccountService
     override fun register(registerAccountDTO: RegisterAccountDTO): Result<*> {
         registerAccountDTO.password = passwordEncoder!!.encode(registerAccountDTO.password)
         val i = mapper!!.addAccount(registerAccountDTO)
-        return if (i > 0) success<Any>() else throw ServiceException(
-            ServiceExceptionEnum.ACCOUNT_EXISTED
-        )
+        return if (i > 0) success<Any>()
+        else throw ServiceException(ServiceExceptionEnum.ACCOUNT_EXISTED)
     }
 
     @Transactional
     override fun updateAccountInformation(account: Account, userId: String): Result<*> {
+        if (account.roleId != null)
+            throw ServiceException(ServiceExceptionEnum.INSUFFICIENT_PERMISSIONS)
         val credentials = SecurityContextHolder.getContext().authentication.credentials as String
         if (credentials != userId) throw ServiceException(ServiceExceptionEnum.AUTHENTICATION_FAILURE)
         val i = mapper!!.update(account)

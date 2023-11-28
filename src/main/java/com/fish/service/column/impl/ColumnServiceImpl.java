@@ -1,5 +1,10 @@
 package com.fish.service.column.impl;
 
+import static com.fish.entity.pojo.table.ColumnTableDef.COLUMN;
+import static com.fish.entity.pojo.table.ColumnTopicTableDef.COLUMN_TOPIC;
+import static com.fish.entity.pojo.table.LabelTableDef.LABEL;
+import static com.fish.entity.pojo.table.TopicLabelTableDef.TOPIC_LABEL;
+import static com.fish.entity.pojo.table.TopicTableDef.TOPIC;
 import com.fish.common.Result;
 import com.fish.entity.pojo.Column;
 import com.fish.entity.vo.ColumnVO;
@@ -15,12 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Objects;
-
-import static com.fish.entity.pojo.table.ColumnTableDef.COLUMN;
-import static com.fish.entity.pojo.table.ColumnTopicTableDef.COLUMN_TOPIC;
-import static com.fish.entity.pojo.table.LabelTableDef.LABEL;
-import static com.fish.entity.pojo.table.TopicLabelTableDef.TOPIC_LABEL;
-import static com.fish.entity.pojo.table.TopicTableDef.TOPIC;
 
 @Service
 public class ColumnServiceImpl extends ServiceImpl<ColumnMapper, Column> implements ColumnService {

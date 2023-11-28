@@ -62,7 +62,7 @@ class AccountController {
      * @param userId 要删除的用户id
      * @return 响应code为200表示请求成功
      */
-    @DeleteMapping("/admin/delete/{userId}")
+    @PutMapping("/admin/delete/{userId}")
     fun deleteAccount(@PathVariable userId: @NotBlank(message = "用户Id未填写") String?): Result<*> {
         return accountService!!.deleteAccount(userId!!)
     }

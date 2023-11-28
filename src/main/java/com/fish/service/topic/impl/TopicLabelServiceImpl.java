@@ -44,7 +44,8 @@ public class TopicLabelServiceImpl extends ServiceImpl<TopicLabelMapper, TopicLa
                                 .from(LABEL)
                                 .innerJoin(TOPIC_LABEL).on(LABEL.LABEL_ID.eq(TOPIC_LABEL.LABEL_ID))
                                 .and(TOPIC_LABEL.TOPIC_ID.eq(topicId))
-                ));
+                )
+        );
         ArrayList<Label> labels = (ArrayList<Label>) labelMapper.selectListByQuery(wrapper);
         return ResultUtil.success(labels);
     }

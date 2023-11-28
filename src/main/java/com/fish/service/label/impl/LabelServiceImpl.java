@@ -1,10 +1,11 @@
-package com.fish.service.label;
+package com.fish.service.label.impl;
 
 import com.fish.common.Result;
 import com.fish.entity.pojo.Label;
 import com.fish.exception.ServiceException;
 import com.fish.exception.ServiceExceptionEnum;
 import com.fish.mapper.LabelMapper;
+import com.fish.service.label.LabelService;
 import com.fish.utils.ResultUtil;
 import com.mybatisflex.core.query.QueryWrapper;
 import com.mybatisflex.spring.service.impl.ServiceImpl;

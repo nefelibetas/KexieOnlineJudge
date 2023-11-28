@@ -3,6 +3,10 @@ package com.fish.entity.pojo
 import com.mybatisflex.annotation.Id
 import com.mybatisflex.annotation.KeyType
 import com.mybatisflex.annotation.Table
+import lombok.AllArgsConstructor
+import lombok.Builder
+import lombok.Data
+import lombok.NoArgsConstructor
 import java.io.Serializable
 
 /**
@@ -12,19 +16,22 @@ import java.io.Serializable
  * @since 2023-11-14
  */
 @Table(value = "oj_like")
-data class Like(
+class Like : Serializable {
     @Id(keyType = KeyType.Auto)
-    var likeId: Long?,
+    var likeId: Long? = null
+
     /**
      * 题解id
      */
-    var solutionId: Long?,
+    var solutionId: Long? = null
+
     /**
      * 评论id
      */
-    var commentId: Long?,
+    var commentId: Long? = null
+
     /**
      * 点赞的用户
      */
-    var userId: String?,
-) : Serializable
+    var userId: String? = null
+}

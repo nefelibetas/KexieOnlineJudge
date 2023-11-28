@@ -5,10 +5,12 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer
 import com.fish.entity.pojo.Label
+import lombok.AllArgsConstructor
+import lombok.NoArgsConstructor
 import java.io.Serializable
 import java.time.LocalDateTime
 
-data class TopicVO(
+class TopicVO(
     var topicId: Long? = null,
     var uploadUserId: String? = null,
     var title: String? = null,

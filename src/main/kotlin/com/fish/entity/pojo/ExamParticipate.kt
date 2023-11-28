@@ -2,6 +2,8 @@ package com.fish.entity.pojo
 
 import com.mybatisflex.annotation.Id
 import com.mybatisflex.annotation.Table
+import lombok.AllArgsConstructor
+import lombok.NoArgsConstructor
 import java.io.Serializable
 
 /**
@@ -11,7 +13,10 @@ import java.io.Serializable
  * @since 2023-11-14
  */
 @Table(value = "oj_exam_participate")
-data class ExamParticipate(
-    @Id var examId: Long?,
-    @Id var participantId: String?,
-) : Serializable
+class ExamParticipate : Serializable {
+    @Id
+    var examId: Long? = null
+
+    @Id
+    var participantId: String? = null
+}

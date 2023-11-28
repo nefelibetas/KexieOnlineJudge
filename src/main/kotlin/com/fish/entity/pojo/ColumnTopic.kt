@@ -3,6 +3,8 @@ package com.fish.entity.pojo
 import com.mybatisflex.annotation.Id
 import com.mybatisflex.annotation.Table
 import jakarta.validation.constraints.NotNull
+import lombok.AllArgsConstructor
+import lombok.NoArgsConstructor
 import java.io.Serializable
 
 /**
@@ -12,7 +14,10 @@ import java.io.Serializable
  * @since 2023-11-14
  */
 @Table(value = "oj_column_topic")
-data class ColumnTopic(
-    @Id var columnId: @NotNull(message = "栏目id不能为空") Long?,
-    @Id var topicId: @NotNull(message = "题目id不能为空") Long?,
-) : Serializable
+class ColumnTopic : Serializable {
+    @Id
+    var columnId: @NotNull(message = "栏目id不能为空") Long? = null
+
+    @Id
+    var topicId: @NotNull(message = "题目id不能为空") Long? = null
+}

@@ -7,6 +7,8 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer
 import com.mybatisflex.annotation.Id
 import com.mybatisflex.annotation.KeyType
 import com.mybatisflex.annotation.Table
+import lombok.AllArgsConstructor
+import lombok.NoArgsConstructor
 import java.io.Serializable
 import java.time.LocalDateTime
 

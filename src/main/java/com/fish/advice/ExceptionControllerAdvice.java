@@ -123,9 +123,7 @@ public class ExceptionControllerAdvice {
         BindingResult result = exception.getBindingResult();
         if (result.hasErrors()) {
             List<ObjectError> errors = result.getAllErrors();
-            errors.forEach(objectError -> {
-                stringBuffer.append(objectError.getDefaultMessage()).append(" ");
-            });
+            errors.forEach(objectError -> stringBuffer.append(objectError.getDefaultMessage()).append(" "));
         }
         return stringBuffer.toString();
     }

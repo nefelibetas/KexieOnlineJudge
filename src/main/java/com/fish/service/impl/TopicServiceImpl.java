@@ -1,4 +1,4 @@
-package com.fish.service.topic.impl;
+package com.fish.service.impl;
 
 import com.fish.common.Result;
 import com.fish.entity.pojo.Topic;
@@ -6,7 +6,7 @@ import com.fish.entity.vo.TopicVO;
 import com.fish.exception.ServiceException;
 import com.fish.exception.ServiceExceptionEnum;
 import com.fish.mapper.TopicMapper;
-import com.fish.service.topic.TopicService;
+import com.fish.service.TopicService;
 import com.fish.utils.ResultUtil;
 import com.mybatisflex.core.query.QueryWrapper;
 import com.mybatisflex.spring.service.impl.ServiceImpl;

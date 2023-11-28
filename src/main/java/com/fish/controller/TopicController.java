@@ -3,7 +3,7 @@ package com.fish.controller;
 import com.fish.common.Result;
 import com.fish.entity.pojo.Topic;
 import com.fish.entity.vo.TopicVO;
-import com.fish.service.topic.TopicService;
+import com.fish.service.TopicService;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -22,10 +22,6 @@ public class TopicController {
     @PostMapping("/admin/topic/adds")
     public Result<?> addTopicBatch(@Valid ArrayList<Topic> topics) {
         return topicService.addTopicBatch(topics);
-    }
-    @PostMapping("/admin/topic/addLabel/{topicId}")
-    public Result<?> addTopicLabel(@PathVariable("topicId")Long topicId) {
-        return null;
     }
     @DeleteMapping("/admin/topic/delete/{topicId}")
     public Result<?> deleteTopic(

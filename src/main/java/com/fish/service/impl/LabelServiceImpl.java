@@ -1,11 +1,11 @@
-package com.fish.service.topic.impl;
+package com.fish.service.impl;
 
 import com.fish.common.Result;
 import com.fish.entity.pojo.Label;
 import com.fish.exception.ServiceException;
 import com.fish.exception.ServiceExceptionEnum;
 import com.fish.mapper.LabelMapper;
-import com.fish.service.topic.LabelService;
+import com.fish.service.LabelService;
 import com.fish.utils.ResultUtil;
 import com.mybatisflex.spring.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;

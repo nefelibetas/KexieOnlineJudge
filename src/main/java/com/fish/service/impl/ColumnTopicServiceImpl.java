@@ -1,4 +1,4 @@
-package com.fish.service.column.impl;
+package com.fish.service.impl;
 
 import com.fish.common.Result;
 import com.fish.entity.pojo.ColumnTopic;
@@ -8,7 +8,7 @@ import com.fish.exception.ServiceException;
 import com.fish.exception.ServiceExceptionEnum;
 import com.fish.mapper.ColumnTopicMapper;
 import com.fish.mapper.TopicMapper;
-import com.fish.service.column.ColumnTopicService;
+import com.fish.service.ColumnTopicService;
 import com.fish.utils.ResultUtil;
 import com.mybatisflex.core.query.QueryWrapper;
 import com.mybatisflex.spring.service.impl.ServiceImpl;

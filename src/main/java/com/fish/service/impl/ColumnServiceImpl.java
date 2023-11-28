@@ -1,11 +1,11 @@
-package com.fish.service.column.impl;
+package com.fish.service.impl;
 
 import com.fish.common.Result;
 import com.fish.entity.pojo.Column;
 import com.fish.exception.ServiceException;
 import com.fish.exception.ServiceExceptionEnum;
 import com.fish.mapper.ColumnMapper;
-import com.fish.service.column.ColumnService;
+import com.fish.service.ColumnService;
 import com.fish.utils.ResultUtil;
 import com.mybatisflex.spring.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;

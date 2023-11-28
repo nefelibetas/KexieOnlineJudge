@@ -3,7 +3,7 @@ package com.fish.controller;
 import com.fish.common.Result;
 import com.fish.entity.pojo.Account;
 import com.fish.exception.ServiceExceptionEnum;
-import com.fish.service.account.AccountService;
+import com.fish.service.AccountService;
 import com.fish.utils.ResultUtil;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;

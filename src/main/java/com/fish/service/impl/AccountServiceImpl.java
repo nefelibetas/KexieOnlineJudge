@@ -1,4 +1,4 @@
-package com.fish.service.account.impl;
+package com.fish.service.impl;
 
 import com.fish.common.Result;
 import com.fish.entity.pojo.Account;
@@ -7,7 +7,7 @@ import com.fish.exception.ServiceException;
 import com.fish.exception.ServiceExceptionEnum;
 import com.fish.mapper.AccountMapper;
 import com.fish.security.LoginAccount;
-import com.fish.service.account.AccountService;
+import com.fish.service.AccountService;
 import com.fish.utils.JwtUtil;
 import com.fish.utils.RedisUtil;
 import com.fish.utils.ResultUtil;

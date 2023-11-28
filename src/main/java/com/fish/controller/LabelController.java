@@ -2,7 +2,7 @@ package com.fish.controller;
 
 import com.fish.common.Result;
 import com.fish.entity.pojo.Label;
-import com.fish.service.topic.LabelService;
+import com.fish.service.LabelService;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;

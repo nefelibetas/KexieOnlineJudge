@@ -2,7 +2,7 @@ package com.fish.controller;
 
 import com.fish.common.Result;
 import com.fish.entity.pojo.Column;
-import com.fish.service.column.ColumnService;
+import com.fish.service.ColumnService;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;

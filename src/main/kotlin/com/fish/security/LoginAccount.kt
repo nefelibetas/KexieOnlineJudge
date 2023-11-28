@@ -14,8 +14,8 @@ import org.springframework.security.core.userdetails.UserDetails
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 class LoginAccount @JsonCreator constructor(
-    @JsonProperty("account") val account: Account,
-    @JsonProperty("authorities") val grantedAuthorities: ArrayList<SystemAuthority?>
+    @param:JsonProperty("account") val account: Account,
+    @param:JsonProperty("authorities") val grantedAuthorities: ArrayList<SystemAuthority?>
 ) : UserDetails {
     override fun getAuthorities(): Collection<GrantedAuthority?> {
         return grantedAuthorities

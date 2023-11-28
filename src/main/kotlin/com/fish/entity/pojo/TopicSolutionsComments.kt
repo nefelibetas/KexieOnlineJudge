@@ -17,20 +17,20 @@ import java.time.LocalDateTime
  * @since 2023-11-14
  */
 @Table(value = "oj_topic_solutions_comments")
-class TopicSolutionsComments : Serializable {
+data class TopicSolutionsComments(
     @Id(keyType = KeyType.Auto)
-    var commentId: Long? = null
-    var userId: String? = null
-    var solutionId: Long? = null
+    var commentId: Long?,
+    var userId: String?,
+    var solutionId: Long?,
 
     /**
      * 父评论的id，作为鉴别是否为二级评论的标志
      */
-    var parentId: Long? = null
-    var content: String? = null
-    var enabled: Boolean? = null
+    var parentId: Long?,
+    var content: String?,
+    var enabled: Boolean?,
 
     @JsonSerialize(using = LocalDateTimeSerializer::class)
     @JsonDeserialize(using = LocalDateTimeDeserializer::class)
-    var createTime: LocalDateTime? = null
-}
+    var createTime: LocalDateTime?,
+) : Serializable

@@ -33,4 +33,5 @@ public class Column implements Serializable {
     @Size(min = 1, max = 100, message = "1~100字符以内")
     private String columnDescribe;
     private Boolean enabled;
+
 }

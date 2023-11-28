@@ -102,14 +102,13 @@ class TopicController {
         return topicService!!.updateTopic(topicId, topic)
     }
 
-    /**
-     * 获取所以题目
-     * @return 所有启用的题目
-     */
-    @GetMapping("/topic/gets")
-    fun getTopics(): Result<ArrayList<TopicVO>> {
-        return topicService!!.getTopics()
-    }
+    @get:GetMapping("/topic/gets")
+    val topics: Result<ArrayList<TopicVO>>
+        /**
+         * 获取所以题目
+         * @return 所有启用的题目
+         */
+        get() = topicService!!.getTopics()
 
     /**
      * 获取对应id的题目

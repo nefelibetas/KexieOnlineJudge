@@ -3,8 +3,6 @@ package com.fish.interceptor;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -13,9 +11,9 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.Objects;
 
+@Slf4j
 @Component
 public class CustomInterceptor implements HandlerInterceptor {
-    private static final Logger log = LoggerFactory.getLogger(CustomInterceptor.class);
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String method = request.getMethod();

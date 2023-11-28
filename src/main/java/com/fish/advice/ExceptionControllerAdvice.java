@@ -6,8 +6,6 @@ import com.fish.exception.ServiceExceptionEnum;
 import com.fish.utils.ResultUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.MyBatisSystemException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.BindingResult;
@@ -21,8 +19,8 @@ import java.nio.file.AccessDeniedException;
 import java.util.List;
 
 @RestControllerAdvice
+@Slf4j
 public class ExceptionControllerAdvice {
-    private static final Logger log = LoggerFactory.getLogger(ExceptionControllerAdvice.class);
     /**
      * <span>用于响应业务异常</span>
      * @param exception 发生的异常

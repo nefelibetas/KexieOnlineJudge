@@ -23,7 +23,7 @@ import java.io.IOException;
 import java.util.Objects;
 
 @Component
-public class JwtLoginFilter extends OncePerRequestFilter {
+public class JWTLoginFilter extends OncePerRequestFilter {
     private static final ObjectMapper mapper = new ObjectMapper();
     @Value("${jwt.header}")
     private String HEADER;

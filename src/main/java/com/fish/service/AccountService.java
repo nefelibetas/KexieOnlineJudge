@@ -14,6 +14,5 @@ public interface AccountService extends IService<Account> {
     Result<?> updateAccountInformation(AccountDTO accountDTO);
     Result<?> deleteAccount(String userId);
     Result<ArrayList<Account>> getAccounts();
-    Result<ArrayList<Account>> getAdmins();
     Result<?> changeAccountRole(String userId, Long roleId);
 }

@@ -17,6 +17,8 @@ import java.util.ArrayList;
  * @since 2023-11-14
  */
 public interface AccountMapper extends BaseMapper<Account> {
+    @Select("select * from oj_account where enabled = true")
+    ArrayList<Account> getAccounts();
     @Select("select * from oj_account where enabled = true and email = #{email}")
     Account getAccountByEmail(@Param("email") String email);
     @Insert("insert into " +
@@ -29,7 +31,7 @@ public interface AccountMapper extends BaseMapper<Account> {
     int deleteAccount(@Param("userId")String userId);
     @Update("update oj_account set role_id = #{roleId} where user_id = #{userId}")
     int changeAccountRole(@Param("userId")String userId, @Param("roleId")Long roleId);
-    @Select("select * from oj_account where enabled = true and role_id < 3")
+    @Select("select * from oj_account where enabled = true and role_id = 2")
     ArrayList<Account> getAdmins();
     @Select("select * from oj_account where enabled = true and role_id = 3")
     ArrayList<Account> getCustomAccounts();

@@ -28,4 +28,5 @@ public class Label implements Serializable {
     private Long labelId;
 
     private String labelName;
+
 }

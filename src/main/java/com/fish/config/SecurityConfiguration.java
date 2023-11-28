@@ -1,7 +1,7 @@
 package com.fish.config;
 
 import com.fish.exception.ServiceExceptionEnum;
-import com.fish.filter.JWTLoginFilter;
+import com.fish.filter.JwtLoginFilter;
 import com.fish.utils.ResultUtil;
 import jakarta.annotation.Resource;
 import org.springframework.context.annotation.Bean;
@@ -20,7 +20,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class SecurityConfiguration {
     @Resource
-    private JWTLoginFilter jwtLoginFilter;
+    private JwtLoginFilter jwtLoginFilter;
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(registry -> {

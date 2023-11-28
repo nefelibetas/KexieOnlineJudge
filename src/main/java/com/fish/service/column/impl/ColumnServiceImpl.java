@@ -16,11 +16,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Objects;
 
-import static com.fish.entity.pojo.table.ColumnTableDef.COLUMN;
-import static com.fish.entity.pojo.table.ColumnTopicTableDef.COLUMN_TOPIC;
-import static com.fish.entity.pojo.table.LabelTableDef.LABEL;
-import static com.fish.entity.pojo.table.TopicLabelTableDef.TOPIC_LABEL;
-import static com.fish.entity.pojo.table.TopicTableDef.TOPIC;
+// import static com.fish.entity.pojo.table.ColumnTopicTableDef.COLUMN_TOPIC;
+// import static com.fish.entity.pojo.table.LabelTableDef.LABEL;
+// import static com.fish.entity.pojo.table.TopicLabelTableDef.TOPIC_LABEL;
+// import static com.fish.entity.pojo.table.TopicTableDef.TOPIC;
 
 @Service
 public class ColumnServiceImpl extends ServiceImpl<ColumnMapper, Column> implements ColumnService {
@@ -44,24 +43,26 @@ public class ColumnServiceImpl extends ServiceImpl<ColumnMapper, Column> impleme
     }
     @Override
     public Result<ArrayList<ColumnVO>> getColumns() {
-        QueryWrapper wrapper = QueryWrapper.create()
-                .select(COLUMN.ALL_COLUMNS, TOPIC.ALL_COLUMNS, LABEL.ALL_COLUMNS).from(COLUMN)
-                .innerJoin(COLUMN_TOPIC).on(COLUMN_TOPIC.COLUMN_ID.eq(COLUMN.COLUMN_ID)).and(COLUMN.ENABLED.eq(true))
-                .innerJoin(TOPIC).on(TOPIC.TOPIC_ID.eq(COLUMN_TOPIC.TOPIC_ID)).and(TOPIC.ENABLED.eq(true))
-                .innerJoin(TOPIC_LABEL).on(TOPIC.TOPIC_ID.eq(TOPIC_LABEL.TOPIC_ID))
-                .innerJoin(LABEL).on(LABEL.LABEL_ID.eq(TOPIC_LABEL.LABEL_ID));
-        return ResultUtil.success((ArrayList<ColumnVO>) mapper.selectListByQueryAs(wrapper, ColumnVO.class));
+        // QueryWrapper wrapper = QueryWrapper.create()
+        //         .select(COLUMN.ALL_COLUMNS, TOPIC.ALL_COLUMNS, LABEL.ALL_COLUMNS).from(COLUMN)
+        //         .innerJoin(COLUMN_TOPIC).on(COLUMN_TOPIC.COLUMN_ID.eq(COLUMN.COLUMN_ID)).and(COLUMN.ENABLED.eq(true))
+        //         .innerJoin(TOPIC).on(TOPIC.TOPIC_ID.eq(COLUMN_TOPIC.TOPIC_ID)).and(TOPIC.ENABLED.eq(true))
+        //         .innerJoin(TOPIC_LABEL).on(TOPIC.TOPIC_ID.eq(TOPIC_LABEL.TOPIC_ID))
+        //         .innerJoin(LABEL).on(LABEL.LABEL_ID.eq(TOPIC_LABEL.LABEL_ID));
+        // return ResultUtil.success((ArrayList<ColumnVO>) mapper.selectListByQueryAs(wrapper, ColumnVO.class));
+        return ResultUtil.success();
     }
     @Override
     public Result<ColumnVO> getColumn(Long columnId) {
-        QueryWrapper wrapper = QueryWrapper.create()
-                .select(COLUMN.ALL_COLUMNS, TOPIC.ALL_COLUMNS, LABEL.ALL_COLUMNS).from(COLUMN)
-                .innerJoin(COLUMN_TOPIC).on(COLUMN_TOPIC.COLUMN_ID.eq(COLUMN.COLUMN_ID)).and(COLUMN.ENABLED.eq(true)).and(COLUMN.COLUMN_ID.eq(columnId))
-                .innerJoin(TOPIC).on(TOPIC.TOPIC_ID.eq(COLUMN_TOPIC.TOPIC_ID)).and(TOPIC.ENABLED.eq(true))
-                .innerJoin(TOPIC_LABEL).on(TOPIC.TOPIC_ID.eq(TOPIC_LABEL.TOPIC_ID))
-                .innerJoin(LABEL).on(LABEL.LABEL_ID.eq(TOPIC_LABEL.LABEL_ID));
-        ColumnVO columnVO = mapper.selectOneByQueryAs(wrapper, ColumnVO.class);
-        return ResultUtil.success(columnVO);
+        // QueryWrapper wrapper = QueryWrapper.create()
+        //         .select(COLUMN.ALL_COLUMNS, TOPIC.ALL_COLUMNS, LABEL.ALL_COLUMNS).from(COLUMN)
+        //         .innerJoin(COLUMN_TOPIC).on(COLUMN_TOPIC.COLUMN_ID.eq(COLUMN.COLUMN_ID)).and(COLUMN.ENABLED.eq(true)).and(COLUMN.COLUMN_ID.eq(columnId))
+        //         .innerJoin(TOPIC).on(TOPIC.TOPIC_ID.eq(COLUMN_TOPIC.TOPIC_ID)).and(TOPIC.ENABLED.eq(true))
+        //         .innerJoin(TOPIC_LABEL).on(TOPIC.TOPIC_ID.eq(TOPIC_LABEL.TOPIC_ID))
+        //         .innerJoin(LABEL).on(LABEL.LABEL_ID.eq(TOPIC_LABEL.LABEL_ID));
+        // ColumnVO columnVO = mapper.selectOneByQueryAs(wrapper, ColumnVO.class);
+        // return ResultUtil.success(columnVO);
+        return ResultUtil.success();
     }
     @Transactional
     @Override

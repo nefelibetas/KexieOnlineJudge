@@ -13,6 +13,8 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
@@ -24,6 +26,8 @@ import java.time.LocalDateTime;
  * @author fish
  * @since 2023-11-14
  */
+@Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(value = "oj_topic")
@@ -87,124 +91,4 @@ public class Topic implements Serializable {
     private String precautions;
     private String from;
     private Boolean enabled;
-
-    public Long getTopicId() {
-        return topicId;
-    }
-
-    public void setTopicId(Long topicId) {
-        this.topicId = topicId;
-    }
-
-    public String getUploadUserId() {
-        return uploadUserId;
-    }
-
-    public void setUploadUserId(String uploadUserId) {
-        this.uploadUserId = uploadUserId;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public String getDifficulty() {
-        return difficulty;
-    }
-
-    public void setDifficulty(String difficulty) {
-        this.difficulty = difficulty;
-    }
-
-    public Long getLimitedMemory() {
-        return limitedMemory;
-    }
-
-    public void setLimitedMemory(Long limitedMemory) {
-        this.limitedMemory = limitedMemory;
-    }
-
-    public Long getLimitedTime() {
-        return limitedTime;
-    }
-
-    public void setLimitedTime(Long limitedTime) {
-        this.limitedTime = limitedTime;
-    }
-
-    public String getInputDescribe() {
-        return inputDescribe;
-    }
-
-    public void setInputDescribe(String inputDescribe) {
-        this.inputDescribe = inputDescribe;
-    }
-
-    public String getOutputDescribe() {
-        return outputDescribe;
-    }
-
-    public void setOutputDescribe(String outputDescribe) {
-        this.outputDescribe = outputDescribe;
-    }
-
-    public Boolean getEnabledSolution() {
-        return enabledSolution;
-    }
-
-    public void setEnabledSolution(Boolean enabledSolution) {
-        this.enabledSolution = enabledSolution;
-    }
-
-    public LocalDateTime getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(LocalDateTime createTime) {
-        this.createTime = createTime;
-    }
-
-    public LocalDateTime getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(LocalDateTime updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public String getPrecautions() {
-        return precautions;
-    }
-
-    public void setPrecautions(String precautions) {
-        this.precautions = precautions;
-    }
-
-    public String getFrom() {
-        return from;
-    }
-
-    public void setFrom(String from) {
-        this.from = from;
-    }
-
-    public Boolean getEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(Boolean enabled) {
-        this.enabled = enabled;
-    }
 }

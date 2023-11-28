@@ -5,6 +5,8 @@ import com.mybatisflex.annotation.Id;
 import com.mybatisflex.annotation.KeyType;
 import com.mybatisflex.annotation.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
@@ -15,6 +17,8 @@ import java.io.Serializable;
  * @author fish
  * @since 2023-11-14
  */
+@Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(value = "oj_example")
@@ -39,51 +43,4 @@ public class Example implements Serializable {
      */
     private Boolean assessed;
 
-    public Long getExampleId() {
-        return exampleId;
-    }
-
-    public void setExampleId(Long exampleId) {
-        this.exampleId = exampleId;
-    }
-
-    public Long getTopicId() {
-        return topicId;
-    }
-
-    public void setTopicId(Long topicId) {
-        this.topicId = topicId;
-    }
-
-    public String getInput() {
-        return input;
-    }
-
-    public void setInput(String input) {
-        this.input = input;
-    }
-
-    public String getOutput() {
-        return output;
-    }
-
-    public void setOutput(String output) {
-        this.output = output;
-    }
-
-    public Boolean getShowed() {
-        return showed;
-    }
-
-    public void setShowed(Boolean showed) {
-        this.showed = showed;
-    }
-
-    public Boolean getAssessed() {
-        return assessed;
-    }
-
-    public void setAssessed(Boolean assessed) {
-        this.assessed = assessed;
-    }
 }

@@ -4,6 +4,8 @@ package com.fish.entity.pojo;
 import com.mybatisflex.annotation.Id;
 import com.mybatisflex.annotation.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
@@ -14,6 +16,8 @@ import java.io.Serializable;
  * @author fish
  * @since 2023-11-14
  */
+@Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(value = "oj_exam_participate")
@@ -25,19 +29,4 @@ public class ExamParticipate implements Serializable {
     @Id
     private String participantId;
 
-    public Long getExamId() {
-        return examId;
-    }
-
-    public void setExamId(Long examId) {
-        this.examId = examId;
-    }
-
-    public String getParticipantId() {
-        return participantId;
-    }
-
-    public void setParticipantId(String participantId) {
-        this.participantId = participantId;
-    }
 }

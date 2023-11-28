@@ -5,8 +5,10 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class RegisterAccountDTO {
@@ -36,92 +38,4 @@ public class RegisterAccountDTO {
     private String blogAddress;
     @Size(max = 128, message = "最多128位")
     private String githubAddress;
-
-    public String getNickname() {
-        return nickname;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
-
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
-    }
-
-    public String getStudentId() {
-        return studentId;
-    }
-
-    public void setStudentId(String studentId) {
-        this.studentId = studentId;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getSpecialty() {
-        return specialty;
-    }
-
-    public void setSpecialty(String specialty) {
-        this.specialty = specialty;
-    }
-
-    public String getQQ() {
-        return qq;
-    }
-
-    public void setQQ(String qq) {
-        this.qq = qq;
-    }
-
-    public String getBlogAddress() {
-        return blogAddress;
-    }
-
-    public void setBlogAddress(String blogAddress) {
-        this.blogAddress = blogAddress;
-    }
-
-    public String getGithubAddress() {
-        return githubAddress;
-    }
-
-    public void setGithubAddress(String githubAddress) {
-        this.githubAddress = githubAddress;
-    }
 }

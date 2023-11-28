@@ -20,7 +20,7 @@ class LabelController {
      */
     @PostMapping("/admin/label/add")
     fun addLabel(@RequestBody label: @Valid Label?): Result<*> {
-        return labelService!!.addLabel(label)
+        return labelService!!.addLabel(label!!)
     }
 
     /**
@@ -29,8 +29,8 @@ class LabelController {
      * @return 响应code为200表示成功
      */
     @PostMapping("/admin/label/adds")
-    fun addLabels(@RequestBody labels: @Valid ArrayList<Label?>?): Result<*> {
-        return labelService!!.addLabelBatch(labels)
+    fun addLabels(@RequestBody labels: @Valid ArrayList<Label>?): Result<*> {
+        return labelService!!.addLabelBatch(labels!!)
     }
 
     /**
@@ -40,7 +40,7 @@ class LabelController {
      */
     @GetMapping("/label/get/{labelId}")
     fun getLabel(@PathVariable("labelId") labelId: @NotNull(message = "标签Id未填写") Long?): Result<Label> {
-        return labelService!!.getLabel(labelId)
+        return labelService!!.getLabel(labelId!!)
     }
     /**
      * 获取全部标签
@@ -59,7 +59,7 @@ class LabelController {
      */
     @PutMapping("/admin/label/update/{labelId}")
     fun updateLabel(@RequestBody label: @Valid Label?): Result<*> {
-        return labelService!!.updateLabel(label)
+        return labelService!!.updateLabel(label!!)
     }
 
     /**
@@ -69,6 +69,6 @@ class LabelController {
      */
     @DeleteMapping("/root/label/delete/{labelId}")
     fun deleteLabel(@PathVariable labelId: @NotNull(message = "标签Id未填写") Long?): Result<*> {
-        return labelService!!.deleteLabel(labelId)
+        return labelService!!.deleteLabel(labelId!!)
     }
 }

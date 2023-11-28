@@ -52,12 +52,6 @@ dependencies {
     kapt("com.mybatis-flex:mybatis-flex-processor:1.5.6")
 }
 
-dependencyManagement {
-    imports {
-        mavenBom(org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES)
-    }
-}
-
 tasks.withType<KotlinCompile> {
     kotlinOptions {
         freeCompilerArgs += "-Xjsr305=strict"

@@ -1,5 +1,6 @@
 package com.fish.security
 
+import com.fish.entity.pojo.Account
 import com.fish.exception.ServiceException
 import com.fish.exception.ServiceExceptionEnum
 import com.fish.mapper.AccountMapper
@@ -19,12 +20,12 @@ class UserDetailsServiceImpl : UserDetailsService {
     private val roleMapper: RoleMapper? = null
     @Throws(UsernameNotFoundException::class)
     override fun loadUserByUsername(username: String): UserDetails {
-        val account = accountMapper!!.getAccountByEmail(username)
+        val account : Account = accountMapper!!.getAccountByEmail(username)
         if (Objects.isNull(account))
             throw ServiceException(ServiceExceptionEnum.ACCOUNT_NOT_FOUND)
-        return LoginAccount(account, getRoles(account.roleId))
+        return LoginAccount(account, getRoles(account.roleId!!))
     }
-    private fun getRoles(roleId: Long?): ArrayList<SystemAuthority?> {
+    private fun getRoles(roleId: Long): ArrayList<SystemAuthority?> {
         val role = roleMapper!!.getRoleById(roleId)
         val simpleGrantedAuthority = SystemAuthority(role.roleName!!)
         val authorities = ArrayList<SystemAuthority?>()

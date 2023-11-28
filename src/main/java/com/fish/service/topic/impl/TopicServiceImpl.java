@@ -14,10 +14,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.List;
 
-import static com.fish.entity.pojo.table.LabelTableDef.LABEL;
-import static com.fish.entity.pojo.table.TopicLabelTableDef.TOPIC_LABEL;
 import static com.fish.entity.pojo.table.TopicTableDef.TOPIC;
+import static com.fish.entity.pojo.table.TopicLabelTableDef.TOPIC_LABEL;
+import static com.fish.entity.pojo.table.LabelTableDef.LABEL;
 
 @Service
 public class TopicServiceImpl extends ServiceImpl<TopicMapper, Topic> implements TopicService {
@@ -59,8 +60,9 @@ public class TopicServiceImpl extends ServiceImpl<TopicMapper, Topic> implements
         QueryWrapper wrapper = QueryWrapper.create()
                 .select()
                 .from(TOPIC)
-                .innerJoin(TOPIC_LABEL).on(TOPIC.TOPIC_ID.eq(TOPIC_LABEL.TOPIC_ID)).and(TOPIC.ENABLED.eq(true))
-                .innerJoin(LABEL).on(LABEL.LABEL_ID.eq(TOPIC_LABEL.LABEL_ID));
+                .leftJoin(TOPIC_LABEL).on(TOPIC.TOPIC_ID.eq(TOPIC_LABEL.TOPIC_ID))
+                .leftJoin(LABEL).on(LABEL.LABEL_ID.eq(TOPIC_LABEL.LABEL_ID))
+                .where(TOPIC.ENABLED.eq(true));
         ArrayList<TopicVO> topicVOS = (ArrayList<TopicVO>) mapper.selectListByQueryAs(wrapper, TopicVO.class);
         return ResultUtil.success(topicVOS);
     }
@@ -69,8 +71,10 @@ public class TopicServiceImpl extends ServiceImpl<TopicMapper, Topic> implements
         QueryWrapper wrapper = QueryWrapper.create()
                 .select()
                 .from(TOPIC)
-                .innerJoin(TOPIC_LABEL).on(TOPIC.TOPIC_ID.eq(TOPIC_LABEL.TOPIC_ID)).and(TOPIC.ENABLED.eq(true)).and(TOPIC_LABEL.TOPIC_ID.eq(topicId))
-                .innerJoin(LABEL).on(LABEL.LABEL_ID.eq(TOPIC_LABEL.LABEL_ID));
+                .leftJoin(TOPIC_LABEL).on(TOPIC.TOPIC_ID.eq(TOPIC_LABEL.TOPIC_ID))
+                .leftJoin(LABEL).on(LABEL.LABEL_ID.eq(TOPIC_LABEL.LABEL_ID))
+                .where(TOPIC.ENABLED.eq(true))
+                .and(TOPIC.TOPIC_ID.eq(topicId));
         TopicVO topicVO = mapper.selectOneByQueryAs(wrapper, TopicVO.class);
         return ResultUtil.success(topicVO);
     }

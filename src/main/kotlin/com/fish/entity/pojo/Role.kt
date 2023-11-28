@@ -14,6 +14,6 @@ import java.io.Serializable
 @Table(value = "oj_role")
 data class Role(
     @Id(keyType = KeyType.Auto) var roleId: Long?,
-    var roleName: String?,
-    var roleDescribe: String?,
+    val roleName: String?,
+    val roleDescribe: String?,
 ) : Serializable

@@ -27,7 +27,7 @@ class AccountController {
      */
     @PostMapping("/login")
     fun login(@RequestBody loginAccountDTO: @Valid LoginAccountDTO?): Result<HashMap<String, Any>> {
-        return accountService!!.login(loginAccountDTO)
+        return accountService!!.login(loginAccountDTO!!)
     }
 
     /**
@@ -38,7 +38,7 @@ class AccountController {
      */
     @PostMapping("/register")
     fun register(@RequestBody registerAccountDTO: @Valid RegisterAccountDTO?): Result<*> {
-        return accountService!!.register(registerAccountDTO)
+        return accountService!!.register(registerAccountDTO!!)
     }
 
     /**
@@ -53,7 +53,7 @@ class AccountController {
         @RequestBody account: @Valid Account?,
         @PathVariable userId: @NotBlank(message = "用户Id不能为空") String?
     ): Result<*> {
-        return accountService!!.updateAccountInformation(account, userId)
+        return accountService!!.updateAccountInformation(account!!, userId!!)
     }
 
     /**
@@ -64,7 +64,7 @@ class AccountController {
      */
     @DeleteMapping("/admin/delete/{userId}")
     fun deleteAccount(@PathVariable userId: @NotBlank(message = "用户Id未填写") String?): Result<*> {
-        return accountService!!.deleteAccount(userId)
+        return accountService!!.deleteAccount(userId!!)
     }
 
     /**
@@ -74,12 +74,7 @@ class AccountController {
      * @return 用户信息,含敏感信息。仅开放给管理员
      */
     @GetMapping("/admin/gets/{operate}")
-    fun getAccounts(
-        @PathVariable operate: @Pattern(
-            regexp = "^([12])$",
-            message = "只能从1和2中选择"
-        ) String?
-    ): Result<ArrayList<Account>> {
+    fun getAccounts(@PathVariable operate: @Pattern(regexp = "^([12])$", message = "只能从1和2中选择") String?): Result<ArrayList<Account>> {
         return when (operate) {
             "1" -> accountService!!.getAccounts()
             "2" -> accountService!!.getAdmins()
@@ -99,6 +94,6 @@ class AccountController {
         @PathVariable("userId") userId: @NotBlank(message = "用户Id未填写") String?,
         @PathVariable("roleId") roleId: @NotNull(message = "角色Id未填写") Long?
     ): Result<*> {
-        return accountService!!.changeAccountRole(userId, roleId)
+        return accountService!!.changeAccountRole(userId!!, roleId!!)
     }
 }

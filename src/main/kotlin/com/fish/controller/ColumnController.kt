@@ -7,6 +7,7 @@ import com.fish.service.column.ColumnService
 import com.fish.service.column.ColumnTopicService
 import jakarta.annotation.Resource
 import jakarta.validation.Valid
+import jakarta.validation.constraints.NotEmpty
 import jakarta.validation.constraints.NotNull
 import org.springframework.web.bind.annotation.*
 
@@ -25,7 +26,7 @@ class ColumnController {
      */
     @PostMapping("/admin/column/add")
     fun addColumn(@RequestBody column: @Valid Column?): Result<*> {
-        return columnService!!.addColumn(column)
+        return columnService!!.addColumn(column!!)
     }
 
     /**
@@ -34,8 +35,8 @@ class ColumnController {
      * @return 响应code为200表示成功
      */
     @PostMapping("/admin/column/adds")
-    fun addLabels(@RequestBody columns: @Valid ArrayList<Column?>?): Result<*> {
-        return columnService!!.addColumnBatch(columns)
+    fun addColumns(@RequestBody columns: @NotEmpty(message = "至少包含一个栏目") ArrayList<@Valid Column>?): Result<*> {
+        return columnService!!.addColumnBatch(columns!!)
     }
 
     /**
@@ -54,7 +55,7 @@ class ColumnController {
      */
     @GetMapping("/column/get/{columnId}")
     fun getColumn(@PathVariable("columnId") columnId: @NotNull(message = "题目Id未填写") Long?): Result<ColumnVO> {
-        return columnService!!.getColumn(columnId)
+        return columnService!!.getColumn(columnId!!)
     }
 
     /**
@@ -64,7 +65,7 @@ class ColumnController {
      */
     @PutMapping("/admin/column/update")
     fun updateColumn(@RequestBody column: @Valid Column?): Result<*> {
-        return columnService!!.updateColumn(column)
+        return columnService!!.updateColumn(column!!)
     }
 
     /**
@@ -74,7 +75,7 @@ class ColumnController {
      */
     @PutMapping("/admin/column/delete/{columnId}")
     fun deleteColumn(@PathVariable("columnId") columnId: @NotNull(message = "题目Id未填写") Long?): Result<*> {
-        return columnService!!.deleteColumn(columnId)
+        return columnService!!.deleteColumn(columnId!!)
     }
 
     /**
@@ -84,6 +85,6 @@ class ColumnController {
      */
     @DeleteMapping("/root/column/delete/{columnId}")
     fun deleteColumnReality(@PathVariable("columnId") columnId: @NotNull(message = "题目Id未填写") Long?): Result<*> {
-        return columnService!!.deleteColumnReality(columnId)
+        return columnService!!.deleteColumnReality(columnId!!)
     }
 }

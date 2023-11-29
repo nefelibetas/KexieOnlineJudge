@@ -41,13 +41,13 @@ object ResultUtil {
      * @param <T> 任意数据类型
     </T> */
     @JvmStatic
-    fun <T> failure(exception: ServiceException?): Result<T> {
-        return Result(exception!!)
+    fun <T> failure(exception: ServiceException): Result<T> {
+        return Result(exception)
     }
 
     @JvmStatic
-    fun <T> failure(exceptionEnum: ServiceExceptionEnum?): Result<T> {
-        return Result(exceptionEnum!!)
+    fun <T> failure(exceptionEnum: ServiceExceptionEnum): Result<T> {
+        return Result(exceptionEnum)
     }
 
     /**
@@ -58,13 +58,13 @@ object ResultUtil {
      * @param <T>： 基本泛型
     </T> */
     @JvmStatic
-    fun <T> failure(code: Int, message: String?): Result<T?> {
-        return Result(code, message!!, null)
+    fun <T> failure(code: Int, message: String): Result<T> {
+        return Result(code, message, null)
     }
 
     @JvmStatic
     @Throws(IOException::class)
-    fun failure(response: HttpServletResponse, exceptionEnum: ServiceExceptionEnum?) {
+    fun failure(response: HttpServletResponse, exceptionEnum: ServiceExceptionEnum) {
         response.contentType = MediaType.APPLICATION_JSON_VALUE
         val result = failure<String>(exceptionEnum)
         mapper.writeValue(response.outputStream, result)

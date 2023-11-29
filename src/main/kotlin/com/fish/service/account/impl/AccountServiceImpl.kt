@@ -4,6 +4,7 @@ import com.fish.common.Result
 import com.fish.entity.dto.LoginAccountDTO
 import com.fish.entity.dto.RegisterAccountDTO
 import com.fish.entity.pojo.Account
+import com.fish.entity.pojo.table.AccountTableDef.ACCOUNT
 import com.fish.entity.vo.AccountVO
 import com.fish.exception.ServiceException
 import com.fish.exception.ServiceExceptionEnum
@@ -13,6 +14,7 @@ import com.fish.service.account.AccountService
 import com.fish.utils.JwtUtil
 import com.fish.utils.RedisUtil
 import com.fish.utils.ResultUtil.success
+import com.mybatisflex.core.update.UpdateChain
 import com.mybatisflex.spring.service.impl.ServiceImpl
 import jakarta.annotation.Resource
 import org.springframework.beans.factory.annotation.Value
@@ -77,9 +79,9 @@ class AccountServiceImpl : ServiceImpl<AccountMapper, Account>(), AccountService
     }
 
     @Transactional
-    override fun deleteAccount(userId: String): Result<*> {
+    override fun disableAccount(userId: String): Result<*> {
         if (checkRole(userId, null)) throw ServiceException(ServiceExceptionEnum.INSUFFICIENT_PERMISSIONS)
-        val i = mapper!!.deleteAccount(userId)
+        val i = mapper!!.disableAccount(userId)
         return if (i > 0) success<Any>() else throw ServiceException(
             ServiceExceptionEnum.OPERATE_ERROR
         )
@@ -99,6 +101,17 @@ class AccountServiceImpl : ServiceImpl<AccountMapper, Account>(), AccountService
         return if (i > 0) success<Any>() else throw ServiceException(
             ServiceExceptionEnum.OPERATE_ERROR
         )
+    }
+
+    @Transactional
+    override fun enableAccount(userId: String): Result<*> {
+        val update = UpdateChain.of(ACCOUNT)
+            .set(ACCOUNT.ENABLED, true)
+            .where(ACCOUNT.USER_ID.eq(userId))
+            .update()
+        if (update)
+            return success<Any>()
+        throw ServiceException(ServiceExceptionEnum.OPERATE_ERROR)
     }
 
     protected fun makeKey(userId: String?, nickname: String?): String {

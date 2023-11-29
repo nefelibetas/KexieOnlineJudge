@@ -19,7 +19,7 @@ interface AccountMapper : BaseMapper<Account> {
     fun getAccountByEmail(@Param("email") email: String): Account
 
     @Update("update oj_account set enabled = false where user_id = #{userId}")
-    fun deleteAccount(@Param("userId") userId: String): Int
+    fun disableAccount(@Param("userId") userId: String): Int
 
     @Update("update oj_account set role_id = #{roleId} where user_id = #{userId}")
     fun changeAccountRole(@Param("userId") userId: String, @Param("roleId") roleId: Long): Int

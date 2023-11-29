@@ -3,6 +3,7 @@ package com.fish.service.column.impl
 import com.fish.common.Result
 import com.fish.entity.pojo.Column
 import com.fish.entity.pojo.table.*
+import com.fish.entity.pojo.table.ColumnTableDef.COLUMN
 import com.fish.entity.vo.ColumnVO
 import com.fish.exception.ServiceException
 import com.fish.exception.ServiceExceptionEnum
@@ -10,8 +11,10 @@ import com.fish.mapper.ColumnMapper
 import com.fish.service.column.ColumnService
 import com.fish.utils.ResultUtil.success
 import com.mybatisflex.core.query.QueryWrapper
+import com.mybatisflex.core.update.UpdateChain
 import com.mybatisflex.spring.service.impl.ServiceImpl
 import jakarta.validation.Valid
+import org.apache.ibatis.annotations.Update
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.util.*
@@ -22,7 +25,8 @@ class ColumnServiceImpl : ServiceImpl<ColumnMapper, Column>(), ColumnService {
     @Transactional
     override fun addColumn(column: Column): Result<*> {
         val i = mapper!!.insert(column)
-        if (i > 0) return success<Any>()
+        if (i > 0)
+            return success<Any>()
         throw ServiceException(ServiceExceptionEnum.OPERATE_ERROR)
     }
 
@@ -49,7 +53,10 @@ class ColumnServiceImpl : ServiceImpl<ColumnMapper, Column>(), ColumnService {
             .on(TopicTableDef.TOPIC.TOPIC_ID.eq(TopicLabelTableDef.TOPIC_LABEL.TOPIC_ID))
             .innerJoin<QueryWrapper>(LabelTableDef.LABEL)
             .on(LabelTableDef.LABEL.LABEL_ID.eq(TopicLabelTableDef.TOPIC_LABEL.LABEL_ID))
-        return success(mapper!!.selectListByQueryAs(wrapper, ColumnVO::class.java) as ArrayList<ColumnVO>)
+        val columnVOS = mapper!!.selectListByQueryAs(wrapper, ColumnVO::class.java) as ArrayList<ColumnVO>
+        if (columnVOS.size > 0)
+            return success()
+        throw ServiceException(ServiceExceptionEnum.NOT_FOUND)
     }
 
     override fun getColumn(columnId: Long): Result<ColumnVO> {
@@ -67,28 +74,44 @@ class ColumnServiceImpl : ServiceImpl<ColumnMapper, Column>(), ColumnService {
             .innerJoin<QueryWrapper>(LabelTableDef.LABEL)
             .on(LabelTableDef.LABEL.LABEL_ID.eq(TopicLabelTableDef.TOPIC_LABEL.LABEL_ID))
         val columnVO = mapper!!.selectOneByQueryAs(wrapper, ColumnVO::class.java)
-        return success(columnVO)
+        if (!Objects.isNull(columnVO))
+            return success(columnVO)
+        throw ServiceException(ServiceExceptionEnum.NOT_FOUND)
     }
 
     @Transactional
     override fun updateColumn(column: Column): Result<*> {
         if (Objects.isNull(column.columnId)) throw ServiceException(ServiceExceptionEnum.KEY_ARGUMENT_NOT_INPUT)
         val i = mapper!!.update(column)
-        if (i > 0) return success<Any>()
+        if (i > 0)
+            return success<Any>()
+        throw ServiceException(ServiceExceptionEnum.OPERATE_ERROR)
+    }
+
+    @Transactional
+    override fun disableColumn(columnId: Long): Result<*> {
+        val i = mapper!!.disableColumn(columnId)
+        if (i > 0)
+            return success<Any>()
+        throw ServiceException(ServiceExceptionEnum.OPERATE_ERROR)
+    }
+
+    @Transactional
+    override fun enableColumn(columnId: Long): Result<*> {
+        val update = UpdateChain.of(COLUMN)
+            .set(COLUMN.ENABLED, true)
+            .where(COLUMN.COLUMN_ID.eq(columnId))
+            .update()
+        if (update)
+            return success<Any>()
         throw ServiceException(ServiceExceptionEnum.OPERATE_ERROR)
     }
 
     @Transactional
     override fun deleteColumn(columnId: Long): Result<*> {
-        val i = mapper!!.deleteColumn(columnId)
-        if (i > 0) return success<Any>()
-        throw ServiceException(ServiceExceptionEnum.OPERATE_ERROR)
-    }
-
-    @Transactional
-    override fun deleteColumnReality(columnId: Long): Result<*> {
         val i = mapper!!.deleteById(columnId)
-        if (i > 0) return success<Any>()
+        if (i > 0)
+            return success<Any>()
         throw ServiceException(ServiceExceptionEnum.OPERATE_ERROR)
     }
 }

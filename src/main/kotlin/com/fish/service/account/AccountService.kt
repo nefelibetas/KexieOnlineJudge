@@ -34,7 +34,7 @@ interface AccountService : IService<Account> {
      * @param userId 要删除的用户id
      * @return 封装好的响应信息
      */
-    fun deleteAccount(userId: String): Result<*>
+    fun disableAccount(userId: String): Result<*>
 
     /**
      * 获取所有普通用户信息
@@ -55,4 +55,5 @@ interface AccountService : IService<Account> {
      * @return 封装好的响应信息
      */
     fun changeAccountRole(userId: String, roleId: Long): Result<*>
+    fun enableAccount(userId: String): Result<*>
 }

@@ -14,6 +14,7 @@ import com.fish.mapper.TopicMapper
 import com.fish.service.topic.TopicService
 import com.fish.utils.ResultUtil.success
 import com.mybatisflex.core.query.QueryWrapper
+import com.mybatisflex.core.update.UpdateChain
 import com.mybatisflex.spring.service.impl.ServiceImpl
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -35,9 +36,24 @@ class TopicServiceImpl : ServiceImpl<TopicMapper, Topic>(), TopicService {
     }
 
     @Transactional
-    override fun deleteTopic(topicId: Long): Result<*> {
-        val i = mapper!!.deleteById(topicId)
-        if (i > 0) return success<Any>()
+    override fun disableTopic(topicId: Long): Result<*> {
+        val update = UpdateChain.of(TOPIC)
+            .set(TOPIC.ENABLED, false)
+            .where(TOPIC.TOPIC_ID.eq(topicId))
+            .update()
+        if (update)
+            return success<Any>()
+        throw ServiceException(ServiceExceptionEnum.OPERATE_ERROR)
+    }
+
+    @Transactional
+    override fun enableTopic(topicId: Long): Result<*> {
+        val update = UpdateChain.of(TOPIC)
+            .set(TOPIC.ENABLED, true)
+            .where(TOPIC.TOPIC_ID.eq(topicId))
+            .update()
+        if (update)
+            return success<Any>()
         throw ServiceException(ServiceExceptionEnum.OPERATE_ERROR)
     }
 

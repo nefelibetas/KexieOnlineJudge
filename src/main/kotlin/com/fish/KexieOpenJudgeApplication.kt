@@ -6,7 +6,7 @@ import org.springframework.boot.runApplication
 
 @SpringBootApplication
 @MapperScan("com.fish.mapper")
-open class KexieOpenJudgeApplication
+class KexieOpenJudgeApplication
 fun main(args : Array<String>) {
     runApplication<KexieOpenJudgeApplication>(*args)
 }

@@ -21,11 +21,18 @@ interface TopicService : IService<Topic> {
     fun addTopicBatch(topics: ArrayList<Topic>): Result<*>
 
     /**
-     * 删除对应题目
+     * 禁用题目
      * @param topicId 题目id
      * @return 封装好的响应信息
      */
-    fun deleteTopic(topicId: Long): Result<*>
+    fun disableTopic(topicId: Long): Result<*>
+
+    /**
+     * 启用题目
+     * @param topicId 题目id
+     * @return 封装好的响应信息
+     */
+    fun enableTopic(topicId: Long): Result<*>
 
     /**
      * 更新题目信息

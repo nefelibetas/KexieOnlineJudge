@@ -28,4 +28,8 @@ class Notion: Serializable {
     @JsonSerialize(using = LocalDateTimeSerializer::class)
     @JsonDeserialize(using = LocalDateTimeDeserializer::class)
     var createTime: LocalDateTime? = null
+    override fun toString(): String {
+        return "Notion(notionId=$notionId, hostId=$hostId, title=$title, content=$content, enabled=$enabled, createTime=$createTime)"
+    }
+
 }

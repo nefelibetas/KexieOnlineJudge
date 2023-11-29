@@ -33,4 +33,8 @@ class TopicSolutionsComments : Serializable {
     @JsonSerialize(using = LocalDateTimeSerializer::class)
     @JsonDeserialize(using = LocalDateTimeDeserializer::class)
     var createTime: LocalDateTime? = null
+    override fun toString(): String {
+        return "TopicSolutionsComments(commentId=$commentId, userId=$userId, solutionId=$solutionId, parentId=$parentId, content=$content, enabled=$enabled, createTime=$createTime)"
+    }
+
 }

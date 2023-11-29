@@ -13,4 +13,8 @@ data class SolutionDTO(
     @NotNull(message = "内容不能为空")
     @Size(min = 1, max = 21500, message = "限制：1~21500个汉字")
     val content: String? = null
-): Serializable
+): Serializable {
+    override fun toString(): String {
+        return "SolutionDTO(topicId=$topicId, title=$title, content=$content)"
+    }
+}

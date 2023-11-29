@@ -14,4 +14,8 @@ import java.io.Serializable
 data class ExamParticipate(
     @Id var examId: Long?,
     @Id var participantId: String?,
-) : Serializable
+) : Serializable {
+    override fun toString(): String {
+        return "ExamParticipate(examId=$examId, participantId=$participantId)"
+    }
+}

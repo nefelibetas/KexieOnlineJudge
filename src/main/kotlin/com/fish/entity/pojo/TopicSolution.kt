@@ -31,4 +31,8 @@ class TopicSolution : Serializable {
     @JsonSerialize(using = LocalDateTimeSerializer::class)
     @JsonDeserialize(using = LocalDateTimeDeserializer::class)
     var createTime: LocalDateTime? = null
+    override fun toString(): String {
+        return "TopicSolution(solutionId=$solutionId, topicId=$topicId, title=$title, content=$content, pined=$pined, enabled=$enabled, createTime=$createTime)"
+    }
+
 }

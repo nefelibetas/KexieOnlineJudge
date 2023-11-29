@@ -15,4 +15,8 @@ data class ExamTopic(
     @Id var examId: Long?,
     @Id var topicId: Long?,
     var examScore: Long?
-) : Serializable
+) : Serializable {
+    override fun toString(): String {
+        return "ExamTopic(examId=$examId, topicId=$topicId, examScore=$examScore)"
+    }
+}

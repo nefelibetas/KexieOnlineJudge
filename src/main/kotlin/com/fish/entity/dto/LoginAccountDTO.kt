@@ -11,4 +11,9 @@ class LoginAccountDTO : Serializable {
     @Email(message = "邮箱格式不正确") String? = null
     val password: @NotBlank(message = "密码不能为空")
     @Size(min = 8, max = 16, message = "密码最少8位,最多16位") String? = null
+
+    override fun toString(): String {
+        return "LoginAccountDTO(email=$email, password=$password)"
+    }
+
 }

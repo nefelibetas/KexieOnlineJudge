@@ -78,4 +78,8 @@ class Account: Serializable {
     @JsonSerialize(using = LocalDateTimeSerializer::class)
     @JsonDeserialize(using = LocalDateTimeDeserializer::class)
     val createTime: LocalDateTime? = null
+    override fun toString(): String {
+        return "Account(userId=$userId, roleId=$roleId, nickname=$nickname, avatar=$avatar, studentId=$studentId, username=$username, password=$password, gender=$gender, email=$email, specialty=$specialty, qq=$qq, blogAddress=$blogAddress, githubAddress=$githubAddress, enabled=$enabled, createTime=$createTime)"
+    }
+
 }

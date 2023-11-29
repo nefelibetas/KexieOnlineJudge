@@ -24,4 +24,8 @@ data class Column(
         message = "1~100字符以内"
     ) String?,
     var enabled: Boolean?,
-) : Serializable
+) : Serializable {
+    override fun toString(): String {
+        return "Column(columnId=$columnId, columnName=$columnName, columnDescribe=$columnDescribe, enabled=$enabled)"
+    }
+}

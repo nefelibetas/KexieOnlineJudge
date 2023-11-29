@@ -36,7 +36,7 @@ class ExceptionControllerAdvice {
      * @param <T> 泛型
     </T> */
     @ExceptionHandler(HttpRequestMethodNotSupportedException::class)
-    fun <T> methodsNotSupportedHandler(exception: HttpRequestMethodNotSupportedException): Result<T?> {
+    fun <T> methodsNotSupportedHandler(exception: HttpRequestMethodNotSupportedException): Result<T> {
         return failure<T>(
             ServiceExceptionEnum.METHOD_NOT_SUPPORT.code,
             exception.method + ServiceExceptionEnum.METHOD_NOT_SUPPORT.msg
@@ -84,8 +84,8 @@ class ExceptionControllerAdvice {
      * @param <T> 泛型
     </T> */
     @ExceptionHandler(MethodArgumentNotValidException::class)
-    fun <T> methodArgumentNotValidExceptionHandler(exception: MethodArgumentNotValidException): Result<T?> {
-        return failure<T>(
+    fun <T> methodArgumentNotValidExceptionHandler(exception: MethodArgumentNotValidException): Result<T> {
+        return failure(
             ServiceExceptionEnum.METHOD_ARGUMENT_NOT_VALID.code,
             ServiceExceptionEnum.METHOD_ARGUMENT_NOT_VALID.msg + getAllErrorMessage(exception)
         )

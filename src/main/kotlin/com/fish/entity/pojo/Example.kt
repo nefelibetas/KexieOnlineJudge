@@ -26,4 +26,8 @@ data class Example(
      * 是否参与测评
      */
     var assessed: Boolean?,
-) : Serializable
+) : Serializable {
+    override fun toString(): String {
+        return "Example(exampleId=$exampleId, topicId=$topicId, input=$input, output=$output, showed=$showed, assessed=$assessed)"
+    }
+}

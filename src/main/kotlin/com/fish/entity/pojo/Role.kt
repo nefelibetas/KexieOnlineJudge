@@ -16,4 +16,8 @@ data class Role(
     @Id(keyType = KeyType.Auto) var roleId: Long?,
     val roleName: String?,
     val roleDescribe: String?,
-) : Serializable
+) : Serializable {
+    override fun toString(): String {
+        return "Role(roleId=$roleId, roleName=$roleName, roleDescribe=$roleDescribe)"
+    }
+}

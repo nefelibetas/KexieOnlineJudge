@@ -27,4 +27,8 @@ class Message : Serializable {
     @JsonSerialize(using = LocalDateTimeSerializer::class)
     @JsonDeserialize(using = LocalDateTimeDeserializer::class)
     var sendTime: LocalDateTime? = null
+    override fun toString(): String {
+        return "Message(messageId=$messageId, commentId=$commentId, typeId=$typeId, content=$content, sendTo=$sendTo, sendTime=$sendTime)"
+    }
+
 }

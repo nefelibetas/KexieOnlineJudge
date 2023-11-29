@@ -20,4 +20,8 @@ data class ExampleResult(
     var memory: Long?,
     var time: Long?,
     var assessmentStatus: String?,
-) : Serializable
+) : Serializable {
+    override fun toString(): String {
+        return "ExampleResult(exampleResultId=$exampleResultId, exampleId=$exampleId, resultId=$resultId, memory=$memory, time=$time, assessmentStatus=$assessmentStatus)"
+    }
+}

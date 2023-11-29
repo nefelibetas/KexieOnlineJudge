@@ -27,4 +27,8 @@ data class Like(
      * 点赞的用户
      */
     var userId: String?,
-) : Serializable
+) : Serializable {
+    override fun toString(): String {
+        return "Like(likeId=$likeId, solutionId=$solutionId, commentId=$commentId, userId=$userId)"
+    }
+}

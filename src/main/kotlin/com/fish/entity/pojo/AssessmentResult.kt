@@ -22,4 +22,8 @@ data class AssessmentResult(
     var score: Long?,
     var allTime: Long?,
     var status: String?,
-) : Serializable
+) : Serializable {
+    override fun toString(): String {
+        return "AssessmentResult(resultId=$resultId, userId=$userId, topicId=$topicId, code=$code, hash=$hash, examId=$examId, score=$score, allTime=$allTime, status=$status)"
+    }
+}

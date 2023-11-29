@@ -14,4 +14,8 @@ import java.io.Serializable
 data class TopicLabel(
     @Id var topicId: Long?,
     @Id var labelId: Long?
-) : Serializable
+) : Serializable {
+    override fun toString(): String {
+        return "TopicLabel(topicId=$topicId, labelId=$labelId)"
+    }
+}

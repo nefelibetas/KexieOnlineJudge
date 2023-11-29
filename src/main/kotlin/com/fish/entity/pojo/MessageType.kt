@@ -17,4 +17,8 @@ data class MessageType(
     var typeId: Long?,
     var typeName: String?,
     var typeDescribe: String?,
-) : Serializable
+) : Serializable {
+    override fun toString(): String {
+        return "MessageType(typeId=$typeId, typeName=$typeName, typeDescribe=$typeDescribe)"
+    }
+}

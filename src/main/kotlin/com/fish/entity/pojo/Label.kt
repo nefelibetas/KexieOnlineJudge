@@ -17,4 +17,8 @@ import java.io.Serializable
 data class Label(
     @Id(keyType = KeyType.Auto) var labelId: Long?,
     var labelName: @Size(min = 1, max = 32, message = "1~32字符以内") @NotBlank(message = "标签名未填写") String?,
-) : Serializable
+) : Serializable {
+    override fun toString(): String {
+        return "Label(labelId=$labelId, labelName=$labelName)"
+    }
+}

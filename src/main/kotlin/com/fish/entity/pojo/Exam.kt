@@ -53,4 +53,8 @@ class Exam: Serializable {
     @JsonDeserialize(using = LocalDateTimeDeserializer::class)
     var createTime: LocalDateTime? = null
     var enabled: Boolean? = null
+    override fun toString(): String {
+        return "Exam(examId=$examId, hostId=$hostId, opened=$opened, ranked=$ranked, describe=$describe, startTime=$startTime, endTime=$endTime, createTime=$createTime, enabled=$enabled)"
+    }
+
 }

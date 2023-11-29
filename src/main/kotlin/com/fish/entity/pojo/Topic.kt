@@ -90,4 +90,8 @@ class Topic: Serializable {
     var precautions: String? = null
     var from: String? = null
     var enabled: Boolean? = null
+    override fun toString(): String {
+        return "Topic(topicId=$topicId, uploadUserId=$uploadUserId, title=$title, content=$content, difficulty=$difficulty, limitedMemory=$limitedMemory, limitedTime=$limitedTime, inputDescribe=$inputDescribe, outputDescribe=$outputDescribe, enabledSolution=$enabledSolution, createTime=$createTime, updateTime=$updateTime, precautions=$precautions, from=$from, enabled=$enabled)"
+    }
+
 }

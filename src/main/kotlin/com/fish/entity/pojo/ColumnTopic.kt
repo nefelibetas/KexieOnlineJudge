@@ -15,4 +15,8 @@ import java.io.Serializable
 data class ColumnTopic(
     @Id var columnId: @NotNull(message = "栏目id不能为空") Long?,
     @Id var topicId: @NotNull(message = "题目id不能为空") Long?,
-) : Serializable
+) : Serializable {
+    override fun toString(): String {
+        return "ColumnTopic(columnId=$columnId, topicId=$topicId)"
+    }
+}

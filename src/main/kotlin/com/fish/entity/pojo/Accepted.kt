@@ -17,4 +17,8 @@ data class Accepted(
     @Id var topicId: @NotNull(message = "题目Id未填写") Long?
 ) : Serializable {
     constructor() : this(null, null)
+    override fun toString(): String {
+        return "Accepted(userId=$userId, topicId=$topicId)"
+    }
+
 }

@@ -7,7 +7,6 @@ import com.fish.entity.pojo.Account
 import com.fish.exception.ServiceExceptionEnum
 import com.fish.service.account.AccountService
 import com.fish.utils.ResultUtil.failure
-import jakarta.annotation.Resource
 import jakarta.validation.Valid
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.NotNull
@@ -75,11 +74,12 @@ class AccountController(val accountService: AccountService) {
      * @return 用户信息,含敏感信息。仅开放给管理员
      */
     @GetMapping("/admin/gets/{operate}")
-    fun getAccounts(@PathVariable operate: @Pattern(regexp = "^([12])$", message = "只能从1和2中选择") String?): Result<ArrayList<Account>> {
+    fun getAccounts(@PathVariable operate: String?): Result<ArrayList<Account>> {
         return when (operate) {
             "1" -> accountService.getAccounts()
             "2" -> accountService.getAdmins()
-            else -> failure(ServiceExceptionEnum.OPERATE_ERROR)
+            else -> failure(ServiceExceptionEnum.OPERATE_ERROR.code,
+                ServiceExceptionEnum.OPERATE_ERROR.msg + ",只能从1和2中选择")
         }
     }
 

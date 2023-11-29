@@ -14,5 +14,5 @@ import org.apache.ibatis.annotations.Update
  */
 interface ColumnMapper : BaseMapper<Column> {
     @Update("update oj_column set enabled = false where column_id = #{columnId}")
-    fun deleteColumn(@Param("columnId") columnId: Long): Int
+    fun disableColumn(@Param("columnId") columnId: Long): Int
 }

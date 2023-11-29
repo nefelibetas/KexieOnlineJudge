@@ -15,10 +15,7 @@ import jakarta.validation.constraints.Pattern
 import org.springframework.web.bind.annotation.*
 
 @RestController
-class AccountController {
-    @Resource
-    private val accountService: AccountService? = null
-
+class AccountController(val accountService: AccountService) {
     /**
      *
      * 登陆接口
@@ -27,7 +24,7 @@ class AccountController {
      */
     @PostMapping("/login")
     fun login(@RequestBody loginAccountDTO: @Valid LoginAccountDTO?): Result<HashMap<String, Any>> {
-        return accountService!!.login(loginAccountDTO!!)
+        return accountService.login(loginAccountDTO!!)
     }
 
     /**
@@ -38,7 +35,7 @@ class AccountController {
      */
     @PostMapping("/register")
     fun register(@RequestBody registerAccountDTO: @Valid RegisterAccountDTO?): Result<*> {
-        return accountService!!.register(registerAccountDTO!!)
+        return accountService.register(registerAccountDTO!!)
     }
 
     /**
@@ -50,10 +47,10 @@ class AccountController {
      */
     @PutMapping("/user/update/{userId}")
     fun updateAccountInformation(
-        @RequestBody account: @Valid Account?,
-        @PathVariable userId: @NotBlank(message = "用户Id不能为空") String?
+        @PathVariable userId: @NotBlank(message = "用户Id不能为空") String?,
+        @RequestBody account: @Valid Account?
     ): Result<*> {
-        return accountService!!.updateAccountInformation(account!!, userId!!)
+        return accountService.updateAccountInformation(account!!, userId!!)
     }
 
     /**
@@ -62,9 +59,13 @@ class AccountController {
      * @param userId 要删除的用户id
      * @return 响应code为200表示请求成功
      */
-    @PutMapping("/admin/delete/{userId}")
+    @PutMapping("/admin/disable/{userId}")
     fun deleteAccount(@PathVariable userId: @NotBlank(message = "用户Id未填写") String?): Result<*> {
-        return accountService!!.deleteAccount(userId!!)
+        return accountService.disableAccount(userId!!)
+    }
+    @PutMapping("/admin/enable/{userId}")
+    fun enableAccount(@PathVariable userId: @NotBlank(message = "用户Id未填写") String?): Result<*>{
+        return accountService.enableAccount(userId!!)
     }
 
     /**
@@ -76,8 +77,8 @@ class AccountController {
     @GetMapping("/admin/gets/{operate}")
     fun getAccounts(@PathVariable operate: @Pattern(regexp = "^([12])$", message = "只能从1和2中选择") String?): Result<ArrayList<Account>> {
         return when (operate) {
-            "1" -> accountService!!.getAccounts()
-            "2" -> accountService!!.getAdmins()
+            "1" -> accountService.getAccounts()
+            "2" -> accountService.getAdmins()
             else -> failure(ServiceExceptionEnum.OPERATE_ERROR)
         }
     }

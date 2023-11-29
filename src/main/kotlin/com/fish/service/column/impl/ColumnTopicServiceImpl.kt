@@ -15,6 +15,7 @@ import com.fish.exception.ServiceExceptionEnum
 import com.mybatisflex.core.query.QueryWrapper
 import com.mybatisflex.spring.service.impl.ServiceImpl
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 class ColumnTopicServiceImpl : ServiceImpl<ColumnTopicMapper, ColumnTopic>(), ColumnTopicService {
@@ -38,6 +39,7 @@ class ColumnTopicServiceImpl : ServiceImpl<ColumnTopicMapper, ColumnTopic>(), Co
         return success(topicVOS)
     }
 
+    @Transactional
     override fun addTopicToColumn(columnId: Long, topicIds: ArrayList<Long>): Result<*> {
         val columnTopics = ArrayList<ColumnTopic>()
         topicIds.forEach{ columnTopics.add(ColumnTopic(columnId, it))}
@@ -47,6 +49,7 @@ class ColumnTopicServiceImpl : ServiceImpl<ColumnTopicMapper, ColumnTopic>(), Co
         throw ServiceException(ServiceExceptionEnum.OPERATE_ERROR)
     }
 
+    @Transactional
     override fun removeTopic(columnId: Long, topicIds: ArrayList<Long>): Result<*> {
         val wrapper = QueryWrapper.create()
             .select().from(COLUMN_TOPIC)

@@ -1,7 +1,8 @@
 package com.fish.exception
-
 import lombok.Getter
-
+/**
+ * 可能出现的服务异常
+ */
 @Getter
 enum class ServiceExceptionEnum(val code: Int, val msg: String) {
     AUTHENTICATION_FAILURE(-200, "认证失败"),
@@ -11,13 +12,15 @@ enum class ServiceExceptionEnum(val code: Int, val msg: String) {
     ACCOUNT_EXISTED(-204, "用户已经存在"),
     METHOD_ARGUMENT_NOT_VALID(-205, ""),
     OPERATE_ERROR(-206, "操作失败"),
-    KEY_ARGUMENT_NOT_INPUT(-207, "关键信息未输入完整"),
+    KEY_ARGUMENT_NOT_INPUT(-207, "关键信息未输入"),
     TOKEN_ERROR(-208, "Token异常"),
     NOT_FOUND(-209, "未找到目标"),
-    UN_LOGIN(-210, "还没有登录"),
+    UN_LOGIN(-210, "还未登录或Token过期"),
+    PATH_VARIABLE_MISSING(-211, "请检查是否缺少路径参数"),
+    SELECT_NOT_IN(-212, "该选项不存在"),
     METHOD_NOT_SUPPORT(-2000, "方法不支持"),
     UNKNOWN_ERROR(-2001, "未知异常"),
     MYBATIS_SYSTEM_ERROR(-2002, "数据库出现错误"),
-    ILLEGAL_ARGUMENT(-2003, "非法参数"),
-    IO_ERROR(-2004, "IO出现错误")
+    REDIS_CONNECTION_ERROR(-2003, "Redis连接失败"),
+    NULL_POINTER(-2004, "出现空指针异常,请通知管理员排查")
 }

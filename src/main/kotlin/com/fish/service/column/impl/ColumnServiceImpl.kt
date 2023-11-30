@@ -14,11 +14,9 @@ import com.mybatisflex.core.query.QueryWrapper
 import com.mybatisflex.core.update.UpdateChain
 import com.mybatisflex.spring.service.impl.ServiceImpl
 import jakarta.validation.Valid
-import org.apache.ibatis.annotations.Update
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.util.*
-import kotlin.collections.ArrayList
 
 @Service
 class ColumnServiceImpl : ServiceImpl<ColumnMapper, Column>(), ColumnService {
@@ -41,11 +39,11 @@ class ColumnServiceImpl : ServiceImpl<ColumnMapper, Column>(), ColumnService {
 
     override fun getColumns(): Result<ArrayList<ColumnVO>> {
         val wrapper = QueryWrapper.create()
-            .select(ColumnTableDef.COLUMN.ALL_COLUMNS, TopicTableDef.TOPIC.ALL_COLUMNS, LabelTableDef.LABEL.ALL_COLUMNS)
-            .from(ColumnTableDef.COLUMN)
+            .select(COLUMN.ALL_COLUMNS, TopicTableDef.TOPIC.ALL_COLUMNS, LabelTableDef.LABEL.ALL_COLUMNS)
+            .from(COLUMN)
             .innerJoin<QueryWrapper>(ColumnTopicTableDef.COLUMN_TOPIC)
-            .on(ColumnTopicTableDef.COLUMN_TOPIC.COLUMN_ID.eq(ColumnTableDef.COLUMN.COLUMN_ID))
-            .and(ColumnTableDef.COLUMN.ENABLED.eq(true))
+            .on(ColumnTopicTableDef.COLUMN_TOPIC.COLUMN_ID.eq(COLUMN.COLUMN_ID))
+            .and(COLUMN.ENABLED.eq(true))
             .innerJoin<QueryWrapper>(TopicTableDef.TOPIC)
             .on(TopicTableDef.TOPIC.TOPIC_ID.eq(ColumnTopicTableDef.COLUMN_TOPIC.TOPIC_ID))
             .and(TopicTableDef.TOPIC.ENABLED.eq(true))
@@ -61,11 +59,11 @@ class ColumnServiceImpl : ServiceImpl<ColumnMapper, Column>(), ColumnService {
 
     override fun getColumn(columnId: Long): Result<ColumnVO> {
         val wrapper = QueryWrapper.create()
-            .select(ColumnTableDef.COLUMN.ALL_COLUMNS, TopicTableDef.TOPIC.ALL_COLUMNS, LabelTableDef.LABEL.ALL_COLUMNS)
-            .from(ColumnTableDef.COLUMN)
+            .select(COLUMN.ALL_COLUMNS, TopicTableDef.TOPIC.ALL_COLUMNS, LabelTableDef.LABEL.ALL_COLUMNS)
+            .from(COLUMN)
             .innerJoin<QueryWrapper>(ColumnTopicTableDef.COLUMN_TOPIC)
-            .on(ColumnTopicTableDef.COLUMN_TOPIC.COLUMN_ID.eq(ColumnTableDef.COLUMN.COLUMN_ID))
-            .and(ColumnTableDef.COLUMN.ENABLED.eq(true)).and(ColumnTableDef.COLUMN.COLUMN_ID.eq(columnId))
+            .on(ColumnTopicTableDef.COLUMN_TOPIC.COLUMN_ID.eq(COLUMN.COLUMN_ID))
+            .and(COLUMN.ENABLED.eq(true)).and(COLUMN.COLUMN_ID.eq(columnId))
             .innerJoin<QueryWrapper>(TopicTableDef.TOPIC)
             .on(TopicTableDef.TOPIC.TOPIC_ID.eq(ColumnTopicTableDef.COLUMN_TOPIC.TOPIC_ID))
             .and(TopicTableDef.TOPIC.ENABLED.eq(true))

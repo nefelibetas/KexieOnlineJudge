@@ -7,7 +7,9 @@ import com.fish.exception.ServiceExceptionEnum
 import jakarta.servlet.http.HttpServletResponse
 import org.springframework.http.MediaType
 import java.io.IOException
-
+/**
+ * 响应工具类
+ */
 object ResultUtil {
     private val mapper = ObjectMapper()
 

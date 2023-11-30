@@ -1,17 +1,17 @@
 package com.fish.service.column.impl
 
+import com.fish.common.Result
 import com.fish.entity.pojo.ColumnTopic
 import com.fish.entity.pojo.table.ColumnTopicTableDef.COLUMN_TOPIC
 import com.fish.entity.pojo.table.LabelTableDef.LABEL
 import com.fish.entity.pojo.table.TopicLabelTableDef.TOPIC_LABEL
 import com.fish.entity.pojo.table.TopicTableDef.TOPIC
 import com.fish.entity.vo.TopicVO
+import com.fish.exception.ServiceException
+import com.fish.exception.ServiceExceptionEnum
 import com.fish.mapper.ColumnTopicMapper
 import com.fish.service.column.ColumnTopicService
 import com.fish.utils.ResultUtil.success
-import com.fish.common.Result
-import com.fish.exception.ServiceException
-import com.fish.exception.ServiceExceptionEnum
 import com.mybatisflex.core.query.QueryWrapper
 import com.mybatisflex.spring.service.impl.ServiceImpl
 import org.springframework.stereotype.Service

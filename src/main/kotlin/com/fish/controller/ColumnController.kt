@@ -39,7 +39,7 @@ class ColumnController(val columnService: ColumnService, val columnTopicService:
      */
     @PostMapping("/admin/column/addTopic/{columnId}")
     fun addTopicsToColumn(
-        @PathVariable("columnId") columnId: @NotNull(message = "栏目id未填写") Long?,
+        @PathVariable columnId: Long?,
         @RequestBody topicIds : @NotEmpty(message = "至少选一题") ArrayList<@NotNull(message = "题目id未填写") Long>?
     ) : Result<*> {
         return columnTopicService.addTopicToColumn(columnId!!, topicIds!!)
@@ -60,7 +60,7 @@ class ColumnController(val columnService: ColumnService, val columnTopicService:
      * @return 该栏目的全部信息
      */
     @GetMapping("/column/get/{columnId}")
-    fun getColumn(@PathVariable("columnId") columnId: @NotNull(message = "题目Id未填写") Long?): Result<ColumnVO> {
+    fun getColumn(@PathVariable columnId: Long?): Result<ColumnVO> {
         return columnService.getColumn(columnId!!)
     }
 
@@ -69,7 +69,7 @@ class ColumnController(val columnService: ColumnService, val columnTopicService:
      * @param columnId 栏目id
      */
     @GetMapping("/admin/column/getOptionalTopic/{columnId}")
-    fun getOptionalTopic(@PathVariable("columnId") columnId: @NotNull(message = "栏目id不能为空") Long?) : Result<ArrayList<TopicVO>> {
+    fun getOptionalTopic(@PathVariable columnId: Long?) : Result<ArrayList<TopicVO>> {
         return columnTopicService.getOptionalTopic(columnId!!)
     }
 
@@ -89,7 +89,7 @@ class ColumnController(val columnService: ColumnService, val columnTopicService:
      * @return 响应code为200表示成功
      */
     @PutMapping("/admin/column/disable/{columnId}")
-    fun disableColumn(@PathVariable("columnId") columnId: @NotNull(message = "题目Id未填写") Long?): Result<*> {
+    fun disableColumn(@PathVariable columnId: Long?): Result<*> {
         return columnService.disableColumn(columnId!!)
     }
 
@@ -99,7 +99,7 @@ class ColumnController(val columnService: ColumnService, val columnTopicService:
      * @return 响应code为200表示成功
      */
     @PutMapping("/admin/column/enable/{columnId}")
-    fun enableColumn(@PathVariable("columnId") columnId: @NotNull(message = "题目Id未填写") Long?): Result<*> {
+    fun enableColumn(@PathVariable columnId: Long?): Result<*> {
         return columnService.enableColumn(columnId!!)
     }
 
@@ -109,7 +109,7 @@ class ColumnController(val columnService: ColumnService, val columnTopicService:
      * @return 响应为200表示成功
      */
     @DeleteMapping("/root/column/delete/{columnId}")
-    fun deleteColumn(@PathVariable("columnId") columnId: @NotNull(message = "题目Id未填写") Long?): Result<*> {
+    fun deleteColumn(@PathVariable columnId: Long?): Result<*> {
         return columnService.deleteColumn(columnId!!)
     }
 
@@ -120,7 +120,7 @@ class ColumnController(val columnService: ColumnService, val columnTopicService:
      */
     @DeleteMapping("/admin/column/deleteTopic/{columnId}")
     fun removeTopic(
-        @PathVariable("columnId") columnId: @NotNull(message = "题目id不能为空") Long?,
+        @PathVariable columnId: Long?,
         @RequestBody topicIds: @NotEmpty(message = "至少选择一个题目") ArrayList<@NotNull(message = "题目id不能为空") Long>?
     ) : Result<*> {
         return columnTopicService.removeTopic(columnId!!, topicIds!!)

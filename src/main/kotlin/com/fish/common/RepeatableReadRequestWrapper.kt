@@ -7,7 +7,10 @@ import jakarta.servlet.http.HttpServletRequestWrapper
 import java.io.BufferedReader
 import java.io.ByteArrayInputStream
 import java.io.InputStreamReader
-
+/**
+ * 一个RequestWrapper, 用于服务日志过滤器中构造可复用的流
+ * @author fish
+ */
 class RepeatableReadRequestWrapper(request: HttpServletRequest): HttpServletRequestWrapper(request) {
     val body: ByteArray = request.inputStream.readAllBytes()
     override fun getReader(): BufferedReader {

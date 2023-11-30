@@ -3,9 +3,8 @@ package com.fish.controller
 import com.fish.common.Result
 import com.fish.entity.pojo.Label
 import com.fish.service.label.LabelService
-import jakarta.annotation.Resource
 import jakarta.validation.Valid
-import jakarta.validation.constraints.NotNull
+import jakarta.validation.constraints.NotEmpty
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -26,7 +25,7 @@ class LabelController(val labelService: LabelService) {
      * @return 响应code为200表示成功
      */
     @PostMapping("/admin/label/adds")
-    fun addLabels(@RequestBody labels: @Valid ArrayList<Label>?): Result<*> {
+    fun addLabels(@RequestBody labels: @NotEmpty(message = "至少增加一个标签") ArrayList<@Valid Label>?): Result<*> {
         return labelService.addLabelBatch(labels!!)
     }
 
@@ -36,7 +35,7 @@ class LabelController(val labelService: LabelService) {
      * @return id对应标签
      */
     @GetMapping("/label/get/{labelId}")
-    fun getLabel(@PathVariable("labelId") labelId: @NotNull(message = "标签Id未填写") Long?): Result<Label> {
+    fun getLabel(@PathVariable("labelId") labelId: Long?): Result<Label> {
         return labelService.getLabel(labelId!!)
     }
     /**
@@ -48,13 +47,12 @@ class LabelController(val labelService: LabelService) {
         return labelService.getLabels()
     }
 
-
     /**
      * 修改标签
      * @param label 要修改的标签
      * @return 响应code为200表示成功
      */
-    @PutMapping("/admin/label/update/{labelId}")
+    @PutMapping("/admin/label/update")
     fun updateLabel(@RequestBody label: @Valid Label?): Result<*> {
         return labelService.updateLabel(label!!)
     }
@@ -65,7 +63,7 @@ class LabelController(val labelService: LabelService) {
      * @return 响应code为200表示成功
      */
     @DeleteMapping("/root/label/delete/{labelId}")
-    fun deleteLabel(@PathVariable labelId: @NotNull(message = "标签Id未填写") Long?): Result<*> {
+    fun deleteLabel(@PathVariable labelId: Long?): Result<*> {
         return labelService.deleteLabel(labelId!!)
     }
 }

@@ -2,7 +2,7 @@ package com.fish.service.label.impl
 
 import com.fish.common.Result
 import com.fish.entity.pojo.Label
-import com.fish.entity.pojo.table.LabelTableDef
+import com.fish.entity.pojo.table.LabelTableDef.LABEL
 import com.fish.exception.ServiceException
 import com.fish.exception.ServiceExceptionEnum
 import com.fish.mapper.LabelMapper
@@ -13,7 +13,6 @@ import com.mybatisflex.spring.service.impl.ServiceImpl
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.util.*
-import kotlin.collections.ArrayList
 
 @Service
 class LabelServiceImpl : ServiceImpl<LabelMapper, Label>(), LabelService {
@@ -46,9 +45,10 @@ class LabelServiceImpl : ServiceImpl<LabelMapper, Label>(), LabelService {
 
     @Transactional
     override fun updateLabel(label: Label): Result<*> {
-        if (Objects.isNull(label.labelId)) throw ServiceException(ServiceExceptionEnum.KEY_ARGUMENT_NOT_INPUT)
-        val wrapper = QueryWrapper.create().select().from(LabelTableDef.LABEL)
-            .where(LabelTableDef.LABEL.LABEL_ID.eq(label.labelId))
+        if (Objects.isNull(label.labelId))
+            throw ServiceException(ServiceExceptionEnum.KEY_ARGUMENT_NOT_INPUT)
+        val wrapper = QueryWrapper.create().select().from(LABEL)
+            .where(LABEL.LABEL_ID.eq(label.labelId))
         val i = mapper!!.updateByQuery(label, wrapper)
         if (i > 0) return success<Any>()
         throw ServiceException(ServiceExceptionEnum.OPERATE_ERROR)

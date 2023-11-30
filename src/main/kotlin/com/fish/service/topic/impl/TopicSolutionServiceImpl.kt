@@ -11,11 +11,10 @@ import com.fish.service.topic.TopicSolutionService
 import com.fish.utils.ResultUtil.success
 import com.mybatisflex.core.query.QueryWrapper
 import com.mybatisflex.core.update.UpdateChain
-import com.mybatisflex.core.update.UpdateWrapper
 import com.mybatisflex.spring.service.impl.ServiceImpl
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import java.util.Objects
+import java.util.*
 
 @Service
 class TopicSolutionServiceImpl : ServiceImpl<TopicSolutionMapper, TopicSolution>(), TopicSolutionService {

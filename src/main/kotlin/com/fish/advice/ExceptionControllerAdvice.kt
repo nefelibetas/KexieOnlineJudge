@@ -4,15 +4,16 @@ import com.fish.common.Result
 import com.fish.exception.ServiceException
 import com.fish.exception.ServiceExceptionEnum
 import com.fish.utils.ResultUtil.failure
+import io.lettuce.core.RedisConnectionException
 import org.mybatis.spring.MyBatisSystemException
 import org.slf4j.LoggerFactory
 import org.springframework.security.core.AuthenticationException
 import org.springframework.security.core.userdetails.UsernameNotFoundException
-import org.springframework.validation.ObjectError
 import org.springframework.web.HttpRequestMethodNotSupportedException
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
+import org.springframework.web.servlet.NoHandlerFoundException
 import java.nio.file.AccessDeniedException
 import java.util.function.Consumer
 
@@ -92,6 +93,14 @@ class ExceptionControllerAdvice {
     }
 
     /**
+     * 用于响应捕获到Redis连接的异常
+     */
+    @ExceptionHandler(RedisConnectionException::class)
+    fun <T> redisConnectionFailureExceptionHandler(): Result<T> {
+        return failure(ServiceExceptionEnum.REDIS_CONNECTION_ERROR)
+    }
+
+    /**
      *
      * 处理由MyBatis异常导致的错误，并打印到日志
      * @param exception MybatisSystemExceptionHandler
@@ -105,13 +114,28 @@ class ExceptionControllerAdvice {
     }
 
     /**
-     *
+     * 用于响应路径参数缺失异常
+     */
+    @ExceptionHandler(NoHandlerFoundException ::class)
+    fun <T> noHandlerFoundExceptionHandler(): Result<T> {
+        return failure(ServiceExceptionEnum.PATH_VARIABLE_MISSING)
+    }
+
+    /**
      * 用于响应捕获到非法参数异常
      * @param exception 非法参数异常
      */
     @ExceptionHandler(IllegalArgumentException::class)
     fun illegalArgumentExceptionHandler(exception: IllegalArgumentException?) {
         log.error("非法参数异常: ", exception)
+    }
+
+    /**
+     * 用于响应捕获到的空指针异常
+     */
+    @ExceptionHandler(NullPointerException::class)
+    fun <T> nullPointerExceptionHandler(): Result<T> {
+        return failure(ServiceExceptionEnum.NULL_POINTER)
     }
 
     /**

@@ -6,7 +6,6 @@ import com.fish.entity.pojo.Topic
 import com.fish.entity.vo.TopicVO
 import com.fish.service.topic.TopicLabelService
 import com.fish.service.topic.TopicService
-import jakarta.annotation.Resource
 import jakarta.validation.Valid
 import jakarta.validation.constraints.NotEmpty
 import jakarta.validation.constraints.NotNull
@@ -42,7 +41,7 @@ class TopicController(val topicService: TopicService, val topicLabelService: Top
      */
     @PostMapping("/admin/topic/addLabel/{topicId}")
     fun addTopicLabel(
-        @PathVariable("topicId") topicId: @NotNull(message = "题目id不能为空") Long?,
+        @PathVariable topicId: Long?,
         @RequestBody labelIds: @NotEmpty(message = "必须选择一个标签") ArrayList<@NotNull(message = "标签id不能为空") Long>?
     ): Result<*> {
         return topicLabelService.addLabelToTopic(topicId!!, labelIds!!)
@@ -54,7 +53,7 @@ class TopicController(val topicService: TopicService, val topicLabelService: Top
      * @return 所有可选的标签
      */
     @GetMapping("/admin/topic/getOptionalLabel/{topicId}")
-    fun getOptionalLabels(@PathVariable("topicId") topicId: @NotNull(message = "题目id不能为空") Long?): Result<ArrayList<Label>> {
+    fun getOptionalLabels(@PathVariable topicId: Long?): Result<ArrayList<Label>> {
         return topicLabelService.getOptionalLabels(topicId!!)
     }
 
@@ -64,7 +63,7 @@ class TopicController(val topicService: TopicService, val topicLabelService: Top
      * @return 响应code为200表示成功
      */
     @PutMapping("/admin/topic/disable/{topicId}")
-    fun disableTopic(@PathVariable("topicId") topicId: @NotNull(message = "题目Id不能为空") Long?): Result<*> {
+    fun disableTopic(@PathVariable topicId: Long?): Result<*> {
         return topicService.disableTopic(topicId!!)
     }
 
@@ -74,7 +73,7 @@ class TopicController(val topicService: TopicService, val topicLabelService: Top
      * @return 响应code为200表示成功
      */
     @PutMapping("/admin/topic/enable/{topicId}")
-    fun enableTopic(@PathVariable("topicId") topicId: @NotNull(message = "题目Id不能为空") Long?): Result<*> {
+    fun enableTopic(@PathVariable topicId: Long?): Result<*> {
         return topicService.enableTopic(topicId!!)
     }
 
@@ -86,7 +85,7 @@ class TopicController(val topicService: TopicService, val topicLabelService: Top
      */
     @DeleteMapping("/admin/topic/deleteLabel/{topicId}")
     fun deleteTopicLabel(
-        @PathVariable("topicId") topicId: @NotNull(message = "题目Id不能为空") Long?,
+        @PathVariable topicId: Long?,
         @RequestBody labelIds: @NotEmpty(message = "必须选择一个标签") ArrayList<@NotNull(message = "标签id不能为空") Long>?
     ): Result<*> {
         return topicLabelService.removeLabels(topicId!!, labelIds!!)
@@ -100,7 +99,7 @@ class TopicController(val topicService: TopicService, val topicLabelService: Top
      */
     @PutMapping("/admin/topic/update/{topicId}")
     fun updateTopic(
-        @PathVariable("topicId") topicId: @NotNull(message = "题目Id不能为空") Long?,
+        @PathVariable topicId: Long?,
         @RequestBody topic: @Valid Topic?
     ): Result<*> {
         return topicService.updateTopic(topicId!!, topic!!)
@@ -121,7 +120,7 @@ class TopicController(val topicService: TopicService, val topicLabelService: Top
      * @return 该id对应的题目
      */
     @GetMapping("/topic/get/{topicId}")
-    fun getTopic(@PathVariable("topicId") topicId: @NotNull(message = "题目Id不能为空") Long?): Result<TopicVO> {
+    fun getTopic(@PathVariable topicId: Long?): Result<TopicVO> {
         return topicService.getTopic(topicId!!)
     }
 }

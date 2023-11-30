@@ -48,7 +48,12 @@ class JwtLoginFilter : OncePerRequestFilter() {
             failure(response, ServiceExceptionEnum.TOKEN_ERROR)
             return
         }
-        val json = mapper.writeValueAsString(redisUtil!!.get(redisKey))
+        val json = try {
+            mapper.writeValueAsString(redisUtil!!.get(redisKey))
+        } catch (exception :NullPointerException) {
+            failure(response, ServiceExceptionEnum.UN_LOGIN)
+            return
+        }
         val account = mapper.readValue(json, LoginAccount::class.java)
         if (Objects.isNull(account)) {
             failure(response, ServiceExceptionEnum.UN_LOGIN)

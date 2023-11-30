@@ -4,9 +4,6 @@ import com.fish.entity.pojo.Accepted
 import com.fish.mapper.AcceptedMapper
 import com.fish.service.accepted.AcceptedService
 import com.mybatisflex.spring.service.impl.ServiceImpl
-import jakarta.validation.Valid
-import jakarta.validation.constraints.NotBlank
-import jakarta.validation.constraints.NotNull
 import org.springframework.stereotype.Service
 
 @Service

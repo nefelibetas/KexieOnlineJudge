@@ -3,9 +3,7 @@ package com.fish.service.topic.impl
 import com.fish.common.Result
 import com.fish.entity.pojo.Topic
 import com.fish.entity.pojo.table.LabelTableDef
-import com.fish.entity.pojo.table.TopicLabelTableDef
 import com.fish.entity.pojo.table.TopicLabelTableDef.TOPIC_LABEL
-import com.fish.entity.pojo.table.TopicTableDef
 import com.fish.entity.pojo.table.TopicTableDef.TOPIC
 import com.fish.entity.vo.TopicVO
 import com.fish.exception.ServiceException

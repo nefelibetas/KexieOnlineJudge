@@ -35,21 +35,18 @@ dependencies {
     // 其他库
     implementation("io.jsonwebtoken:jjwt:0.12.3")
     implementation("javax.xml.bind:jaxb-api:2.4.0-b180830.0359")
-    implementation("com.zaxxer:HikariCP:5.0.1")
+    implementation("com.zaxxer:HikariCP")
     implementation("com.mybatis-flex:mybatis-flex-spring-boot-starter:1.6.5")
     implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.20")
     // runtimeOnly
     runtimeOnly("com.mysql:mysql-connector-j")
-    // compile
-    compileOnly("com.mybatis-flex:mybatis-flex-processor:1.6.5")
     // annotation
     annotationProcessor("org.projectlombok:lombok")
-    annotationProcessor("com.mybatis-flex:mybatis-flex-processor:1.6.5")
     // test
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.security:spring-security-test")
     // kapt
-    kapt("com.mybatis-flex:mybatis-flex-processor:1.5.6")
+    kapt("com.mybatis-flex:mybatis-flex-processor:1.6.5")
 }
 
 tasks.withType<KotlinCompile> {

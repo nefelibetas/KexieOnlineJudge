@@ -93,44 +93,6 @@ class ExceptionControllerAdvice {
     }
 
     /**
-     * 用于响应捕获到Redis连接的异常
-     */
-    @ExceptionHandler(RedisConnectionException::class)
-    fun <T> redisConnectionFailureExceptionHandler(): Result<T> {
-        return failure(ServiceExceptionEnum.REDIS_CONNECTION_ERROR)
-    }
-
-    /**
-     *
-     * 处理由MyBatis异常导致的错误，并打印到日志
-     * @param exception MybatisSystemExceptionHandler
-     * @return 异常信息
-     * @param <T> 泛型
-    </T> */
-    @ExceptionHandler(MyBatisSystemException::class)
-    fun <T> mybatisSystemExceptionHandler(exception: MyBatisSystemException?): Result<T> {
-        log.error("MyBatis出现异常：", exception)
-        return failure(ServiceExceptionEnum.MYBATIS_SYSTEM_ERROR)
-    }
-
-    /**
-     * 用于响应路径参数缺失异常
-     */
-    @ExceptionHandler(NoHandlerFoundException ::class)
-    fun <T> noHandlerFoundExceptionHandler(): Result<T> {
-        return failure(ServiceExceptionEnum.PATH_VARIABLE_MISSING)
-    }
-
-    /**
-     * 用于响应捕获到非法参数异常
-     * @param exception 非法参数异常
-     */
-    @ExceptionHandler(IllegalArgumentException::class)
-    fun illegalArgumentExceptionHandler(exception: IllegalArgumentException?) {
-        log.error("非法参数异常: ", exception)
-    }
-
-    /**
      * 用于响应捕获到的空指针异常
      */
     @ExceptionHandler(NullPointerException::class)

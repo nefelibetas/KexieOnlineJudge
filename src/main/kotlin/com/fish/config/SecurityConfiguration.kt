@@ -20,14 +20,12 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
-class SecurityConfiguration {
-    @Resource
-    private val jwtLoginFilter: JwtLoginFilter? = null
+class SecurityConfiguration(val jwtLoginFilter: JwtLoginFilter) {
     @Bean
     @Throws(Exception::class)
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
         http.authorizeHttpRequests { registry ->
-//             registry.requestMatchers("/login", "/register").permitAll()
+//             registry.requestMatchers("/login", "/r   egister").permitAll()
 //                     .requestMatchers("/label/**").permitAll()
 //                     .requestMatchers("/column/**").permitAll()
 //                     .requestMatchers("/topic/**").permitAll()

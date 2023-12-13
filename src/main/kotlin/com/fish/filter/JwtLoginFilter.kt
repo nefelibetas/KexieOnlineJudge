@@ -22,15 +22,12 @@ import java.io.IOException
 import java.util.*
 
 @Component
-class JwtLoginFilter : OncePerRequestFilter() {
+class JwtLoginFilter(
+    val jwtUtil: JwtUtil,
+    val redisUtil: RedisUtil
+) : OncePerRequestFilter() {
     @Value("\${jwt.header}")
-    private val header: String? = null
-
-    @Resource
-    private val jwtUtil: JwtUtil? = null
-
-    @Resource
-    private val redisUtil: RedisUtil? = null
+    val header: String? = null
     @Throws(ServletException::class, IOException::class)
     override fun doFilterInternal(
         request: HttpServletRequest,
@@ -43,13 +40,13 @@ class JwtLoginFilter : OncePerRequestFilter() {
             return
         }
         val redisKey = try {
-            jwtUtil!!.getRedisKey(token)
+            jwtUtil.getRedisKey(token)
         } catch (exception: JwtException) {
             failure(response, ServiceExceptionEnum.TOKEN_ERROR)
             return
         }
         val json = try {
-            mapper.writeValueAsString(redisUtil!!.get(redisKey))
+            mapper.writeValueAsString(redisUtil.get(redisKey))
         } catch (exception :NullPointerException) {
             failure(response, ServiceExceptionEnum.UN_LOGIN)
             return

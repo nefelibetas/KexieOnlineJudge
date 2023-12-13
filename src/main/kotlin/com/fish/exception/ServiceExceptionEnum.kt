@@ -16,11 +16,8 @@ enum class ServiceExceptionEnum(val code: Int, val msg: String) {
     TOKEN_ERROR(-208, "Token异常"),
     NOT_FOUND(-209, "未找到目标"),
     UN_LOGIN(-210, "还未登录或Token过期"),
-    PATH_VARIABLE_MISSING(-211, "请检查是否缺少路径参数"),
     SELECT_NOT_IN(-212, "该选项不存在"),
     METHOD_NOT_SUPPORT(-2000, "方法不支持"),
     UNKNOWN_ERROR(-2001, "未知异常"),
-    MYBATIS_SYSTEM_ERROR(-2002, "数据库出现错误"),
-    REDIS_CONNECTION_ERROR(-2003, "Redis连接失败"),
     NULL_POINTER(-2004, "出现空指针异常,请通知管理员排查")
 }

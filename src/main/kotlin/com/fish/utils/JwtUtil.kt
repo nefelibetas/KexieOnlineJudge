@@ -41,7 +41,7 @@ class JwtUtil {
             .issuedAt(expireDate)
             .issuer(ISS)
             .signWith(Keys.hmacShaKeyFor(secret!!.toByteArray()), ALGORITHM)
-            .compact()
+            .compact();
     }
 
     private fun parseClaim(token: String): Jws<Claims> {

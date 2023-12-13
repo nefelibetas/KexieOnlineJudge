@@ -13,11 +13,10 @@ import org.springframework.stereotype.Service
 import java.util.*
 
 @Service
-class UserDetailsServiceImpl : UserDetailsService {
-    @Resource
-    private val accountMapper: AccountMapper? = null
-    @Resource
-    private val roleMapper: RoleMapper? = null
+class UserDetailsServiceImpl(
+    val accountMapper: AccountMapper,
+    val roleMapper: RoleMapper
+) : UserDetailsService {
     @Throws(UsernameNotFoundException::class)
     override fun loadUserByUsername(username: String): UserDetails {
         val account : Account = accountMapper!!.getAccountByEmail(username)

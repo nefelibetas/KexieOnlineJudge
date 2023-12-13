@@ -4,8 +4,6 @@ import com.fish.common.Result
 import com.fish.exception.ServiceException
 import com.fish.exception.ServiceExceptionEnum
 import com.fish.utils.ResultUtil.failure
-import io.lettuce.core.RedisConnectionException
-import org.mybatis.spring.MyBatisSystemException
 import org.slf4j.LoggerFactory
 import org.springframework.security.core.AuthenticationException
 import org.springframework.security.core.userdetails.UsernameNotFoundException
@@ -13,7 +11,6 @@ import org.springframework.web.HttpRequestMethodNotSupportedException
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
-import org.springframework.web.servlet.NoHandlerFoundException
 import java.nio.file.AccessDeniedException
 import java.util.function.Consumer
 
@@ -96,7 +93,8 @@ class ExceptionControllerAdvice {
      * 用于响应捕获到的空指针异常
      */
     @ExceptionHandler(NullPointerException::class)
-    fun <T> nullPointerExceptionHandler(): Result<T> {
+    fun <T> nullPointerExceptionHandler(exception: NullPointerException): Result<T> {
+        log.error("出现空指针异常： ", exception)
         return failure(ServiceExceptionEnum.NULL_POINTER)
     }
 

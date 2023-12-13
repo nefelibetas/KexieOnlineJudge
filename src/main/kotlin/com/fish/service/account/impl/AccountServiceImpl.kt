@@ -27,40 +27,33 @@ import org.springframework.transaction.annotation.Transactional
 import java.util.*
 
 @Service
-class AccountServiceImpl : ServiceImpl<AccountMapper, Account>(), AccountService {
-    @Resource
-    private val authenticationManager: AuthenticationManager? = null
-
-    @Resource
-    private val passwordEncoder: PasswordEncoder? = null
-
-    @Resource
-    private val jwtUtil: JwtUtil? = null
-
-    @Resource
-    private val redisUtil: RedisUtil? = null
-
+class AccountServiceImpl(
+    val authenticationManager: AuthenticationManager,
+    val passwordEncoder: PasswordEncoder,
+    val jwtUtil: JwtUtil,
+    val redisUtil: RedisUtil
+) : ServiceImpl<AccountMapper, Account>(), AccountService {
     @Value("\${jwt.year}")
     private val year: String? = null
     override fun login(loginAccountDTO: LoginAccountDTO): Result<HashMap<String, Any>> {
         val authenticationToken = UsernamePasswordAuthenticationToken(loginAccountDTO.email, loginAccountDTO.password)
-        val authentication = authenticationManager!!.authenticate(authenticationToken)
+        val authentication = authenticationManager.authenticate(authenticationToken)
         if (Objects.isNull(authentication)) {
             throw ServiceException(ServiceExceptionEnum.ACCOUNT_NOT_FOUND)
         }
         val principal = authentication.principal as LoginAccount
         val redisKey = makeKey(principal.account.userId, principal.account.nickname)
-        val token = jwtUtil!!.createToken(redisKey)
+        val token = jwtUtil.createToken(redisKey)
         val map = HashMap<String, Any>()
         map["Authorization"] = token
         map["account"] = AccountVO(principal.account)
-        redisUtil!!.set(redisKey, principal)
+        redisUtil.set(redisKey, principal)
         return success(map)
     }
 
     @Transactional
     override fun register(registerAccountDTO: RegisterAccountDTO): Result<*> {
-        registerAccountDTO.password = passwordEncoder!!.encode(registerAccountDTO.password)
+        registerAccountDTO.password = passwordEncoder.encode(registerAccountDTO.password)
         val i = mapper!!.addAccount(registerAccountDTO)
         return if (i > 0) success<Any>()
         else throw ServiceException(ServiceExceptionEnum.ACCOUNT_EXISTED)
@@ -133,8 +126,10 @@ class AccountServiceImpl : ServiceImpl<AccountMapper, Account>(), AccountService
         // 否则说明请求来自修改角色，这时候直接判断执行者是否有权限赋予该角色
         val loginAccountRoleId = loginAccount.account.roleId!!
         if (!Objects.isNull(loginAccountRoleId))
-            if (Objects.isNull(roleId) && !Objects.isNull(account.roleId!!)) loginAccountRoleId > account.roleId
-            else loginAccountRoleId > roleId!!
+            return if (Objects.isNull(roleId) && !Objects.isNull(account.roleId!!))
+                loginAccountRoleId > account.roleId
+            else
+                loginAccountRoleId > roleId!!
         // 如果连登陆都没有也不放行
         return true
     }

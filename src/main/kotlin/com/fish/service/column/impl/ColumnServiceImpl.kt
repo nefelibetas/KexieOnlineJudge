@@ -2,8 +2,11 @@ package com.fish.service.column.impl
 
 import com.fish.common.Result
 import com.fish.entity.pojo.Column
-import com.fish.entity.pojo.table.*
 import com.fish.entity.pojo.table.ColumnTableDef.COLUMN
+import com.fish.entity.pojo.table.ColumnTopicTableDef
+import com.fish.entity.pojo.table.LabelTableDef
+import com.fish.entity.pojo.table.TopicLabelTableDef
+import com.fish.entity.pojo.table.TopicTableDef
 import com.fish.entity.vo.ColumnVO
 import com.fish.exception.ServiceException
 import com.fish.exception.ServiceExceptionEnum

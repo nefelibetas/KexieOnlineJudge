@@ -41,7 +41,7 @@ class CustomInterceptor : HandlerInterceptor {
         }
         log.info("接收到${method}请求: ${path}, 来源: $remoteAddr")
         if (StringUtils.hasLength(buffer.toString()))
-            log.info("参数: $buffer")
+            log.info("参数: {}", buffer)
         return super.preHandle(request, response, handler)
     }
     companion object {

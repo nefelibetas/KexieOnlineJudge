@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fish.mapper.AccountMapper">
+    <insert id="addAccount" parameterType="com.fish.entity.dto.RegisterAccountDTO">
+        insert into oj_account
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            `email`, `password`
+            <if test="nickname != null">nickname</if>
+            <if test="avatar != null">avatar</if>
+            <if test="studentId != null">student_id</if>
+            <if test="username != null">username</if>
+            <if test="gender != null">gender</if>
+            <if test="specialty != null">specialty</if>
+            <if test="qq != null">qq</if>
+            <if test="blogAddress != null">blog_address</if>
+            <if test="githubAddress != null">github_address</if>
+        </trim>
+        <trim prefix="values(" suffix=")" suffixOverrides=",">
+            #{email}, #{password}
+            <if test="nickname != null">#{nickname}</if>
+            <if test="avatar != null">#{avatar}</if>
+            <if test="studentId != null">#{student_id}</if>
+            <if test="username != null">#{username}</if>
+            <if test="gender != null">#{gender}</if>
+            <if test="specialty != null">#{specialty}</if>
+            <if test="qq != null">#{qq}</if>
+            <if test="blogAddress != null">#{blog_address}</if>
+            <if test="githubAddress != null">#{github_address}</if>
+        </trim>
+    </insert>
+</mapper>

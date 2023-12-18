@@ -40,11 +40,5 @@ interface AccountMapper : BaseMapper<Account> {
 
     @Select("select * from oj_account where enabled =true and user_id = #{userId}")
     fun getAccount(@Param("userId") userId: String): Account
-
-    @Insert(
-        "insert into " +
-                "oj_account (nickname, avatar, student_id, username, password, gender, email, specialty, qq, blog_address, github_address) " +
-                "value (#{nickname}, #{avatar}, #{studentId}, #{username}, #{password}, #{gender}, #{email}, #{specialty}, #{qq}, #{blog_address}, #{github_address})"
-    )
     fun addAccount(registerAccountDTO: RegisterAccountDTO): Int
 }

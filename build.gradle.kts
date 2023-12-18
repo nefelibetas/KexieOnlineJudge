@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id ("org.springframework.boot") version "3.1.5"
+    id ("org.springframework.boot") version "3.1.6"
     id ("io.spring.dependency-management") version "1.1.4"
     kotlin("jvm") version "1.9.20"
     kotlin("plugin.spring") version "1.9.20"
@@ -33,6 +33,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-json")
     // 其他库
+    implementation("com.zaxxer:HikariCP")
     implementation("io.jsonwebtoken:jjwt:0.12.3")
     implementation("javax.xml.bind:jaxb-api:2.4.0-b180830.0359")
     implementation("com.mybatis-flex:mybatis-flex-spring-boot-starter:1.6.5")

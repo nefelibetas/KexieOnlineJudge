@@ -5,6 +5,7 @@ import com.fish.exception.ServiceException
 import com.fish.exception.ServiceExceptionEnum
 import com.fish.utils.ResultUtil.failure
 import org.slf4j.LoggerFactory
+import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.security.core.AuthenticationException
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.web.HttpRequestMethodNotSupportedException
@@ -47,7 +48,7 @@ class ExceptionControllerAdvice {
      * @return 响应用户名或密码错误
      * @param <T> 泛型
     </T> */
-    @ExceptionHandler(AuthenticationException::class)
+    @ExceptionHandler(BadCredentialsException::class)
     fun <T> authenticationExceptionHandler(): Result<T> {
         return failure(ServiceExceptionEnum.EMAIL_NO_PASSWORD_WRONG)
     }

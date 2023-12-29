@@ -53,7 +53,7 @@ class TopicSolutionServiceImpl : ServiceImpl<TopicSolutionMapper, TopicSolution>
         val topicSolutionArrayList = mapper.selectPined(topicId)
         if (topicSolutionArrayList.size == 1)
             throw ServiceException(ServiceExceptionEnum.OPERATE_ERROR.code, ServiceExceptionEnum.OPERATE_ERROR.msg + ",已经存在置顶")
-        val update = UpdateChain.of(TopicSolution::class.java)
+        val update = UpdateChain.of(TopicSolution::class)
             .set(TOPIC_SOLUTION.PINED, true)
             .where(TOPIC_SOLUTION.SOLUTION_ID.eq(solutionId))
             .and(TOPIC_SOLUTION.ENABLED.eq(true))
@@ -65,7 +65,7 @@ class TopicSolutionServiceImpl : ServiceImpl<TopicSolutionMapper, TopicSolution>
 
     @Transactional
     override fun disablePined(solutionId: Long): Result<*> {
-        val update = UpdateChain.of(TopicSolution::class.java)
+        val update = UpdateChain.of(TopicSolution::class)
             .set(TOPIC_SOLUTION.PINED, false)
             .where(TOPIC_SOLUTION.SOLUTION_ID.eq(solutionId))
             .and(TOPIC_SOLUTION.ENABLED.eq(true))
@@ -77,7 +77,7 @@ class TopicSolutionServiceImpl : ServiceImpl<TopicSolutionMapper, TopicSolution>
 
     @Transactional
     override fun disableSolution(solutionId: Long): Result<*> {
-        val update = UpdateChain.of(TopicSolution::class.java)
+        val update = UpdateChain.of(TopicSolution::class)
             .set(TOPIC_SOLUTION.ENABLED, false)
             .where(TOPIC_SOLUTION.SOLUTION_ID.eq(solutionId))
             .update()
@@ -88,7 +88,7 @@ class TopicSolutionServiceImpl : ServiceImpl<TopicSolutionMapper, TopicSolution>
 
     @Transactional
     override fun enableSolution(solutionId: Long): Result<*> {
-        val update = UpdateChain.of(TopicSolution::class.java)
+        val update = UpdateChain.of(TopicSolution::class)
             .set(TOPIC_SOLUTION.PINED, true)
             .where(TOPIC_SOLUTION.SOLUTION_ID.eq(solutionId))
             .update()

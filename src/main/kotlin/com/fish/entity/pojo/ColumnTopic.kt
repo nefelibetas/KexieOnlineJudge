@@ -12,11 +12,7 @@ import java.io.Serializable
  * @since 2023-11-14
  */
 @Table(value = "oj_column_topic")
-data class ColumnTopic(
-    @Id var columnId: @NotNull(message = "栏目id不能为空") Long?,
-    @Id var topicId: @NotNull(message = "题目id不能为空") Long?,
-) : Serializable {
-    override fun toString(): String {
-        return "ColumnTopic(columnId=$columnId, topicId=$topicId)"
-    }
+open class ColumnTopic: Serializable {
+    @Id var columnId: @NotNull(message = "栏目id不能为空") Long? = null
+    @Id var topicId: @NotNull(message = "题目id不能为空") Long? = null
 }

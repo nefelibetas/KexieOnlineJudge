@@ -11,12 +11,8 @@ import java.io.Serializable
  * @since 2023-11-14
  */
 @Table(value = "oj_exam_topic")
-data class ExamTopic(
+open class ExamTopic(
     @Id var examId: Long?,
     @Id var topicId: Long?,
     var examScore: Long?
-) : Serializable {
-    override fun toString(): String {
-        return "ExamTopic(examId=$examId, topicId=$topicId, examScore=$examScore)"
-    }
-}
+) : Serializable

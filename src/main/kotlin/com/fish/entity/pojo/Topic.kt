@@ -21,7 +21,7 @@ import java.time.LocalDateTime
  * @since 2023-11-14
  */
 @Table(value = "oj_topic")
-class Topic: Serializable {
+open class Topic: Serializable {
     @Id(keyType = KeyType.Auto)
     var topicId: Long? = null
     var uploadUserId: @NotBlank(message = "上传人id不能为空") String? = null
@@ -90,8 +90,4 @@ class Topic: Serializable {
     var precautions: String? = null
     var from: String? = null
     var enabled: Boolean? = null
-    override fun toString(): String {
-        return "Topic(topicId=$topicId, uploadUserId=$uploadUserId, title=$title, content=$content, difficulty=$difficulty, limitedMemory=$limitedMemory, limitedTime=$limitedTime, inputDescribe=$inputDescribe, outputDescribe=$outputDescribe, enabledSolution=$enabledSolution, createTime=$createTime, updateTime=$updateTime, precautions=$precautions, from=$from, enabled=$enabled)"
-    }
-
 }

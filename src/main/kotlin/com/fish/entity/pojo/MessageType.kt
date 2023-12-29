@@ -12,13 +12,9 @@ import java.io.Serializable
  * @since 2023-11-14
  */
 @Table(value = "oj_message_type")
-data class MessageType(
+open class MessageType(
     @Id(keyType = KeyType.Auto)
     var typeId: Long?,
     var typeName: String?,
     var typeDescribe: String?,
-) : Serializable {
-    override fun toString(): String {
-        return "MessageType(typeId=$typeId, typeName=$typeName, typeDescribe=$typeDescribe)"
-    }
-}
+) : Serializable

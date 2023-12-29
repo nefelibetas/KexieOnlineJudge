@@ -99,7 +99,7 @@ class ColumnServiceImpl : ServiceImpl<ColumnMapper, Column>(), ColumnService {
 
     @Transactional
     override fun enableColumn(columnId: Long): Result<*> {
-        val update = UpdateChain.of(COLUMN)
+        val update = UpdateChain.of(Column::class)
             .set(COLUMN.ENABLED, true)
             .where(COLUMN.COLUMN_ID.eq(columnId))
             .update()

@@ -8,6 +8,7 @@ import com.fish.entity.pojo.Account
 import com.fish.service.account.AccountService
 import com.mybatisflex.core.paginate.Page
 import jakarta.validation.Valid
+import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Pattern
 import org.springframework.web.bind.annotation.*
 
@@ -43,17 +44,16 @@ class AccountController(val accountService: AccountService) {
     }
 
     /**
-     * 删除用户接口(假删除)
+     * 改变用户状态（禁用或启用）
      * @param userId 要删除的用户id
      * @return 响应code为200表示请求成功
      */
-    @PutMapping("/admin/disable/{userId}")
-    fun deleteAccount(@PathVariable userId: String?): Result<*> {
-        return accountService.disableAccount(userId!!)
-    }
-    @PutMapping("/admin/enable/{userId}")
-    fun enableAccount(@PathVariable userId: String?): Result<*>{
-        return accountService.enableAccount(userId!!)
+    @PutMapping("/admin/changeStatus")
+    fun changeStatus(
+        @RequestParam userId: String?,
+        @RequestParam(defaultValue = "false", required = false) action: Boolean?
+    ): Result<*> {
+        return accountService.changeStatus(userId!!, action!!)
     }
 
     /**

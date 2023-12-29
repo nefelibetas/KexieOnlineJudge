@@ -35,7 +35,7 @@ class TopicServiceImpl : ServiceImpl<TopicMapper, Topic>(), TopicService {
 
     @Transactional
     override fun disableTopic(topicId: Long): Result<*> {
-        val update = UpdateChain.of(TOPIC)
+        val update = UpdateChain.of(Topic::class)
             .set(TOPIC.ENABLED, false)
             .where(TOPIC.TOPIC_ID.eq(topicId))
             .update()
@@ -46,7 +46,7 @@ class TopicServiceImpl : ServiceImpl<TopicMapper, Topic>(), TopicService {
 
     @Transactional
     override fun enableTopic(topicId: Long): Result<*> {
-        val update = UpdateChain.of(TOPIC)
+        val update = UpdateChain.of(Topic::class)
             .set(TOPIC.ENABLED, true)
             .where(TOPIC.TOPIC_ID.eq(topicId))
             .update()

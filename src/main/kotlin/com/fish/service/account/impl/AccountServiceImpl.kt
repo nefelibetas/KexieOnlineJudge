@@ -19,6 +19,8 @@ import com.fish.utils.SecurityUtil
 import com.mybatisflex.core.paginate.Page
 import com.mybatisflex.core.query.QueryWrapper
 import com.mybatisflex.core.update.UpdateChain
+import com.mybatisflex.kotlin.extensions.kproperty.column
+import com.mybatisflex.kotlin.extensions.kproperty.eq
 import com.mybatisflex.spring.service.impl.ServiceImpl
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.security.authentication.AuthenticationManager
@@ -71,15 +73,6 @@ class AccountServiceImpl(
         throw ServiceException(ServiceExceptionEnum.OPERATE_ERROR)
     }
 
-    @Transactional
-    override fun disableAccount(userId: String): Result<*> {
-        if (checkRole(userId, null)) throw ServiceException(ServiceExceptionEnum.INSUFFICIENT_PERMISSIONS)
-        val i = mapper!!.disableAccount(userId)
-        return if (i > 0) success<Any>() else throw ServiceException(
-            ServiceExceptionEnum.OPERATE_ERROR
-        )
-    }
-
     override fun getAccounts(pageNo: Int, pageSize: Int): Result<Page<Account>> {
         val wrapper = QueryWrapper.create().select(ACCOUNT.USER_ID, ACCOUNT.ROLE_ID, ACCOUNT.AVATAR, ACCOUNT.USERNAME,
                 ACCOUNT.STUDENT_ID, ACCOUNT.GENDER, ACCOUNT.SPECIALTY, ACCOUNT.NICKNAME,
@@ -110,10 +103,14 @@ class AccountServiceImpl(
     }
 
     @Transactional
-    override fun enableAccount(userId: String): Result<*> {
-        val update = UpdateChain.of(ACCOUNT)
-            .set(ACCOUNT.ENABLED, true)
-            .where(ACCOUNT.USER_ID.eq(userId))
+    override fun changeStatus(userId: String, action: Boolean): Result<*> {
+        val account = mapper.selectOneById(userId)
+        val loginAccount = SecurityContextHolder.getContext().authentication.principal as LoginAccount
+        if (loginAccount.account.roleId!! > account.roleId!!)
+            throw ServiceException(ServiceExceptionEnum.INSUFFICIENT_PERMISSIONS)
+        val update = UpdateChain.of(Account::class.java)
+            .set(Account::enabled.column, action)
+            .where(Account::userId eq userId)
             .update()
         if (update)
             return success<Any>()

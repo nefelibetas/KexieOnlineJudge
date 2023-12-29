@@ -12,12 +12,8 @@ import java.io.Serializable
  * @since 2023-11-14
  */
 @Table(value = "oj_role")
-data class Role(
+open class Role(
     @Id(keyType = KeyType.Auto) var roleId: Long?,
     val roleName: String?,
     val roleDescribe: String?,
-) : Serializable {
-    override fun toString(): String {
-        return "Role(roleId=$roleId, roleName=$roleName, roleDescribe=$roleDescribe)"
-    }
-}
+) : Serializable

@@ -12,18 +12,14 @@ import java.io.Serializable
  * @since 2023-11-14
  */
 @Table(value = "oj_assessment_result")
-data class AssessmentResult(
-    @Id(keyType = KeyType.Auto) var resultId: Long?,
-    var userId: String?,
-    var topicId: Long?,
-    var code: String?,
-    var hash: String?,
-    var examId: Long?,
-    var score: Long?,
-    var allTime: Long?,
-    var status: String?,
-) : Serializable {
-    override fun toString(): String {
-        return "AssessmentResult(resultId=$resultId, userId=$userId, topicId=$topicId, code=$code, hash=$hash, examId=$examId, score=$score, allTime=$allTime, status=$status)"
-    }
+open class AssessmentResult: Serializable {
+    @Id(keyType = KeyType.Auto) var resultId: Long? = null
+    var userId: String? = null
+    var topicId: Long? = null
+    var code: String? = null
+    var hash: String? = null
+    var examId: Long? = null
+    var score: Long? = null
+    var allTime: Long? = null
+    var status: String? = null
 }

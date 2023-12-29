@@ -17,7 +17,7 @@ import java.time.LocalDateTime
  * @since 2023-11-14
  */
 @Table(value = "oj_exam")
-class Exam: Serializable {
+open class Exam: Serializable {
     @Id(keyType = KeyType.Auto) var examId: Long? = null
     var hostId: String? = null
 
@@ -53,8 +53,4 @@ class Exam: Serializable {
     @JsonDeserialize(using = LocalDateTimeDeserializer::class)
     var createTime: LocalDateTime? = null
     var enabled: Boolean? = null
-    override fun toString(): String {
-        return "Exam(examId=$examId, hostId=$hostId, opened=$opened, ranked=$ranked, describe=$describe, startTime=$startTime, endTime=$endTime, createTime=$createTime, enabled=$enabled)"
-    }
-
 }

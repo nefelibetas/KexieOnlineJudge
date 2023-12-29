@@ -34,6 +34,6 @@ logging:
     name: D:/log/oj.log
 jwt:
   secret: b474a99a2705e23cf905a484ec6d14ef58b56bbe62e9292783466ec363b5072d
-  expireTime: 10080
+  expireTime: 604800
   header: Authorization
   year: 2023

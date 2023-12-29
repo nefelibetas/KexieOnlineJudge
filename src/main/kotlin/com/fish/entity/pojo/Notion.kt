@@ -17,7 +17,7 @@ import java.time.LocalDateTime
  * @since 2023-11-14
  */
 @Table(value = "oj_notion")
-class Notion: Serializable {
+open class Notion: Serializable {
     @Id(keyType = KeyType.Auto)
     var notionId: Long? = null
     var hostId: String? = null
@@ -28,8 +28,4 @@ class Notion: Serializable {
     @JsonSerialize(using = LocalDateTimeSerializer::class)
     @JsonDeserialize(using = LocalDateTimeDeserializer::class)
     var createTime: LocalDateTime? = null
-    override fun toString(): String {
-        return "Notion(notionId=$notionId, hostId=$hostId, title=$title, content=$content, enabled=$enabled, createTime=$createTime)"
-    }
-
 }

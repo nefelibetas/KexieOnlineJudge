@@ -12,7 +12,7 @@ import java.io.Serializable
  * @since 2023-11-14
  */
 @Table(value = "oj_like")
-data class Like(
+open class Like(
     @Id(keyType = KeyType.Auto)
     var likeId: Long?,
     /**
@@ -27,8 +27,4 @@ data class Like(
      * 点赞的用户
      */
     var userId: String?,
-) : Serializable {
-    override fun toString(): String {
-        return "Like(likeId=$likeId, solutionId=$solutionId, commentId=$commentId, userId=$userId)"
-    }
-}
+) : Serializable

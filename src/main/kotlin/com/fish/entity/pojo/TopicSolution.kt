@@ -17,7 +17,7 @@ import java.time.LocalDateTime
  * @since 2023-11-14
  */
 @Table(value = "oj_topic_solutions")
-class TopicSolution : Serializable {
+open class TopicSolution : Serializable {
     @Id(keyType = KeyType.Auto)
     var solutionId: Long? = null
     var topicId: Long? = null
@@ -31,8 +31,4 @@ class TopicSolution : Serializable {
     @JsonSerialize(using = LocalDateTimeSerializer::class)
     @JsonDeserialize(using = LocalDateTimeDeserializer::class)
     var createTime: LocalDateTime? = null
-    override fun toString(): String {
-        return "TopicSolution(solutionId=$solutionId, topicId=$topicId, title=$title, content=$content, pined=$pined, enabled=$enabled, createTime=$createTime)"
-    }
-
 }

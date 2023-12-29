@@ -17,24 +17,18 @@ import java.time.LocalDateTime
  * @since 2023-11-14
  */
 @Table(value = "oj_topic_solutions_comments")
-class TopicSolutionsComments : Serializable {
+open class TopicSolutionsComments : Serializable {
     @Id(keyType = KeyType.Auto)
     var commentId: Long? = null
     var userId: String? = null
     var solutionId: Long? = null
-
     /**
      * 父评论的id，作为鉴别是否为二级评论的标志
      */
     var parentId: Long? = null
     var content: String? = null
     var enabled: Boolean? = null
-
     @JsonSerialize(using = LocalDateTimeSerializer::class)
     @JsonDeserialize(using = LocalDateTimeDeserializer::class)
     var createTime: LocalDateTime? = null
-    override fun toString(): String {
-        return "TopicSolutionsComments(commentId=$commentId, userId=$userId, solutionId=$solutionId, parentId=$parentId, content=$content, enabled=$enabled, createTime=$createTime)"
-    }
-
 }

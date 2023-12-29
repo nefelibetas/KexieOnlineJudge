@@ -37,6 +37,7 @@ dependencies {
     implementation("io.jsonwebtoken:jjwt:0.12.3")
     implementation("javax.xml.bind:jaxb-api:2.4.0-b180830.0359")
     implementation("com.mybatis-flex:mybatis-flex-spring-boot-starter:1.6.5")
+    implementation("com.mybatis-flex:mybatis-flex-kotlin-extensions:1.0.5")
     implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.20")
     // runtimeOnly
     runtimeOnly("com.mysql:mysql-connector-j")

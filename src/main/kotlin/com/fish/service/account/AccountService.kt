@@ -29,13 +29,6 @@ interface AccountService : IService<Account> {
      */
     fun updateAccountInformation(updateAccountDTO: UpdateAccountDTO): Result<*>
     /**
-     * 删除用户(假删除),要求在执行删除时检查执行者权限和被执行者权限，执行者权限不足则驳回操作
-     * @param userId 要删除的用户id
-     * @return 封装好的响应信息
-     */
-    fun disableAccount(userId: String): Result<*>
-
-    /**
      * 获取所有普通用户信息
      * @return 封装好的响应信息
      */
@@ -54,5 +47,5 @@ interface AccountService : IService<Account> {
      * @return 封装好的响应信息
      */
     fun changeAccountRole(userId: String, roleId: Long): Result<*>
-    fun enableAccount(userId: String): Result<*>
+    fun changeStatus(userId: String, action: Boolean): Result<*>
 }

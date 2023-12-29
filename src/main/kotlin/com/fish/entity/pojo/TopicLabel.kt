@@ -11,11 +11,7 @@ import java.io.Serializable
  * @since 2023-11-14
  */
 @Table(value = "oj_topic_label")
-data class TopicLabel(
+open class TopicLabel(
     @Id var topicId: Long?,
     @Id var labelId: Long?
-) : Serializable {
-    override fun toString(): String {
-        return "TopicLabel(topicId=$topicId, labelId=$labelId)"
-    }
-}
+) : Serializable

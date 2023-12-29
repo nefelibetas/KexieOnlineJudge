@@ -12,13 +12,7 @@ import java.io.Serializable
  * @since 2023-11-14
  */
 @Table(value = "oj_accepted")
-data class Accepted(
-    @Id var userId: @NotNull(message = "用户Id未填写") String?,
-    @Id var topicId: @NotNull(message = "题目Id未填写") Long?
-) : Serializable {
-    constructor() : this(null, null)
-    override fun toString(): String {
-        return "Accepted(userId=$userId, topicId=$topicId)"
-    }
-
+open class Accepted: Serializable {
+    @Id var userId: @NotNull(message = "用户Id未填写") String? = null
+    @Id var topicId: @NotNull(message = "题目Id未填写") Long? = null
 }

@@ -12,7 +12,7 @@ import java.io.Serializable
  * @since 2023-11-14
  */
 @Table(value = "oj_example_result")
-data class ExampleResult(
+open class ExampleResult(
     @Id(keyType = KeyType.Auto)
     var exampleResultId: Long?,
     var exampleId: Long?,
@@ -20,8 +20,4 @@ data class ExampleResult(
     var memory: Long?,
     var time: Long?,
     var assessmentStatus: String?,
-) : Serializable {
-    override fun toString(): String {
-        return "ExampleResult(exampleResultId=$exampleResultId, exampleId=$exampleId, resultId=$resultId, memory=$memory, time=$time, assessmentStatus=$assessmentStatus)"
-    }
-}
+) : Serializable

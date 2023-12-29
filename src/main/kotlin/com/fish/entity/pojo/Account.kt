@@ -15,11 +15,12 @@ import java.time.LocalDateTime
  * @since 2023-11-14
  */
 @Table(value = "oj_account")
-class Account: Serializable {
+open class Account: Serializable {
     /**
      * 用户id
      */
-    @Id(keyType = KeyType.Auto) val userId: String? = null
+    @Id(keyType = KeyType.Auto)
+    val userId: String? = null
     /**
      * 身份id
      */
@@ -78,8 +79,4 @@ class Account: Serializable {
     @JsonSerialize(using = LocalDateTimeSerializer::class)
     @JsonDeserialize(using = LocalDateTimeDeserializer::class)
     val createTime: LocalDateTime? = null
-    override fun toString(): String {
-        return "Account(userId=$userId, roleId=$roleId, nickname=$nickname, avatar=$avatar, studentId=$studentId, username=$username, password=$password, gender=$gender, email=$email, specialty=$specialty, qq=$qq, blogAddress=$blogAddress, githubAddress=$githubAddress, enabled=$enabled, createTime=$createTime)"
-    }
-
 }

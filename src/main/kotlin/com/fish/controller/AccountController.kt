@@ -3,11 +3,12 @@ package com.fish.controller
 import com.fish.common.Result
 import com.fish.entity.dto.LoginAccountDTO
 import com.fish.entity.dto.RegisterAccountDTO
+import com.fish.entity.dto.UpdateAccountDTO
 import com.fish.entity.pojo.Account
-import com.fish.exception.ServiceException
-import com.fish.exception.ServiceExceptionEnum
 import com.fish.service.account.AccountService
+import com.mybatisflex.core.paginate.Page
 import jakarta.validation.Valid
+import jakarta.validation.constraints.Pattern
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -34,16 +35,11 @@ class AccountController(val accountService: AccountService) {
 
     /**
      * 更新用户信息,由用户自己发出才有效
-     * @param account 用户要修改的信息存放在内,其中account的id非必填，必须要登录后才能修改
-     * @param userId 用户id, 还需要和实体类中的id作对比.
      * @return 响应code为200表示请求成功
      */
-    @PutMapping("/user/update/{userId}")
-    fun updateAccountInformation(
-        @PathVariable() userId: String?,
-        @RequestBody account: @Valid Account?
-    ): Result<*> {
-        return accountService.updateAccountInformation(account!!, userId!!)
+    @PutMapping("/user/update")
+    fun updateAccountInformation(@RequestBody updateAccountDTO: @Valid UpdateAccountDTO): Result<*> {
+        return accountService.updateAccountInformation(updateAccountDTO)
     }
 
     /**
@@ -66,13 +62,15 @@ class AccountController(val accountService: AccountService) {
      * @param operate 获取普通用户或管理员通过该字段值决定
      * @return 用户信息,含敏感信息。仅开放给管理员
      */
-    @GetMapping("/admin/gets/{operate}")
-    fun getAccounts(@PathVariable operate: String?): Result<ArrayList<Account>> {
-        if (operate == "1")
-            return accountService.getAccounts()
-        else if (operate == "2")
-            return accountService.getAccounts()
-        throw ServiceException(ServiceExceptionEnum.SELECT_NOT_IN)
+    @GetMapping("/admin/gets")
+    fun getAccounts(
+        @RequestParam(defaultValue = "0", required = true) operate: @Pattern(regexp = "[01]") String?,
+        @RequestParam(defaultValue = "1", required = false) pageNo: Int?,
+        @RequestParam(defaultValue = "20", required = false) pageSize: Int?
+    ): Result<Page<Account>> {
+        if (operate == "0")
+            return accountService.getAccounts(pageNo!!, pageSize!!)
+        return accountService.getAdmins(pageNo!!, pageSize!!)
     }
 
     /**

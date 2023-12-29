@@ -5,14 +5,14 @@ import com.fish.exception.ServiceException
 import com.fish.exception.ServiceExceptionEnum
 import com.fish.utils.ResultUtil.failure
 import org.slf4j.LoggerFactory
+import org.springframework.dao.DuplicateKeyException
 import org.springframework.security.authentication.BadCredentialsException
-import org.springframework.security.core.AuthenticationException
+import org.springframework.security.authentication.InternalAuthenticationServiceException
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.web.HttpRequestMethodNotSupportedException
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
-import java.nio.file.AccessDeniedException
 import java.util.function.Consumer
 
 @RestControllerAdvice
@@ -43,12 +43,20 @@ class ExceptionControllerAdvice {
     }
 
     /**
+     * 用于捕获数据库重复键异常(插入时检测出唯一键重复)
+     * @return 响应用户已存在
+     */
+    @ExceptionHandler(DuplicateKeyException::class)
+    fun <T> duplicateKeyExceptionHandler(): Result<T>{
+        return failure(ServiceExceptionEnum.ACCOUNT_EXISTED)
+    }
+    /**
      *
      * 用于响应捕获到的认证失败异常
      * @return 响应用户名或密码错误
      * @param <T> 泛型
     </T> */
-    @ExceptionHandler(BadCredentialsException::class)
+    @ExceptionHandler(BadCredentialsException::class, InternalAuthenticationServiceException::class)
     fun <T> authenticationExceptionHandler(): Result<T> {
         return failure(ServiceExceptionEnum.EMAIL_NO_PASSWORD_WRONG)
     }
@@ -62,17 +70,6 @@ class ExceptionControllerAdvice {
     @ExceptionHandler(UsernameNotFoundException::class)
     fun <T> usernameNotFoundExceptionHandler(): Result<T> {
         return failure(ServiceExceptionEnum.ACCOUNT_NOT_FOUND)
-    }
-
-    /**
-     *
-     * 处理由用户越权访问接口造成的异常
-     * @return 提示权限不足
-     * @param <T> 泛型
-    </T> */
-    @ExceptionHandler(AccessDeniedException::class)
-    fun <T> accessDeniedExceptionHandler(): Result<T> {
-        return failure(ServiceExceptionEnum.INSUFFICIENT_PERMISSIONS)
     }
 
     /**
@@ -95,7 +92,7 @@ class ExceptionControllerAdvice {
      */
     @ExceptionHandler(NullPointerException::class)
     fun <T> nullPointerExceptionHandler(exception: NullPointerException): Result<T> {
-        log.error("出现空指针异常： ", exception)
+        log.error("出现空指针异常: ", exception)
         return failure(ServiceExceptionEnum.NULL_POINTER)
     }
 

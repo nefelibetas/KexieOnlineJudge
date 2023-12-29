@@ -3,6 +3,7 @@ package com.fish.service.account.impl
 import com.fish.common.Result
 import com.fish.entity.dto.LoginAccountDTO
 import com.fish.entity.dto.RegisterAccountDTO
+import com.fish.entity.dto.UpdateAccountDTO
 import com.fish.entity.pojo.Account
 import com.fish.entity.pojo.table.AccountTableDef.ACCOUNT
 import com.fish.entity.vo.AccountVO
@@ -14,9 +15,11 @@ import com.fish.service.account.AccountService
 import com.fish.utils.JwtUtil
 import com.fish.utils.RedisUtil
 import com.fish.utils.ResultUtil.success
+import com.fish.utils.SecurityUtil
+import com.mybatisflex.core.paginate.Page
+import com.mybatisflex.core.query.QueryWrapper
 import com.mybatisflex.core.update.UpdateChain
 import com.mybatisflex.spring.service.impl.ServiceImpl
-import jakarta.annotation.Resource
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
@@ -54,19 +57,17 @@ class AccountServiceImpl(
     @Transactional
     override fun register(registerAccountDTO: RegisterAccountDTO): Result<*> {
         registerAccountDTO.password = passwordEncoder.encode(registerAccountDTO.password)
-        val i = mapper!!.addAccount(registerAccountDTO)
-        return if (i > 0) success<Any>()
-        else throw ServiceException(ServiceExceptionEnum.ACCOUNT_EXISTED)
+        mapper!!.addAccount(registerAccountDTO)
+        return success<Any>()
     }
 
     @Transactional
-    override fun updateAccountInformation(account: Account, userId: String): Result<*> {
-        if (account.roleId != null)
-            throw ServiceException(ServiceExceptionEnum.INSUFFICIENT_PERMISSIONS)
-        val credentials = SecurityContextHolder.getContext().authentication.credentials as String
-        if (credentials != userId) throw ServiceException(ServiceExceptionEnum.AUTHENTICATION_FAILURE)
-        val i = mapper!!.update(account)
-        if (i > 0) return success<Any>()
+    override fun updateAccountInformation(updateAccountDTO: UpdateAccountDTO): Result<*> {
+        val id = SecurityUtil.getId()
+        updateAccountDTO.id = id
+        val i = mapper!!.updateAccount(updateAccountDTO)
+        if (i > 0)
+            return success<Any>()
         throw ServiceException(ServiceExceptionEnum.OPERATE_ERROR)
     }
 
@@ -79,16 +80,29 @@ class AccountServiceImpl(
         )
     }
 
-    override fun getAccounts(): Result<ArrayList<Account>> {
-        return success(mapper!!.getCustomAccounts())
+    override fun getAccounts(pageNo: Int, pageSize: Int): Result<Page<Account>> {
+        val wrapper = QueryWrapper.create().select(ACCOUNT.USER_ID, ACCOUNT.ROLE_ID, ACCOUNT.AVATAR, ACCOUNT.USERNAME,
+                ACCOUNT.STUDENT_ID, ACCOUNT.GENDER, ACCOUNT.SPECIALTY, ACCOUNT.NICKNAME,
+                ACCOUNT.EMAIL, ACCOUNT.QQ, ACCOUNT.GITHUB_ADDRESS, ACCOUNT.BLOG_ADDRESS, ACCOUNT.ENABLED)
+            .from(ACCOUNT)
+            .where(ACCOUNT.ENABLED.eq(true)).and(ACCOUNT.ROLE_ID.eq(3))
+        val accountPage = mapper.paginate(Page.of(pageNo, pageSize), wrapper)
+        return success(accountPage)
     }
-    override fun getAdmins(): Result<ArrayList<Account>> {
-        return success(mapper!!.getAdmins())
+    override fun getAdmins(pageNo: Int, pageSize: Int): Result<Page<Account>> {
+        val wrapper = QueryWrapper.create().select(ACCOUNT.USER_ID, ACCOUNT.ROLE_ID, ACCOUNT.AVATAR, ACCOUNT.USERNAME,
+                ACCOUNT.STUDENT_ID, ACCOUNT.GENDER, ACCOUNT.SPECIALTY, ACCOUNT.NICKNAME,
+                ACCOUNT.EMAIL, ACCOUNT.QQ, ACCOUNT.GITHUB_ADDRESS, ACCOUNT.BLOG_ADDRESS, ACCOUNT.ENABLED)
+            .from(ACCOUNT)
+            .where(ACCOUNT.ENABLED.eq(true)).and(ACCOUNT.ROLE_ID.lt(3))
+        val accountPage = mapper.paginate(Page.of(pageNo, pageSize), wrapper)
+        return success(accountPage)
     }
 
     @Transactional
     override fun changeAccountRole(userId: String, roleId: Long): Result<*> {
-        if (checkRole(userId, roleId)) throw ServiceException(ServiceExceptionEnum.INSUFFICIENT_PERMISSIONS)
+        if (checkRole(userId, roleId))
+            throw ServiceException(ServiceExceptionEnum.INSUFFICIENT_PERMISSIONS)
         val i = mapper!!.changeAccountRole(userId, roleId)
         return if (i > 0) success<Any>() else throw ServiceException(
             ServiceExceptionEnum.OPERATE_ERROR
@@ -118,19 +132,18 @@ class AccountServiceImpl(
      */
     protected fun checkRole(userId: String, roleId: Long?): Boolean {
         val authentication = SecurityContextHolder.getContext().authentication
+        val id = authentication.credentials as String
         val loginAccount = authentication.principal as LoginAccount
-        val account = mapper!!.getAccount(userId)
-        // 不能修改自己的角色
-        if (loginAccount.account.userId == account.userId) throw ServiceException(ServiceExceptionEnum.OPERATE_ERROR)
-        // roleId为空说明请求来自删除用户,仅需要判断执行者的权限是否足够删除
-        // 否则说明请求来自修改角色，这时候直接判断执行者是否有权限赋予该角色
+        if (id == userId)
+            throw ServiceException(ServiceExceptionEnum.OPERATE_ERROR)
         val loginAccountRoleId = loginAccount.account.roleId!!
-        if (!Objects.isNull(loginAccountRoleId))
+        if (!Objects.isNull(loginAccountRoleId)) {
+            val account = mapper!!.getAccount(userId)
             return if (Objects.isNull(roleId) && !Objects.isNull(account.roleId!!))
                 loginAccountRoleId > account.roleId
             else
                 loginAccountRoleId > roleId!!
-        // 如果连登陆都没有也不放行
+        }
         return true
     }
 }

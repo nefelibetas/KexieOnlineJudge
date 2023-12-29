@@ -17,12 +17,15 @@ import java.time.LocalDateTime
  * @since 2023-11-14
  */
 @Table(value = "oj_comment_message")
-open class CommentMessage : Serializable {
+open class CommentMessage(
+    commentId: Long?,
+    content: String?,
+    sendTime: LocalDateTime?
+) : Serializable {
     @Id(keyType = KeyType.Auto)
-    var commentId: Long? = null
-    var content: String? = null
-
+    val commentId: Long? = null
+    val content: String? = null
     @JsonSerialize(using = LocalDateTimeSerializer::class)
     @JsonDeserialize(using = LocalDateTimeDeserializer::class)
-    var sendTime: LocalDateTime? = null
+    val sendTime: LocalDateTime? = null
 }

@@ -15,6 +15,10 @@ import java.io.Serializable
  */
 @Table(value = "oj_label")
 open class Label(
-    @Id(keyType = KeyType.Auto) var labelId: Long?,
-    var labelName: @Size(min = 1, max = 32, message = "1~32字符以内") @NotBlank(message = "标签名未填写") String?,
-) : Serializable
+    labelId: Long?,
+    labelName: String?,
+) : Serializable {
+    @Id(keyType = KeyType.Auto)
+    val labelId: Long? = null
+    val labelName: @Size(min = 1, max = 32, message = "1~32字符以内") @NotBlank(message = "标签名未填写") String? = null
+}

@@ -14,12 +14,15 @@ import java.io.Serializable
  * @since 2023-11-14
  */
 @Table(value = "oj_column")
-open class Column: Serializable {
+open class Column(
+    columnId: Long?,
+    columnName: String?,
+    columnDescribe: String?,
+    enabled: Boolean?
+): Serializable {
     @Id(keyType = KeyType.Auto)
-    var columnId: Long? = null
-    var columnName: @NotBlank(message = "栏目名未填写") @Size(min = 1, max = 32, message = "1~32字符以内") String? = null
-    var columnDescribe: @NotBlank(message = "栏目描述未填写") @Size(
-        min = 1, max = 100, message = "1~100字符以内"
-    ) String? = null
-    var enabled: Boolean? = null
+    val columnId: Long? = null
+    val columnName: @NotBlank(message = "栏目名未填写") @Size(min = 1, max = 32, message = "1~32字符以内") String? = null
+    val columnDescribe: @NotBlank(message = "栏目描述未填写")@Size(min = 1, max = 100, message = "1~100字符以内")String? = null
+    val enabled: Boolean? = null
 }

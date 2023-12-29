@@ -13,8 +13,12 @@ import java.io.Serializable
  */
 @Table(value = "oj_message_type")
 open class MessageType(
+    typeId: Long?,
+    typeName: String?,
+    typeDescribe: String?,
+) : Serializable {
     @Id(keyType = KeyType.Auto)
-    var typeId: Long?,
-    var typeName: String?,
-    var typeDescribe: String?,
-) : Serializable
+    val typeId: Long? = null
+    val typeName: String? = null
+    val typeDescribe: String? = null
+}

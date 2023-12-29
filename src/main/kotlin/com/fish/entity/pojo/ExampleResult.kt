@@ -13,11 +13,18 @@ import java.io.Serializable
  */
 @Table(value = "oj_example_result")
 open class ExampleResult(
+    exampleResultId: Long?,
+    exampleId: Long?,
+    resultId: Long?,
+    memory: Long?,
+    time: Long?,
+    assessmentStatus: String?,
+) : Serializable {
     @Id(keyType = KeyType.Auto)
-    var exampleResultId: Long?,
-    var exampleId: Long?,
-    var resultId: Long?,
-    var memory: Long?,
-    var time: Long?,
-    var assessmentStatus: String?,
-) : Serializable
+    var exampleResultId: Long? = null
+    var exampleId: Long? = null
+    var resultId: Long? = null
+    var memory: Long? = null
+    var time: Long? = null
+    var assessmentStatus: String? = null
+}

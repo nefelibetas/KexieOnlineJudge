@@ -12,6 +12,11 @@ import java.io.Serializable
  */
 @Table(value = "oj_exam_participate")
 open class ExamParticipate(
-    @Id var examId: Long?,
-    @Id var participantId: String?,
-) : Serializable
+    examId: Long?,
+    participantId: String?,
+) : Serializable {
+    @Id
+    val examId: Long? = null
+    @Id
+    val participantId: String? = null
+}

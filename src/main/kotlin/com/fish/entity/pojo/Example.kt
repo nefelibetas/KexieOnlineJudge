@@ -13,17 +13,24 @@ import java.io.Serializable
  */
 @Table(value = "oj_example")
 open class Example(
+    exampleId: Long?,
+    topicId: Long?,
+    input: String?,
+    output: String?,
+    showed: Boolean?,
+    assessed: Boolean?,
+) : Serializable {
     @Id(keyType = KeyType.Auto)
-    var exampleId: Long?,
-    var topicId: Long?,
-    var input: String?,
-    var output: String?,
+    var exampleId: Long? = null
+    var topicId: Long? = null
+    var input: String? = null
+    var output: String? = null
     /**
      * 是否展示
      */
-    var showed: Boolean?,
+    var showed: Boolean? = null
     /**
      * 是否参与测评
      */
-    var assessed: Boolean?,
-) : Serializable
+    var assessed: Boolean? = null
+}

@@ -17,40 +17,50 @@ import java.time.LocalDateTime
  * @since 2023-11-14
  */
 @Table(value = "oj_exam")
-open class Exam: Serializable {
-    @Id(keyType = KeyType.Auto) var examId: Long? = null
-    var hostId: String? = null
-
+open class Exam(
+    examId: Long?,
+    hostId: String?,
+    opened: Boolean?,
+    ranked: Boolean?,
+    describe: String?,
+    startTime: LocalDateTime?,
+    endTime: LocalDateTime?,
+    createTime: LocalDateTime?,
+    enabled: Boolean?
+): Serializable {
+    @Id(keyType = KeyType.Auto) 
+    val examId: Long? = null
+    val hostId: String? = null
     /**
      * 是否公布成绩
      */
-    var opened: Boolean? = null
+    val opened: Boolean? = null
 
     /**
      * 是否进行排行
      */
-    var ranked: Boolean? = null
-    var describe: String? = null
+    val ranked: Boolean? = null
+    val describe: String? = null
 
     /**
      * 考试开始时间
      */
     @JsonSerialize(using = LocalDateTimeSerializer::class)
     @JsonDeserialize(using = LocalDateTimeDeserializer::class)
-    var startTime: LocalDateTime? = null
+    val startTime: LocalDateTime? = null
 
     /**
      * 结束时间，默认为开始时间后七天
      */
     @JsonSerialize(using = LocalDateTimeSerializer::class)
     @JsonDeserialize(using = LocalDateTimeDeserializer::class)
-    var endTime: LocalDateTime? = null
+    val endTime: LocalDateTime? = null
 
     /**
      * 该项考试创建时间，和enabled字段搭配实现复用
      */
     @JsonSerialize(using = LocalDateTimeSerializer::class)
     @JsonDeserialize(using = LocalDateTimeDeserializer::class)
-    var createTime: LocalDateTime? = null
-    var enabled: Boolean? = null
+    val createTime: LocalDateTime? = null
+    val enabled: Boolean? = null
 }

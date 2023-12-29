@@ -12,6 +12,11 @@ import java.io.Serializable
  */
 @Table(value = "oj_topic_label")
 open class TopicLabel(
-    @Id var topicId: Long?,
-    @Id var labelId: Long?
-) : Serializable
+    topicId: Long?,
+    labelId: Long?
+) : Serializable {
+    @Id
+    val topicId: Long? = null
+    @Id
+    val labelId: Long? = null
+}

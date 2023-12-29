@@ -12,7 +12,13 @@ import java.io.Serializable
  */
 @Table(value = "oj_exam_topic")
 open class ExamTopic(
-    @Id var examId: Long?,
-    @Id var topicId: Long?,
-    var examScore: Long?
-) : Serializable
+    examId: Long?,
+    topicId: Long?,
+    examScore: Long?
+) : Serializable {
+    @Id
+    var examId: Long? = null
+    @Id
+    var topicId: Long? = null
+    var examScore: Long? = null
+}

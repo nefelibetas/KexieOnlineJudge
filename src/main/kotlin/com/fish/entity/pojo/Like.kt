@@ -13,18 +13,23 @@ import java.io.Serializable
  */
 @Table(value = "oj_like")
 open class Like(
+    likeId: Long?,
+    solutionId: Long?,
+    commentId: Long?,
+    userId: String?
+) : Serializable {
     @Id(keyType = KeyType.Auto)
-    var likeId: Long?,
+    val likeId: Long? = null
     /**
      * 题解id
      */
-    var solutionId: Long?,
+    val solutionId: Long? = null
     /**
      * 评论id
      */
-    var commentId: Long?,
+    val commentId: Long? = null
     /**
      * 点赞的用户
      */
-    var userId: String?,
-) : Serializable
+    val userId: String? = null
+}

@@ -12,7 +12,12 @@ import java.io.Serializable
  * @since 2023-11-14
  */
 @Table(value = "oj_accepted")
-open class Accepted: Serializable {
-    @Id var userId: @NotNull(message = "用户Id未填写") String? = null
-    @Id var topicId: @NotNull(message = "题目Id未填写") Long? = null
+open class Accepted(
+    userId: String?,
+    topicId: Long?
+): Serializable {
+    @Id
+    val userId: @NotNull(message = "用户Id未填写") String? = null
+    @Id
+    val topicId: @NotNull(message = "题目Id未填写") Long? = null
 }

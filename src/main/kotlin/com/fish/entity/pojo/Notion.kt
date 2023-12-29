@@ -17,15 +17,21 @@ import java.time.LocalDateTime
  * @since 2023-11-14
  */
 @Table(value = "oj_notion")
-open class Notion: Serializable {
+open class Notion(
+    notionId: Long?,
+    hostId: String?,
+    title: String?,
+    content: String?,
+    enabled: Boolean?,
+    createTime: LocalDateTime?
+): Serializable {
     @Id(keyType = KeyType.Auto)
-    var notionId: Long? = null
-    var hostId: String? = null
-    var title: String? = null
-    var content: String? = null
-    var enabled: Boolean? = null
-
+    val notionId: Long? = null
+    val hostId: String? = null
+    val title: String? = null
+    val content: String? = null
+    val enabled: Boolean? = null
     @JsonSerialize(using = LocalDateTimeSerializer::class)
     @JsonDeserialize(using = LocalDateTimeDeserializer::class)
-    var createTime: LocalDateTime? = null
+    val createTime: LocalDateTime? = null
 }

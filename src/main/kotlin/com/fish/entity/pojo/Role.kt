@@ -13,7 +13,12 @@ import java.io.Serializable
  */
 @Table(value = "oj_role")
 open class Role(
-    @Id(keyType = KeyType.Auto) var roleId: Long?,
-    val roleName: String?,
-    val roleDescribe: String?,
-) : Serializable
+    roleId: Long?,
+    roleName: String?,
+    roleDescribe: String?
+) : Serializable {
+    @Id(keyType = KeyType.Auto)
+    var roleId: Long? = null
+    val roleName: String? = null
+    val roleDescribe: String? = null
+}

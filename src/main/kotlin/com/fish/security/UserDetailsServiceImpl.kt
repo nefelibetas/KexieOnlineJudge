@@ -5,7 +5,6 @@ import com.fish.exception.ServiceException
 import com.fish.exception.ServiceExceptionEnum
 import com.fish.mapper.AccountMapper
 import com.fish.mapper.RoleMapper
-import jakarta.annotation.Resource
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.core.userdetails.UsernameNotFoundException

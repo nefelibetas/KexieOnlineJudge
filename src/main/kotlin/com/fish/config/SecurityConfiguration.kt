@@ -3,7 +3,6 @@ package com.fish.config
 import com.fish.exception.ServiceExceptionEnum
 import com.fish.filter.JwtLoginFilter
 import com.fish.utils.ResultUtil.failure
-import jakarta.annotation.Resource
 import jakarta.servlet.http.HttpServletResponse
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration

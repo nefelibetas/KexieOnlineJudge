@@ -7,7 +7,6 @@ import com.fish.utils.JwtUtil
 import com.fish.utils.RedisUtil
 import com.fish.utils.ResultUtil.failure
 import io.jsonwebtoken.JwtException
-import jakarta.annotation.Resource
 import jakarta.servlet.FilterChain
 import jakarta.servlet.ServletException
 import jakarta.servlet.http.HttpServletRequest

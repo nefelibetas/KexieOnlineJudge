@@ -7,10 +7,7 @@ import org.springframework.security.crypto.password.PasswordEncoder
 
 @SpringBootTest
 internal class KexieOpenJudgeApplicationTests {
-    @Resource
-    private val passwordEncoder: PasswordEncoder? = null
     @Test
     fun contextLoads() {
-        println(passwordEncoder!!.encode("qx310320"))
     }
 }

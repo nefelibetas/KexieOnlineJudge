@@ -12,7 +12,9 @@ import java.io.Serializable
  * @since 2023-11-14
  */
 @Table(value = "oj_column_topic")
-open class ColumnTopic: Serializable {
-    @Id var columnId: @NotNull(message = "栏目id不能为空") Long? = null
-    @Id var topicId: @NotNull(message = "题目id不能为空") Long? = null
+open class ColumnTopic(columnId: Long, topicId: Long) : Serializable {
+    @Id
+    var columnId: @NotNull(message = "栏目id不能为空") Long? = null
+    @Id
+    var topicId: @NotNull(message = "题目id不能为空") Long? = null
 }

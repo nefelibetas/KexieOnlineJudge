@@ -5,11 +5,11 @@ import com.fish.entity.dto.LoginAccountDTO
 import com.fish.entity.dto.RegisterAccountDTO
 import com.fish.entity.dto.UpdateAccountDTO
 import com.fish.entity.pojo.Account
+import com.fish.exception.ServiceException
+import com.fish.exception.ServiceExceptionEnum
 import com.fish.service.account.AccountService
 import com.mybatisflex.core.paginate.Page
 import jakarta.validation.Valid
-import jakarta.validation.constraints.NotBlank
-import jakarta.validation.constraints.Pattern
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -64,13 +64,15 @@ class AccountController(val accountService: AccountService) {
      */
     @GetMapping("/admin/gets")
     fun getAccounts(
-        @RequestParam(defaultValue = "0", required = true) operate: @Pattern(regexp = "[01]") String?,
+        @RequestParam(defaultValue = "0") operate: String,
         @RequestParam(defaultValue = "1", required = false) pageNo: Int?,
         @RequestParam(defaultValue = "20", required = false) pageSize: Int?
     ): Result<Page<Account>> {
-        if (operate == "0")
+        if ("0" == operate)
             return accountService.getAccounts(pageNo!!, pageSize!!)
-        return accountService.getAdmins(pageNo!!, pageSize!!)
+        else if ("1" == operate)
+            return accountService.getAdmins(pageNo!!, pageSize!!)
+        throw ServiceException(ServiceExceptionEnum.SELECT_NOT_IN)
     }
 
     /**

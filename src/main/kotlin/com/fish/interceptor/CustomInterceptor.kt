@@ -18,27 +18,23 @@ class CustomInterceptor : HandlerInterceptor {
         val path = request.servletPath
         val remoteAddr = request.remoteAddr
         val buffer = StringBuffer()
-        when(method) {
-            "GET" -> {
-                val map = request.parameterMap
-                map.forEach { (key: String?, `val`: Array<String?>) ->
-                    if (!Objects.isNull(key) && !Objects.isNull(`val`)) {
-                        buffer.append("key: ")
-                        buffer.append(key)
-                        buffer.append(",value: ")
-                        buffer.append(`val`.contentToString())
-                        buffer.append(" ")
-                    }
+        val map = request.parameterMap
+        if (map.isNotEmpty())
+            map.forEach { (key: String?, `val`: Array<String?>) ->
+                if (!Objects.isNull(key) && !Objects.isNull(`val`)) {
+                    buffer.append("key: ")
+                    buffer.append(key)
+                    buffer.append(",value: ")
+                    buffer.append(`val`.contentToString())
+                    buffer.append(" ")
                 }
             }
-            else -> {
-                BufferedReader(InputStreamReader(request.inputStream)).use {
-                    it.forEachLine {line ->
-                        buffer.append(line.trim())
-                    }
+        if (!Objects.isNull(request.inputStream))
+            BufferedReader(InputStreamReader(request.inputStream)).use {
+                it.forEachLine {line ->
+                    buffer.append(line.trim())
                 }
             }
-        }
         log.info("接收到${method}请求: ${path}, 来源: $remoteAddr")
         if (StringUtils.hasLength(buffer.toString()))
             log.info("参数: {}", buffer)

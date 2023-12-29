@@ -29,8 +29,4 @@ data class RegisterAccountDTO(
     var qq: @Size(max = 20, message = "请正确输入QQ号") String? = null,
     var blogAddress: @Size(max = 128, message = "最多128位") String? = null,
     var githubAddress: @Size(max = 128, message = "最多128位") String? = null
-) : Serializable {
-    override fun toString(): String {
-        return "RegisterAccountDTO(nickname=$nickname, avatar=$avatar, studentId=$studentId, username=$username, password=$password, gender=$gender, email=$email, specialty=$specialty, qq=$qq, blogAddress=$blogAddress, githubAddress=$githubAddress)"
-    }
-}
+) : Serializable

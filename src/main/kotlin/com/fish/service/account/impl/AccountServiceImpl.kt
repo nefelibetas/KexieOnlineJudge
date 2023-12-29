@@ -66,7 +66,7 @@ class AccountServiceImpl(
     @Transactional
     override fun updateAccountInformation(updateAccountDTO: UpdateAccountDTO): Result<*> {
         val id = SecurityUtil.getId()
-        updateAccountDTO.id = id
+        updateAccountDTO.userId = id
         val i = mapper!!.updateAccount(updateAccountDTO)
         if (i > 0)
             return success<Any>()

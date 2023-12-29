@@ -33,14 +33,14 @@
     <update id="updateAccount" parameterType="com.fish.entity.dto.UpdateAccountDTO">
         update oj_account
         <set>
-            <if test="nickname != null">nickname = #{nickname},</if>
-            <if test="avatar != null">avatar = #{avatar},</if>
-            <if test="gender != null">gender = #{gender},</if>
-            <if test="email != null">email = #{email},</if>
-            <if test="qq != null">qq = #{qq},</if>
-            <if test="blogAddress != null">blog_address = #{blogAddress},</if>
-            <if test="githubAddress != null">github_address = #{githubAddress},</if>
+            <if test="nickname != null">`nickname`=#{nickname},</if>
+            <if test="avatar != null">`avatar`=#{avatar},</if>
+            <if test="gender != null">`gender`=#{gender},</if>
+            <if test="email != null">`email`=#{email},</if>
+            <if test="qq != null">`qq`=#{qq},</if>
+            <if test="blogAddress != null">`blog_address`=#{blogAddress},</if>
+            <if test="githubAddress != null">`github_address`=#{githubAddress},</if>
         </set>
-        where id = #{id}
+        where user_id = #{userId}
     </update>
 </mapper>

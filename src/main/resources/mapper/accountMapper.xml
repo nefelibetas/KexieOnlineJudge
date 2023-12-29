@@ -6,28 +6,41 @@
     <insert id="addAccount" parameterType="com.fish.entity.dto.RegisterAccountDTO">
         insert into oj_account
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            `email`, `password`
-            <if test="nickname != null">nickname</if>
-            <if test="avatar != null">avatar</if>
-            <if test="studentId != null">student_id</if>
-            <if test="username != null">username</if>
-            <if test="gender != null">gender</if>
-            <if test="specialty != null">specialty</if>
-            <if test="qq != null">qq</if>
-            <if test="blogAddress != null">blog_address</if>
-            <if test="githubAddress != null">github_address</if>
+            `email`, `password`,
+            <if test="nickname != null">`nickname`,</if>
+            <if test="avatar != null">`avatar`,</if>
+            <if test="studentId != null">`student_id`,</if>
+            <if test="username != null">`username`,</if>
+            <if test="gender != null">`gender`,</if>
+            <if test="specialty != null">`specialty`,</if>
+            <if test="qq != null">`qq`,</if>
+            <if test="blogAddress != null">`blog_address`,</if>
+            <if test="githubAddress != null">`github_address`,</if>
         </trim>
         <trim prefix="values(" suffix=")" suffixOverrides=",">
-            #{email}, #{password}
-            <if test="nickname != null">#{nickname}</if>
-            <if test="avatar != null">#{avatar}</if>
-            <if test="studentId != null">#{student_id}</if>
-            <if test="username != null">#{username}</if>
-            <if test="gender != null">#{gender}</if>
-            <if test="specialty != null">#{specialty}</if>
-            <if test="qq != null">#{qq}</if>
-            <if test="blogAddress != null">#{blog_address}</if>
-            <if test="githubAddress != null">#{github_address}</if>
+            #{email}, #{password},
+            <if test="nickname != null">#{nickname},</if>
+            <if test="avatar != null">#{avatar},</if>
+            <if test="studentId != null">#{student_id},</if>
+            <if test="username != null">#{username},</if>
+            <if test="gender != null">#{gender},</if>
+            <if test="specialty != null">#{specialty},</if>
+            <if test="qq != null">#{qq},</if>
+            <if test="blogAddress != null">#{blog_address},</if>
+            <if test="githubAddress != null">#{github_address},</if>
         </trim>
     </insert>
+    <update id="updateAccount" parameterType="com.fish.entity.dto.UpdateAccountDTO">
+        update oj_account
+        <set>
+            <if test="nickname != null">nickname = #{nickname},</if>
+            <if test="avatar != null">avatar = #{avatar},</if>
+            <if test="gender != null">gender = #{gender},</if>
+            <if test="email != null">email = #{email},</if>
+            <if test="qq != null">qq = #{qq},</if>
+            <if test="blogAddress != null">blog_address = #{blogAddress},</if>
+            <if test="githubAddress != null">github_address = #{githubAddress},</if>
+        </set>
+        where id = #{id}
+    </update>
 </mapper>

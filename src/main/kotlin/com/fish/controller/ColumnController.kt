@@ -28,7 +28,7 @@ class ColumnController(val columnService: ColumnService, val columnTopicService:
      * @return 响应code为200表示成功
      */
     @PostMapping("/admin/column/adds")
-    fun addColumns(@RequestBody @NotEmpty(message = "至少包含一个栏目") columns: ArrayList<@Valid Column>?): Result<*> {
+    fun addColumns(@RequestBody @Valid @NotEmpty(message = "至少包含一个栏目") columns: ArrayList<Column>?): Result<*> {
         return columnService.addColumnBatch(columns!!)
     }
 

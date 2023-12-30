@@ -17,7 +17,9 @@ open class Accepted(
     topicId: Long?
 ): Serializable {
     @Id
-    val userId: @NotNull(message = "用户Id未填写") String? = null
+    @NotNull(message = "用户Id未填写")
+    val userId: String? = null
     @Id
-    val topicId: @NotNull(message = "题目Id未填写") Long? = null
+    @NotNull(message = "题目Id未填写")
+    val topicId: Long? = null
 }

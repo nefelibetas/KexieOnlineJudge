@@ -17,7 +17,9 @@ open class ColumnTopic(
     topicId: Long?
 ) : Serializable {
     @Id
-    val columnId: @NotNull(message = "栏目id不能为空") Long? = null
+    @NotNull(message = "栏目id不能为空")
+    val columnId: Long? = null
     @Id
-    val topicId: @NotNull(message = "题目id不能为空") Long? = null
+    @NotNull(message = "题目id不能为空")
+    val topicId: Long? = null
 }

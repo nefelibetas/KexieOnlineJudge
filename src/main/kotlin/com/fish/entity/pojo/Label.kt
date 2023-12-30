@@ -20,5 +20,7 @@ open class Label(
 ) : Serializable {
     @Id(keyType = KeyType.Auto)
     val labelId: Long? = null
-    val labelName: @Size(min = 1, max = 32, message = "1~32字符以内") @NotBlank(message = "标签名未填写") String? = null
+    @Size(min = 1, max = 32, message = "1~32字符以内")
+    @NotBlank(message = "标签名未填写")
+    val labelName: String? = null
 }

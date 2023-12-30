@@ -13,6 +13,8 @@ import com.fish.service.topic.TopicService
 import com.fish.utils.ResultUtil.success
 import com.mybatisflex.core.query.QueryWrapper
 import com.mybatisflex.core.update.UpdateChain
+import com.mybatisflex.kotlin.extensions.kproperty.column
+import com.mybatisflex.kotlin.extensions.kproperty.eq
 import com.mybatisflex.spring.service.impl.ServiceImpl
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -35,9 +37,9 @@ class TopicServiceImpl : ServiceImpl<TopicMapper, Topic>(), TopicService {
 
     @Transactional
     override fun disableTopic(topicId: Long): Result<*> {
-        val update = UpdateChain.of(Topic::class)
-            .set(TOPIC.ENABLED, false)
-            .where(TOPIC.TOPIC_ID.eq(topicId))
+        val update = UpdateChain.of(Topic::class.java)
+            .set(Topic::enabled.column, false)
+            .where(Topic::topicId eq topicId)
             .update()
         if (update)
             return success<Any>()
@@ -46,7 +48,7 @@ class TopicServiceImpl : ServiceImpl<TopicMapper, Topic>(), TopicService {
 
     @Transactional
     override fun enableTopic(topicId: Long): Result<*> {
-        val update = UpdateChain.of(Topic::class)
+        val update = UpdateChain.of(Topic::class.java)
             .set(TOPIC.ENABLED, true)
             .where(TOPIC.TOPIC_ID.eq(topicId))
             .update()

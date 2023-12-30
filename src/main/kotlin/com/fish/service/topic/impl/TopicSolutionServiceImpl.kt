@@ -11,6 +11,8 @@ import com.fish.service.topic.TopicSolutionService
 import com.fish.utils.ResultUtil.success
 import com.mybatisflex.core.query.QueryWrapper
 import com.mybatisflex.core.update.UpdateChain
+import com.mybatisflex.kotlin.extensions.kproperty.column
+import com.mybatisflex.kotlin.extensions.kproperty.eq
 import com.mybatisflex.spring.service.impl.ServiceImpl
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -53,10 +55,10 @@ class TopicSolutionServiceImpl : ServiceImpl<TopicSolutionMapper, TopicSolution>
         val topicSolutionArrayList = mapper.selectPined(topicId)
         if (topicSolutionArrayList.size == 1)
             throw ServiceException(ServiceExceptionEnum.OPERATE_ERROR.code, ServiceExceptionEnum.OPERATE_ERROR.msg + ",已经存在置顶")
-        val update = UpdateChain.of(TopicSolution::class)
-            .set(TOPIC_SOLUTION.PINED, true)
-            .where(TOPIC_SOLUTION.SOLUTION_ID.eq(solutionId))
-            .and(TOPIC_SOLUTION.ENABLED.eq(true))
+        val update = UpdateChain.of(TopicSolution::class.java)
+            .set(TopicSolution::pined.column, true)
+            .where(TopicSolution::solutionId eq solutionId)
+            .and(TopicSolution::enabled eq true)
             .update()
         if (update)
             return success<Any>()
@@ -65,10 +67,10 @@ class TopicSolutionServiceImpl : ServiceImpl<TopicSolutionMapper, TopicSolution>
 
     @Transactional
     override fun disablePined(solutionId: Long): Result<*> {
-        val update = UpdateChain.of(TopicSolution::class)
-            .set(TOPIC_SOLUTION.PINED, false)
-            .where(TOPIC_SOLUTION.SOLUTION_ID.eq(solutionId))
-            .and(TOPIC_SOLUTION.ENABLED.eq(true))
+        val update = UpdateChain.of(TopicSolution::class.java)
+            .set(TopicSolution::pined.column, false)
+            .where(TopicSolution::solutionId eq solutionId)
+            .and(TopicSolution::enabled eq true)
             .update()
         if (update)
             return success<Any>()
@@ -77,9 +79,9 @@ class TopicSolutionServiceImpl : ServiceImpl<TopicSolutionMapper, TopicSolution>
 
     @Transactional
     override fun disableSolution(solutionId: Long): Result<*> {
-        val update = UpdateChain.of(TopicSolution::class)
-            .set(TOPIC_SOLUTION.ENABLED, false)
-            .where(TOPIC_SOLUTION.SOLUTION_ID.eq(solutionId))
+        val update = UpdateChain.of(TopicSolution::class.java)
+            .set(TopicSolution::enabled.column, false)
+            .where(TopicSolution::solutionId eq solutionId)
             .update()
         if (update)
             return success<Any>()
@@ -88,9 +90,9 @@ class TopicSolutionServiceImpl : ServiceImpl<TopicSolutionMapper, TopicSolution>
 
     @Transactional
     override fun enableSolution(solutionId: Long): Result<*> {
-        val update = UpdateChain.of(TopicSolution::class)
-            .set(TOPIC_SOLUTION.PINED, true)
-            .where(TOPIC_SOLUTION.SOLUTION_ID.eq(solutionId))
+        val update = UpdateChain.of(TopicSolution::class.java)
+            .set(TopicSolution::enabled.column, true)
+            .where(TopicSolution::solutionId eq solutionId)
             .update()
         if (update)
             return success<Any>()

@@ -20,7 +20,7 @@ class AccountController(val accountService: AccountService) {
      * @return 用户基本信息(不包含敏感信息)和token,后续访问接口需要携带token
      */
     @PostMapping("/login")
-    fun login(@RequestBody loginAccountDTO: @Valid LoginAccountDTO?): Result<HashMap<String, Any>> {
+    fun login(@RequestBody @Valid loginAccountDTO: LoginAccountDTO?): Result<HashMap<String, Any>> {
         return accountService.login(loginAccountDTO!!)
     }
 
@@ -30,7 +30,7 @@ class AccountController(val accountService: AccountService) {
      * @return 响应code为200表示注册成功，否则响应其他信息
      */
     @PostMapping("/register")
-    fun register(@RequestBody registerAccountDTO: @Valid RegisterAccountDTO?): Result<*> {
+    fun register(@RequestBody @Valid registerAccountDTO: RegisterAccountDTO?): Result<*> {
         return accountService.register(registerAccountDTO!!)
     }
 
@@ -39,8 +39,8 @@ class AccountController(val accountService: AccountService) {
      * @return 响应code为200表示请求成功
      */
     @PutMapping("/user/update")
-    fun updateAccountInformation(@RequestBody updateAccountDTO: @Valid UpdateAccountDTO): Result<*> {
-        return accountService.updateAccountInformation(updateAccountDTO)
+    fun updateAccountInformation(@RequestBody @Valid updateAccountDTO: UpdateAccountDTO?): Result<*> {
+        return accountService.updateAccountInformation(updateAccountDTO!!)
     }
 
     /**

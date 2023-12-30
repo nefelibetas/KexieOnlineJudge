@@ -41,40 +41,38 @@ open class Topic(
     @Id(keyType = KeyType.Auto)
     val topicId: Long? = null
     val uploadUserId: @NotBlank(message = "上传人id不能为空") String? = null
-    val title: @NotBlank(message = "题目未填写") @Size(min = 2, max = 32, message = "题目要求在2~32字内") String? = null
+    @NotBlank(message = "题目未填写")
+    @Size(min = 2, max = 32, message = "题目要求在2~32字内")
+    val title: String? = null
     /**
      * 题面
      */
-    val content: @NotBlank(message = "题面未填写") @Size(
-        min = 2,
-        max = 1000,
-        message = "题面要求在2~1000字内"
-    ) String? = null
-    val difficulty: @Pattern(regexp = "^([低中高])$", message = "只能在低、中、高中选择") String? = null
+    @NotBlank(message = "题面未填写") @Size(min = 2, max = 1000, message = "题面要求在2~1000字内")
+    val content: String? = null
+    @Pattern(regexp = "^([低中高])$", message = "只能在低、中、高中选择")
+    val difficulty: String? = null
     /**
      * 限制内存
      */
-    val limitedMemory: @NotNull(message = "最大内存未填写") Long? = null
+    @NotNull(message = "最大内存未填写")
+    val limitedMemory: Long? = null
     /**
      * 限制时间
      */
-    val limitedTime: @NotNull(message = "最大时间未填写") Long? = null
+    @NotNull(message = "最大时间未填写")
+    val limitedTime: Long? = null
     /**
      * 输入描述
      */
-    val inputDescribe: @NotBlank(message = "输入描述未填写") @Size(
-        min = 2,
-        max = 1000,
-        message = "输入描述要求在2~1000字内"
-    ) String? = null
+    @NotBlank(message = "输入描述未填写")
+    @Size(min = 2, max = 1000, message = "输入描述要求在2~1000字内")
+    val inputDescribe: String? = null
     /**
      * 输出描述
      */
-    val outputDescribe: @NotBlank(message = "输出描述未填写") @Size(
-        min = 2,
-        max = 1000,
-        message = "输出描述要求在2~1000字内"
-    ) String? = null
+    @NotBlank(message = "输出描述未填写")
+    @Size(min = 2, max = 1000, message = "输出描述要求在2~1000字内")
+    val outputDescribe:  String? = null
     /**
      * 是否开启题解
      */

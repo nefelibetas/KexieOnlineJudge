@@ -1,6 +1,7 @@
 package com.fish.service.label.impl
 
 import com.fish.common.Result
+import com.fish.entity.dto.LabelsDTO
 import com.fish.entity.pojo.Label
 import com.fish.entity.pojo.table.LabelTableDef.LABEL
 import com.fish.exception.ServiceException
@@ -8,6 +9,7 @@ import com.fish.exception.ServiceExceptionEnum
 import com.fish.mapper.LabelMapper
 import com.fish.service.label.LabelService
 import com.fish.utils.ResultUtil.success
+import com.mybatisflex.core.paginate.Page
 import com.mybatisflex.core.query.QueryWrapper
 import com.mybatisflex.spring.service.impl.ServiceImpl
 import org.springframework.stereotype.Service
@@ -24,16 +26,16 @@ class LabelServiceImpl : ServiceImpl<LabelMapper, Label>(), LabelService {
     }
 
     @Transactional
-    override fun addLabelBatch(labels: ArrayList<Label>): Result<*> {
-        if (labels.isEmpty()) throw ServiceException(ServiceExceptionEnum.KEY_ARGUMENT_NOT_INPUT)
-        val i = mapper!!.insertBatch(labels)
+    override fun addLabelBatch(labels: LabelsDTO): Result<*> {
+        val i = mapper!!.insertBatch(labels.labels)
         if (i > 0) return success<Any>()
         throw ServiceException(ServiceExceptionEnum.OPERATE_ERROR)
     }
 
-    override fun getLabels(): Result<ArrayList<Label>> {
-        val labels = mapper!!.selectAll() as ArrayList<Label>
-        return success(labels)
+    override fun getLabels(pageNo: Int, pageSize: Int): Result<Page<Label>> {
+        val wrapper = QueryWrapper.create().select(LABEL.ALL_COLUMNS).from(LABEL).orderBy(LABEL.LABEL_ID.asc())
+        val labelPage = mapper!!.paginate(Page.of(pageNo, pageSize), wrapper)
+        return success(labelPage)
     }
 
     override fun getLabel(labelId: Long): Result<Label> {

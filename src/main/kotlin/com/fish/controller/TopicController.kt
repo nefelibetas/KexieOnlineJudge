@@ -1,14 +1,15 @@
 package com.fish.controller
 
 import com.fish.common.Result
+import com.fish.entity.dto.InsertTopicDTO
+import com.fish.entity.dto.UpdateTopicDTO
 import com.fish.entity.pojo.Label
-import com.fish.entity.pojo.Topic
 import com.fish.entity.vo.TopicVO
 import com.fish.service.topic.TopicLabelService
 import com.fish.service.topic.TopicService
+import com.mybatisflex.core.paginate.Page
 import jakarta.validation.Valid
 import jakarta.validation.constraints.NotEmpty
-import jakarta.validation.constraints.NotNull
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -19,18 +20,8 @@ class TopicController(val topicService: TopicService, val topicLabelService: Top
      * @return 响应code为200表示成功
      */
     @PostMapping("/admin/topic/add")
-    fun addTopic(@RequestBody @Valid topic: Topic?): Result<*> {
-        return topicService.addTopic(topic!!)
-    }
-
-    /**
-     * 批量增加题目
-     * @param topics 题目数组
-     * @return 响应code为200表示成功
-     */
-    @PostMapping("/admin/topic/adds")
-    fun addTopicBatch(@RequestBody @NotEmpty(message = "至少上传一道题目") @Valid topics:  ArrayList< Topic>?): Result<*> {
-        return topicService.addTopicBatch(topics!!)
+    fun addTopic(@RequestBody @Valid insertTopicDTO: InsertTopicDTO?): Result<*> {
+        return topicService.addTopicWithExample(insertTopicDTO!!)
     }
 
     /**
@@ -42,7 +33,7 @@ class TopicController(val topicService: TopicService, val topicLabelService: Top
     @PostMapping("/admin/topic/addLabel/{topicId}")
     fun addTopicLabel(
         @PathVariable topicId: Long?,
-        @RequestBody @NotEmpty(message = "必须选择一个标签") labelIds:  ArrayList<Long>?
+        @RequestBody @NotEmpty(message = "必须选择一个标签") labelIds: ArrayList<Long>?
     ): Result<*> {
         return topicLabelService.addLabelToTopic(topicId!!, labelIds!!)
     }
@@ -53,28 +44,25 @@ class TopicController(val topicService: TopicService, val topicLabelService: Top
      * @return 所有可选的标签
      */
     @GetMapping("/admin/topic/getOptionalLabel/{topicId}")
-    fun getOptionalLabels(@PathVariable topicId: Long?): Result<ArrayList<Label>> {
-        return topicLabelService.getOptionalLabels(topicId!!)
+    fun getOptionalLabels(
+        @PathVariable topicId: Long?,
+        @RequestParam(defaultValue = "1") pageNo: Int,
+        @RequestParam(defaultValue = "20") pageSize: Int
+    ): Result<Page<Label>> {
+        return topicLabelService.getOptionalLabels(topicId!!, pageNo, pageSize)
     }
 
     /**
-     * 禁用题目
+     * 禁用/启用 题目
      * @param topicId 题目id
      * @return 响应code为200表示成功
      */
-    @PutMapping("/admin/topic/disable/{topicId}")
-    fun disableTopic(@PathVariable topicId: Long?): Result<*> {
-        return topicService.disableTopic(topicId!!)
-    }
-
-    /**
-     * 启用题目
-     * @param topicId 题目id
-     * @return 响应code为200表示成功
-     */
-    @PutMapping("/admin/topic/enable/{topicId}")
-    fun enableTopic(@PathVariable topicId: Long?): Result<*> {
-        return topicService.enableTopic(topicId!!)
+    @PutMapping("/admin/topic/changeStatus/{topicId}")
+    fun changeStatus(
+        @PathVariable topicId: Long?,
+        @RequestParam(defaultValue = "false") action: Boolean
+    ): Result<*> {
+        return topicService.changeStatus(topicId!!, action)
     }
 
     /**
@@ -100,9 +88,9 @@ class TopicController(val topicService: TopicService, val topicLabelService: Top
     @PutMapping("/admin/topic/update/{topicId}")
     fun updateTopic(
         @PathVariable topicId: Long?,
-        @RequestBody @Valid topic: Topic?
+        @RequestBody @Valid updateTopicDTO: UpdateTopicDTO
     ): Result<*> {
-        return topicService.updateTopic(topicId!!, topic!!)
+        return topicService.updateTopic(topicId!!, updateTopicDTO!!)
     }
 
     /**
@@ -110,8 +98,11 @@ class TopicController(val topicService: TopicService, val topicLabelService: Top
      * @return 所有启用的题目
      */
     @GetMapping("/topic/gets")
-    fun getTopics(): Result<ArrayList<TopicVO>> {
-        return topicService.getTopics()
+    fun getTopics(
+        @RequestParam(defaultValue = "1") pageNo: Int,
+        @RequestParam(defaultValue = "20") pageSize: Int
+    ): Result<Page<TopicVO>> {
+        return topicService.getTopics(pageNo, pageSize)
     }
 
     /**

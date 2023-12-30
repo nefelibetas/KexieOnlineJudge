@@ -14,10 +14,7 @@ import java.io.Serializable
  * @since 2023-11-14
  */
 @Table(value = "oj_label")
-open class Label(
-    labelId: Long?,
-    labelName: String?,
-) : Serializable {
+open class Label: Serializable {
     @Id(keyType = KeyType.Auto)
     val labelId: Long? = null
     @Size(min = 1, max = 32, message = "1~32字符以内")

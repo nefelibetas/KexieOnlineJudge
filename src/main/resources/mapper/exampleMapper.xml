@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fish.mapper.ExampleMapper">
+    <insert id="addExampleBatch" parameterType="java.util.ArrayList">
+        insert into oj_example(`topic_id`, `input`, `output`, `showed`, `assessed`)
+        values
+        <foreach collection="examples" item="example" separator=",">
+            (#{example.topicId}, #{example.input}, #{example.output}, #{example.showed}, #{example.assessed})
+        </foreach>
+    </insert>
+</mapper>

@@ -10,8 +10,6 @@ import com.fish.exception.ServiceExceptionEnum
 import com.fish.service.account.AccountService
 import com.mybatisflex.core.paginate.Page
 import jakarta.validation.Valid
-import jakarta.validation.constraints.NotBlank
-import jakarta.validation.constraints.Pattern
 import org.springframework.web.bind.annotation.*
 
 @RestController

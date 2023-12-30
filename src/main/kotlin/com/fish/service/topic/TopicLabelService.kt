@@ -3,6 +3,7 @@ package com.fish.service.topic
 import com.fish.common.Result
 import com.fish.entity.pojo.Label
 import com.fish.entity.pojo.TopicLabel
+import com.mybatisflex.core.paginate.Page
 import com.mybatisflex.core.service.IService
 
 interface TopicLabelService : IService<TopicLabel> {
@@ -19,7 +20,7 @@ interface TopicLabelService : IService<TopicLabel> {
      * @param topicId 题目id
      * @return 获取该题目id可选的标签
      */
-    fun getOptionalLabels(topicId: Long): Result<ArrayList<Label>>
+    fun getOptionalLabels(topicId: Long, pageNo: Int, pageSize: Int): Result<Page<Label>>
 
     /**
      * 给题目批量移除标签

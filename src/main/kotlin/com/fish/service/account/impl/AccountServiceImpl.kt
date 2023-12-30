@@ -94,6 +94,8 @@ class AccountServiceImpl(
 
     @Transactional
     override fun changeAccountRole(userId: String, roleId: Long): Result<*> {
+        if (roleId == 1L)
+            throw ServiceException(ServiceExceptionEnum.OPERATE_ERROR)
         if (checkRole(userId, roleId))
             throw ServiceException(ServiceExceptionEnum.INSUFFICIENT_PERMISSIONS)
         val i = mapper!!.changeAccountRole(userId, roleId)

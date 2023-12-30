@@ -11,12 +11,12 @@ import com.fish.mapper.LabelMapper
 import com.fish.mapper.TopicLabelMapper
 import com.fish.service.topic.TopicLabelService
 import com.fish.utils.ResultUtil.success
+import com.mybatisflex.core.paginate.Page
 import com.mybatisflex.core.query.QueryWrapper
 import com.mybatisflex.spring.service.impl.ServiceImpl
 import jakarta.annotation.Resource
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import java.util.function.Consumer
 
 @Service
 class TopicLabelServiceImpl : ServiceImpl<TopicLabelMapper, TopicLabel>(), TopicLabelService {
@@ -25,13 +25,19 @@ class TopicLabelServiceImpl : ServiceImpl<TopicLabelMapper, TopicLabel>(), Topic
     @Transactional
     override fun addLabelToTopic(topicId: Long, labelIds: ArrayList<Long>): Result<*> {
         val topicLabels = ArrayList<TopicLabel>()
-        labelIds.forEach(Consumer { labelId: Long -> topicLabels.add(TopicLabel(topicId, labelId)) })
+        for (i in 0 until labelIds.size) {
+            val topicLabel = TopicLabel()
+            topicLabel.labelId = labelIds[i]
+            topicLabel.topicId = topicId
+            topicLabels.add(topicLabel)
+        }
         val i = mapper!!.insertBatch(topicLabels)
-        if (i > 0) return success<Any>()
+        if (i > 0)
+            return success<Any>()
         throw ServiceException(ServiceExceptionEnum.OPERATE_ERROR)
     }
 
-    override fun getOptionalLabels(topicId: Long): Result<ArrayList<Label>> {
+    override fun getOptionalLabels(topicId: Long, pageNo: Int, pageSize: Int): Result<Page<Label>> {
         val wrapper = QueryWrapper.create()
             .select(LABEL.ALL_COLUMNS).from(LABEL)
             .where(LABEL.LABEL_ID.notIn(
@@ -42,8 +48,8 @@ class TopicLabelServiceImpl : ServiceImpl<TopicLabelMapper, TopicLabel>(), Topic
                         .on(LABEL.LABEL_ID.eq(TOPIC_LABEL.LABEL_ID))
                         .and(TOPIC_LABEL.TOPIC_ID.eq(topicId))
                 )
-            )
-        val labels = labelMapper!!.selectListByQuery(wrapper) as ArrayList<Label>
+            ).orderBy(LABEL.LABEL_ID.asc())
+        val labels = labelMapper!!.paginate(Page.of(pageNo, pageSize), wrapper)
         return success(labels)
     }
 

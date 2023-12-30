@@ -1,14 +1,15 @@
 package com.fish.controller
 
 import com.fish.common.Result
+import com.fish.entity.dto.ColumnDTO
 import com.fish.entity.pojo.Column
 import com.fish.entity.vo.ColumnVO
 import com.fish.entity.vo.TopicVO
 import com.fish.service.column.ColumnService
 import com.fish.service.column.ColumnTopicService
+import com.mybatisflex.core.paginate.Page
 import jakarta.validation.Valid
 import jakarta.validation.constraints.NotEmpty
-import jakarta.validation.constraints.NotNull
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -21,15 +22,6 @@ class ColumnController(val columnService: ColumnService, val columnTopicService:
     @PostMapping("/admin/column/add")
     fun addColumn(@RequestBody @Valid column: Column?): Result<*> {
         return columnService.addColumn(column!!)
-    }
-    /**
-     * 批量增加栏目
-     * @param columns 栏目数组
-     * @return 响应code为200表示成功
-     */
-    @PostMapping("/admin/column/adds")
-    fun addColumns(@RequestBody @Valid @NotEmpty(message = "至少包含一个栏目") columns: ArrayList<Column>?): Result<*> {
-        return columnService.addColumnBatch(columns!!)
     }
 
     /**
@@ -50,8 +42,11 @@ class ColumnController(val columnService: ColumnService, val columnTopicService:
      * @return 全部栏目,包括栏目内的题目(题目包括其标签)
      */
     @GetMapping("/column/gets")
-    fun getColumns(): Result<ArrayList<ColumnVO>> {
-        return columnService.getColumns()
+    fun getColumns(
+        @RequestParam(defaultValue = "1") pageNo: Int,
+        @RequestParam(defaultValue = "5") pageSize: Int
+    ): Result<Page<ColumnVO>> {
+        return columnService.getColumns(pageNo, pageSize)
     }
 
     /**
@@ -69,8 +64,12 @@ class ColumnController(val columnService: ColumnService, val columnTopicService:
      * @param columnId 栏目id
      */
     @GetMapping("/admin/column/getOptionalTopic/{columnId}")
-    fun getOptionalTopic(@PathVariable columnId: Long?) : Result<ArrayList<TopicVO>> {
-        return columnTopicService.getOptionalTopic(columnId!!)
+    fun getOptionalTopic(
+        @PathVariable columnId: Long?,
+        @RequestParam(defaultValue = "1") pageNo: Int,
+        @RequestParam(defaultValue = "10") pageSize: Int
+    ): Result<Page<TopicVO>> {
+        return columnTopicService.getOptionalTopic(columnId!!, pageNo, pageSize)
     }
 
     /**
@@ -79,28 +78,21 @@ class ColumnController(val columnService: ColumnService, val columnTopicService:
      * @return 响应code为200表示成功
      */
     @PutMapping("/admin/column/update")
-    fun updateColumn(@RequestBody @Valid column: Column?): Result<*> {
+    fun updateColumn(@RequestBody @Valid column: ColumnDTO?): Result<*> {
         return columnService.updateColumn(column!!)
     }
 
     /**
-     * 禁用栏目
+     * 禁用/启用 栏目
      * @param columnId 栏目id
      * @return 响应code为200表示成功
      */
-    @PutMapping("/admin/column/disable/{columnId}")
-    fun disableColumn(@PathVariable columnId: Long?): Result<*> {
-        return columnService.disableColumn(columnId!!)
-    }
-
-    /**
-     * 启用栏目
-     * @param columnId 栏目id
-     * @return 响应code为200表示成功
-     */
-    @PutMapping("/admin/column/enable/{columnId}")
-    fun enableColumn(@PathVariable columnId: Long?): Result<*> {
-        return columnService.enableColumn(columnId!!)
+    @PutMapping("/admin/column/changeStatus/{columnId}")
+    fun changeStatus(
+        @PathVariable columnId: Long?,
+        @RequestParam(defaultValue = "false") action: Boolean
+    ): Result<*> {
+        return columnService.changeStatus(columnId!!, action)
     }
 
     /**

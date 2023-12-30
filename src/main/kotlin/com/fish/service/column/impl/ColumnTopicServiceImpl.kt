@@ -12,6 +12,7 @@ import com.fish.exception.ServiceExceptionEnum
 import com.fish.mapper.ColumnTopicMapper
 import com.fish.service.column.ColumnTopicService
 import com.fish.utils.ResultUtil.success
+import com.mybatisflex.core.paginate.Page
 import com.mybatisflex.core.query.QueryWrapper
 import com.mybatisflex.spring.service.impl.ServiceImpl
 import org.springframework.stereotype.Service
@@ -19,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 class ColumnTopicServiceImpl : ServiceImpl<ColumnTopicMapper, ColumnTopic>(), ColumnTopicService {
-    override fun getOptionalTopic(columnId: Long): Result<ArrayList<TopicVO>> {
+    override fun getOptionalTopic(columnId: Long, pageNo: Int, pageSize: Int): Result<Page<TopicVO>> {
         val wrapper = QueryWrapper.create()
             .select()
             .from(TOPIC)
@@ -35,8 +36,8 @@ class ColumnTopicServiceImpl : ServiceImpl<ColumnTopicMapper, ColumnTopic>(), Co
                         .and(COLUMN_TOPIC.COLUMN_ID.eq(columnId))
                 )
             )
-        val topicVOS = mapper!!.selectListByQueryAs(wrapper, TopicVO::class.java) as ArrayList<TopicVO>
-        return success(topicVOS)
+        val paginateAs = mapper!!.paginateAs(Page.of(pageNo, pageSize), wrapper, TopicVO::class.java)
+        return success(paginateAs)
     }
 
     @Transactional
@@ -60,5 +61,4 @@ class ColumnTopicServiceImpl : ServiceImpl<ColumnTopicMapper, ColumnTopic>(), Co
             return success<Any>()
         throw ServiceException(ServiceExceptionEnum.OPERATE_ERROR)
     }
-
 }

@@ -1,10 +1,11 @@
 package com.fish.controller
 
 import com.fish.common.Result
+import com.fish.entity.dto.LabelsDTO
 import com.fish.entity.pojo.Label
 import com.fish.service.label.LabelService
+import com.mybatisflex.core.paginate.Page
 import jakarta.validation.Valid
-import jakarta.validation.constraints.NotEmpty
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -25,7 +26,7 @@ class LabelController(val labelService: LabelService) {
      * @return 响应code为200表示成功
      */
     @PostMapping("/admin/label/adds")
-    fun addLabels(@RequestBody @NotEmpty(message = "至少增加一个标签") @Valid labels: ArrayList< Label>?): Result<*> {
+    fun addLabels(@RequestBody @Valid labels: LabelsDTO?): Result<*> {
         return labelService.addLabelBatch(labels!!)
     }
 
@@ -38,13 +39,17 @@ class LabelController(val labelService: LabelService) {
     fun getLabel(@PathVariable("labelId") labelId: Long?): Result<Label> {
         return labelService.getLabel(labelId!!)
     }
+
     /**
      * 获取全部标签
      * @return 全部标签
      */
     @GetMapping("/label/gets")
-    fun getLabels(): Result<ArrayList<Label>> {
-        return labelService.getLabels()
+    fun getLabels(
+        @RequestParam(defaultValue = "1") pageNo: Int,
+        @RequestParam(defaultValue = "20") pageSize: Int
+    ): Result<Page<Label>> {
+        return labelService.getLabels(pageNo, pageSize)
     }
 
     /**

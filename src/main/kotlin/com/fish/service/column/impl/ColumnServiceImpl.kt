@@ -1,6 +1,7 @@
 package com.fish.service.column.impl
 
 import com.fish.common.Result
+import com.fish.entity.dto.ColumnDTO
 import com.fish.entity.pojo.Column
 import com.fish.entity.pojo.table.ColumnTableDef.COLUMN
 import com.fish.entity.pojo.table.ColumnTopicTableDef
@@ -13,10 +14,12 @@ import com.fish.exception.ServiceExceptionEnum
 import com.fish.mapper.ColumnMapper
 import com.fish.service.column.ColumnService
 import com.fish.utils.ResultUtil.success
+import com.mybatisflex.core.paginate.Page
 import com.mybatisflex.core.query.QueryWrapper
 import com.mybatisflex.core.update.UpdateChain
+import com.mybatisflex.kotlin.extensions.kproperty.column
+import com.mybatisflex.kotlin.extensions.kproperty.eq
 import com.mybatisflex.spring.service.impl.ServiceImpl
-import jakarta.validation.Valid
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.util.*
@@ -31,16 +34,7 @@ class ColumnServiceImpl : ServiceImpl<ColumnMapper, Column>(), ColumnService {
         throw ServiceException(ServiceExceptionEnum.OPERATE_ERROR)
     }
 
-    @Transactional
-    override fun addColumnBatch(columns: @Valid ArrayList<Column>): Result<*> {
-        if (columns.isEmpty()) throw ServiceException(ServiceExceptionEnum.KEY_ARGUMENT_NOT_INPUT)
-        val i = mapper!!.insertBatch(columns)
-        if (i > 0)
-            return success<Any>()
-        throw ServiceException(ServiceExceptionEnum.OPERATE_ERROR)
-    }
-
-    override fun getColumns(): Result<ArrayList<ColumnVO>> {
+    override fun getColumns(pageNo: Int, pageSize: Int): Result<Page<ColumnVO>> {
         val wrapper = QueryWrapper.create()
             .select(COLUMN.ALL_COLUMNS, TopicTableDef.TOPIC.ALL_COLUMNS, LabelTableDef.LABEL.ALL_COLUMNS)
             .from(COLUMN)
@@ -54,10 +48,8 @@ class ColumnServiceImpl : ServiceImpl<ColumnMapper, Column>(), ColumnService {
             .on(TopicTableDef.TOPIC.TOPIC_ID.eq(TopicLabelTableDef.TOPIC_LABEL.TOPIC_ID))
             .innerJoin<QueryWrapper>(LabelTableDef.LABEL)
             .on(LabelTableDef.LABEL.LABEL_ID.eq(TopicLabelTableDef.TOPIC_LABEL.LABEL_ID))
-        val columnVOS = mapper!!.selectListByQueryAs(wrapper, ColumnVO::class.java) as ArrayList<ColumnVO>
-        if (columnVOS.size > 0)
-            return success()
-        throw ServiceException(ServiceExceptionEnum.NOT_FOUND)
+        val columnVOPage = mapper!!.paginateAs(Page.of(pageNo, pageSize), wrapper, ColumnVO::class.java)
+        return success(columnVOPage)
     }
 
     override fun getColumn(columnId: Long): Result<ColumnVO> {
@@ -81,27 +73,20 @@ class ColumnServiceImpl : ServiceImpl<ColumnMapper, Column>(), ColumnService {
     }
 
     @Transactional
-    override fun updateColumn(column: Column): Result<*> {
-        if (Objects.isNull(column.columnId)) throw ServiceException(ServiceExceptionEnum.KEY_ARGUMENT_NOT_INPUT)
-        val i = mapper!!.update(column)
+    override fun updateColumn(column: ColumnDTO): Result<*> {
+        if (Objects.isNull(column.columnId))
+            throw ServiceException(ServiceExceptionEnum.KEY_ARGUMENT_NOT_INPUT)
+        val i = mapper!!.updateInfo(column)
         if (i > 0)
             return success<Any>()
         throw ServiceException(ServiceExceptionEnum.OPERATE_ERROR)
     }
 
     @Transactional
-    override fun disableColumn(columnId: Long): Result<*> {
-        val i = mapper!!.disableColumn(columnId)
-        if (i > 0)
-            return success<Any>()
-        throw ServiceException(ServiceExceptionEnum.OPERATE_ERROR)
-    }
-
-    @Transactional
-    override fun enableColumn(columnId: Long): Result<*> {
-        val update = UpdateChain.of(Column::class)
-            .set(COLUMN.ENABLED, true)
-            .where(COLUMN.COLUMN_ID.eq(columnId))
+    override fun changeStatus(columnId: Long, action: Boolean): Result<*> {
+        val update = UpdateChain.of(Column::class.java)
+            .set(Column::enabled.column, action)
+            .where(Column::columnId eq columnId)
             .update()
         if (update)
             return success<Any>()

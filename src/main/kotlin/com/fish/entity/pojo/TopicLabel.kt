@@ -11,12 +11,9 @@ import java.io.Serializable
  * @since 2023-11-14
  */
 @Table(value = "oj_topic_label")
-open class TopicLabel(
-    topicId: Long?,
-    labelId: Long?
-) : Serializable {
+open class TopicLabel: Serializable {
     @Id
-    val topicId: Long? = null
+    var labelId: Long? = null
     @Id
-    val labelId: Long? = null
+    var topicId: Long? = null
 }

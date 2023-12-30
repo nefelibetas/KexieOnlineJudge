@@ -1,8 +1,11 @@
 package com.fish.service.topic
 
 import com.fish.common.Result
+import com.fish.entity.dto.InsertTopicDTO
+import com.fish.entity.dto.UpdateTopicDTO
 import com.fish.entity.pojo.Topic
 import com.fish.entity.vo.TopicVO
+import com.mybatisflex.core.paginate.Page
 import com.mybatisflex.core.service.IService
 
 interface TopicService : IService<Topic> {
@@ -11,28 +14,14 @@ interface TopicService : IService<Topic> {
      * @param topic 题目
      * @return 封装好的响应信息
      */
-    fun addTopic(topic: Topic): Result<*>
+    fun addTopicWithExample(insertTopicDTO: InsertTopicDTO): Result<*>
 
     /**
-     * 批量新增题目
-     * @param topics 题目数组
-     * @return 封装好的响应信息
-     */
-    fun addTopicBatch(topics: ArrayList<Topic>): Result<*>
-
-    /**
-     * 禁用题目
+     * 禁用/启用 题目
      * @param topicId 题目id
      * @return 封装好的响应信息
      */
-    fun disableTopic(topicId: Long): Result<*>
-
-    /**
-     * 启用题目
-     * @param topicId 题目id
-     * @return 封装好的响应信息
-     */
-    fun enableTopic(topicId: Long): Result<*>
+    fun changeStatus(topicId: Long, action: Boolean): Result<*>
 
     /**
      * 更新题目信息
@@ -40,13 +29,13 @@ interface TopicService : IService<Topic> {
      * @param topic 题目传输对象
      * @return 封装好的响应信息
      */
-    fun updateTopic(topicId: Long, topic: Topic): Result<*>
+    fun updateTopic(topicId: Long, updateTopicDTO: UpdateTopicDTO): Result<*>
 
     /**
      * 获取所有题目
      * @return 封装好的响应信息
      */
-    fun getTopics(): Result<ArrayList<TopicVO>>
+    fun getTopics(pageNo: Int, pageSize: Int): Result<Page<TopicVO>>
 
     /**
      * 获取id对应的题目

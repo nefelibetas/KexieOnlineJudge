@@ -7,10 +7,6 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer
 import com.mybatisflex.annotation.Id
 import com.mybatisflex.annotation.KeyType
 import com.mybatisflex.annotation.Table
-import jakarta.validation.constraints.NotBlank
-import jakarta.validation.constraints.NotNull
-import jakarta.validation.constraints.Pattern
-import jakarta.validation.constraints.Size
 import java.io.Serializable
 import java.time.LocalDateTime
 
@@ -21,57 +17,31 @@ import java.time.LocalDateTime
  * @since 2023-11-14
  */
 @Table(value = "oj_topic")
-open class Topic(
-    topicId: Long?,
-    uploadUserId: String?,
-    title: String?,
-    content: String?,
-    difficulty: String?,
-    limitedMemory: Long?,
-    limitedTime: Long?,
-    inputDescribe: String?,
-    outputDescribe: String?,
-    enabledSolution: Boolean?,
-    createTime: LocalDateTime?,
-    updateTime: LocalDateTime?,
-    precautions: String?,
-    from: String?,
-    enabled: Boolean?
-): Serializable {
+open class Topic: Serializable {
     @Id(keyType = KeyType.Auto)
     val topicId: Long? = null
-    val uploadUserId: @NotBlank(message = "上传人id不能为空") String? = null
-    @NotBlank(message = "题目未填写")
-    @Size(min = 2, max = 32, message = "题目要求在2~32字内")
+    val uploadUserId: String? = null
     val title: String? = null
     /**
      * 题面
      */
-    @NotBlank(message = "题面未填写") @Size(min = 2, max = 1000, message = "题面要求在2~1000字内")
     val content: String? = null
-    @Pattern(regexp = "^([低中高])$", message = "只能在低、中、高中选择")
     val difficulty: String? = null
     /**
      * 限制内存
      */
-    @NotNull(message = "最大内存未填写")
     val limitedMemory: Long? = null
     /**
      * 限制时间
      */
-    @NotNull(message = "最大时间未填写")
     val limitedTime: Long? = null
     /**
      * 输入描述
      */
-    @NotBlank(message = "输入描述未填写")
-    @Size(min = 2, max = 1000, message = "输入描述要求在2~1000字内")
     val inputDescribe: String? = null
     /**
      * 输出描述
      */
-    @NotBlank(message = "输出描述未填写")
-    @Size(min = 2, max = 1000, message = "输出描述要求在2~1000字内")
     val outputDescribe:  String? = null
     /**
      * 是否开启题解

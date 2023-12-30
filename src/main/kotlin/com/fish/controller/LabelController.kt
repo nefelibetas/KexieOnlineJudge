@@ -15,7 +15,7 @@ class LabelController(val labelService: LabelService) {
      * @return 响应code为200为成功
      */
     @PostMapping("/admin/label/add")
-    fun addLabel(@RequestBody label: @Valid Label?): Result<*> {
+    fun addLabel(@RequestBody @Valid label: Label?): Result<*> {
         return labelService.addLabel(label!!)
     }
 
@@ -25,7 +25,7 @@ class LabelController(val labelService: LabelService) {
      * @return 响应code为200表示成功
      */
     @PostMapping("/admin/label/adds")
-    fun addLabels(@RequestBody labels: @NotEmpty(message = "至少增加一个标签") ArrayList<@Valid Label>?): Result<*> {
+    fun addLabels(@RequestBody @NotEmpty(message = "至少增加一个标签") @Valid labels: ArrayList< Label>?): Result<*> {
         return labelService.addLabelBatch(labels!!)
     }
 
@@ -53,7 +53,7 @@ class LabelController(val labelService: LabelService) {
      * @return 响应code为200表示成功
      */
     @PutMapping("/admin/label/update")
-    fun updateLabel(@RequestBody label: @Valid Label?): Result<*> {
+    fun updateLabel(@RequestBody @Valid label: Label?): Result<*> {
         return labelService.updateLabel(label!!)
     }
 

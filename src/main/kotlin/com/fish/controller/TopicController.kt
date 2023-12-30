@@ -19,7 +19,7 @@ class TopicController(val topicService: TopicService, val topicLabelService: Top
      * @return 响应code为200表示成功
      */
     @PostMapping("/admin/topic/add")
-    fun addTopic(topic: @Valid Topic?): Result<*> {
+    fun addTopic(@RequestBody @Valid topic: Topic?): Result<*> {
         return topicService.addTopic(topic!!)
     }
 
@@ -29,7 +29,7 @@ class TopicController(val topicService: TopicService, val topicLabelService: Top
      * @return 响应code为200表示成功
      */
     @PostMapping("/admin/topic/adds")
-    fun addTopicBatch(topics: @NotEmpty(message = "至少上传一道题目") ArrayList<@Valid Topic>?): Result<*> {
+    fun addTopicBatch(@RequestBody @NotEmpty(message = "至少上传一道题目") @Valid topics:  ArrayList< Topic>?): Result<*> {
         return topicService.addTopicBatch(topics!!)
     }
 
@@ -42,7 +42,7 @@ class TopicController(val topicService: TopicService, val topicLabelService: Top
     @PostMapping("/admin/topic/addLabel/{topicId}")
     fun addTopicLabel(
         @PathVariable topicId: Long?,
-        @RequestBody labelIds: @NotEmpty(message = "必须选择一个标签") ArrayList<@NotNull(message = "标签id不能为空") Long>?
+        @RequestBody @NotEmpty(message = "必须选择一个标签") labelIds:  ArrayList<Long>?
     ): Result<*> {
         return topicLabelService.addLabelToTopic(topicId!!, labelIds!!)
     }
@@ -86,7 +86,7 @@ class TopicController(val topicService: TopicService, val topicLabelService: Top
     @DeleteMapping("/admin/topic/deleteLabel/{topicId}")
     fun deleteTopicLabel(
         @PathVariable topicId: Long?,
-        @RequestBody labelIds: @NotEmpty(message = "必须选择一个标签") ArrayList<@NotNull(message = "标签id不能为空") Long>?
+        @RequestBody @NotEmpty(message = "必须选择一个标签") labelIds: ArrayList<Long>?
     ): Result<*> {
         return topicLabelService.removeLabels(topicId!!, labelIds!!)
     }
@@ -100,7 +100,7 @@ class TopicController(val topicService: TopicService, val topicLabelService: Top
     @PutMapping("/admin/topic/update/{topicId}")
     fun updateTopic(
         @PathVariable topicId: Long?,
-        @RequestBody topic: @Valid Topic?
+        @RequestBody @Valid topic: Topic?
     ): Result<*> {
         return topicService.updateTopic(topicId!!, topic!!)
     }

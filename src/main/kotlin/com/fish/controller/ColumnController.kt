@@ -19,7 +19,7 @@ class ColumnController(val columnService: ColumnService, val columnTopicService:
      * @return 响应code为200表示成功
      */
     @PostMapping("/admin/column/add")
-    fun addColumn(@RequestBody column: @Valid Column?): Result<*> {
+    fun addColumn(@RequestBody @Valid column: Column?): Result<*> {
         return columnService.addColumn(column!!)
     }
     /**
@@ -28,7 +28,7 @@ class ColumnController(val columnService: ColumnService, val columnTopicService:
      * @return 响应code为200表示成功
      */
     @PostMapping("/admin/column/adds")
-    fun addColumns(@RequestBody columns: @NotEmpty(message = "至少包含一个栏目") ArrayList<@Valid Column>?): Result<*> {
+    fun addColumns(@RequestBody @NotEmpty(message = "至少包含一个栏目") columns: ArrayList<@Valid Column>?): Result<*> {
         return columnService.addColumnBatch(columns!!)
     }
 
@@ -40,7 +40,7 @@ class ColumnController(val columnService: ColumnService, val columnTopicService:
     @PostMapping("/admin/column/addTopic/{columnId}")
     fun addTopicsToColumn(
         @PathVariable columnId: Long?,
-        @RequestBody topicIds : @NotEmpty(message = "至少选一题") ArrayList<@NotNull(message = "题目id未填写") Long>?
+        @RequestBody @NotEmpty(message = "至少选一题")  topicIds : ArrayList<Long>?
     ) : Result<*> {
         return columnTopicService.addTopicToColumn(columnId!!, topicIds!!)
     }
@@ -79,7 +79,7 @@ class ColumnController(val columnService: ColumnService, val columnTopicService:
      * @return 响应code为200表示成功
      */
     @PutMapping("/admin/column/update")
-    fun updateColumn(@RequestBody column: @Valid Column?): Result<*> {
+    fun updateColumn(@RequestBody @Valid column: Column?): Result<*> {
         return columnService.updateColumn(column!!)
     }
 
@@ -121,7 +121,7 @@ class ColumnController(val columnService: ColumnService, val columnTopicService:
     @DeleteMapping("/admin/column/deleteTopic/{columnId}")
     fun removeTopic(
         @PathVariable columnId: Long?,
-        @RequestBody topicIds: @NotEmpty(message = "至少选择一个题目") ArrayList<@NotNull(message = "题目id不能为空") Long>?
+        @RequestBody @NotEmpty(message = "至少选择一个题目") topicIds: ArrayList<Long>?
     ) : Result<*> {
         return columnTopicService.removeTopic(columnId!!, topicIds!!)
     }

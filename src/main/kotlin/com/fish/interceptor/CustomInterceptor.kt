@@ -29,7 +29,7 @@ class CustomInterceptor : HandlerInterceptor {
                     buffer.append(" ")
                 }
             }
-        if (!Objects.isNull(request.inputStream))
+        if (request.inputStream.readAllBytes().isNotEmpty())
             BufferedReader(InputStreamReader(request.inputStream)).use {
                 it.forEachLine {line ->
                     buffer.append(line.trim())

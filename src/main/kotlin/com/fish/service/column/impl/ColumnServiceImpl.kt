@@ -4,7 +4,6 @@ import com.fish.common.Result
 import com.fish.entity.dto.InsertColumnDTO
 import com.fish.entity.dto.UpdateColumnDTO
 import com.fish.entity.pojo.Column
-import com.fish.entity.pojo.ColumnTopic
 import com.fish.entity.pojo.table.ColumnTableDef.COLUMN
 import com.fish.entity.pojo.table.ColumnTopicTableDef.COLUMN_TOPIC
 import com.fish.entity.pojo.table.LabelTableDef.LABEL
@@ -14,7 +13,6 @@ import com.fish.entity.vo.ColumnVO
 import com.fish.exception.ServiceException
 import com.fish.exception.ServiceExceptionEnum
 import com.fish.mapper.ColumnMapper
-import com.fish.mapper.ColumnTopicMapper
 import com.fish.service.column.ColumnService
 import com.fish.service.column.ColumnTopicService
 import com.fish.utils.ResultUtil.success
@@ -24,11 +22,9 @@ import com.mybatisflex.core.update.UpdateChain
 import com.mybatisflex.kotlin.extensions.kproperty.column
 import com.mybatisflex.kotlin.extensions.kproperty.eq
 import com.mybatisflex.spring.service.impl.ServiceImpl
-import com.sun.net.httpserver.Authenticator.Success
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.util.*
-import kotlin.collections.ArrayList
 
 @Service
 class ColumnServiceImpl(val columnTopicService: ColumnTopicService) : ServiceImpl<ColumnMapper, Column>(), ColumnService {

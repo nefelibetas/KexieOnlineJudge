@@ -1,6 +1,5 @@
 package com.fish.entity.dto
 
-import com.mybatisflex.annotation.Column
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Size
 import java.io.Serializable

@@ -3,7 +3,6 @@ package com.fish.controller
 import com.fish.common.Result
 import com.fish.entity.dto.InsertColumnDTO
 import com.fish.entity.dto.UpdateColumnDTO
-import com.fish.entity.pojo.Column
 import com.fish.entity.vo.ColumnVO
 import com.fish.entity.vo.TopicVO
 import com.fish.service.column.ColumnService

@@ -8,7 +8,6 @@ import com.fish.entity.pojo.Topic
 import com.fish.entity.pojo.table.LabelTableDef.LABEL
 import com.fish.entity.pojo.table.TopicLabelTableDef.TOPIC_LABEL
 import com.fish.entity.pojo.table.TopicTableDef.TOPIC
-import com.fish.entity.pojo.table.ExampleTableDef.EXAMPLE
 import com.fish.entity.vo.TopicVO
 import com.fish.exception.ServiceException
 import com.fish.exception.ServiceExceptionEnum
@@ -22,12 +21,10 @@ import com.mybatisflex.core.query.QueryWrapper
 import com.mybatisflex.core.update.UpdateChain
 import com.mybatisflex.kotlin.extensions.kproperty.column
 import com.mybatisflex.kotlin.extensions.kproperty.eq
-import com.mybatisflex.kotlin.extensions.sql.eq
 import com.mybatisflex.spring.service.impl.ServiceImpl
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.util.*
-import kotlin.collections.ArrayList
 
 @Service
 class TopicServiceImpl(val exampleMapper: ExampleMapper, val topicLabelService: TopicLabelService): ServiceImpl<TopicMapper, Topic>(), TopicService {

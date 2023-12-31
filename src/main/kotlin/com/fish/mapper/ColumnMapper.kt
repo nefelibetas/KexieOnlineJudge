@@ -4,7 +4,6 @@ import com.fish.entity.dto.InsertColumnDTO
 import com.fish.entity.dto.UpdateColumnDTO
 import com.fish.entity.pojo.Column
 import com.mybatisflex.core.BaseMapper
-import org.apache.ibatis.annotations.Insert
 
 /**
  * 映射层。

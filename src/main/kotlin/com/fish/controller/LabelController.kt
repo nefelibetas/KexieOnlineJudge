@@ -1,7 +1,7 @@
 package com.fish.controller
 
 import com.fish.common.Result
-import com.fish.entity.dto.LabelsDTO
+import com.fish.entity.dto.InsertLabelsDTO
 import com.fish.entity.pojo.Label
 import com.fish.service.label.LabelService
 import com.mybatisflex.core.paginate.Page
@@ -26,7 +26,7 @@ class LabelController(val labelService: LabelService) {
      * @return 响应code为200表示成功
      */
     @PostMapping("/admin/label/adds")
-    fun addLabels(@RequestBody @Valid labels: LabelsDTO?): Result<*> {
+    fun addLabels(@RequestBody @Valid labels: InsertLabelsDTO?): Result<*> {
         return labelService.addLabelBatch(labels!!)
     }
 

@@ -12,14 +12,11 @@ import java.io.Serializable
  * @since 2023-11-14
  */
 @Table(value = "oj_column_topic")
-open class ColumnTopic(
-    columnId: Long?,
-    topicId: Long?
-) : Serializable {
+open class ColumnTopic: Serializable {
     @Id
     @NotNull(message = "栏目id不能为空")
-    val columnId: Long? = null
+    var columnId: Long? = null
     @Id
     @NotNull(message = "题目id不能为空")
-    val topicId: Long? = null
+    var topicId: Long? = null
 }

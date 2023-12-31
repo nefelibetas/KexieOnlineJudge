@@ -1,7 +1,8 @@
 package com.fish.controller
 
 import com.fish.common.Result
-import com.fish.entity.dto.ColumnDTO
+import com.fish.entity.dto.InsertColumnDTO
+import com.fish.entity.dto.UpdateColumnDTO
 import com.fish.entity.pojo.Column
 import com.fish.entity.vo.ColumnVO
 import com.fish.entity.vo.TopicVO
@@ -19,9 +20,9 @@ class ColumnController(val columnService: ColumnService, val columnTopicService:
      * @param column 栏目信息
      * @return 响应code为200表示成功
      */
-    @PostMapping("/admin/column/add")
-    fun addColumn(@RequestBody @Valid column: Column?): Result<*> {
-        return columnService.addColumn(column!!)
+    @PostMapping("/admin/column/addWithTopic")
+    fun addWithTopic(@RequestBody @Valid insertColumnDTO: InsertColumnDTO?): Result<*> {
+        return columnService.addWithTopic(insertColumnDTO!!)
     }
 
     /**
@@ -78,7 +79,7 @@ class ColumnController(val columnService: ColumnService, val columnTopicService:
      * @return 响应code为200表示成功
      */
     @PutMapping("/admin/column/update")
-    fun updateColumn(@RequestBody @Valid column: ColumnDTO?): Result<*> {
+    fun updateColumn(@RequestBody @Valid column: UpdateColumnDTO?): Result<*> {
         return columnService.updateColumn(column!!)
     }
 

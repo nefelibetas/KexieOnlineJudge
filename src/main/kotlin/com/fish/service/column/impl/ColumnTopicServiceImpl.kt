@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
-class ColumnTopicServiceImpl : ServiceImpl<ColumnTopicMapper, ColumnTopic>(), ColumnTopicService {
+class ColumnTopicServiceImpl: ServiceImpl<ColumnTopicMapper, ColumnTopic>(), ColumnTopicService {
     override fun getOptionalTopic(columnId: Long, pageNo: Int, pageSize: Int): Result<Page<TopicVO>> {
         val wrapper = QueryWrapper.create()
             .select()
@@ -42,8 +42,14 @@ class ColumnTopicServiceImpl : ServiceImpl<ColumnTopicMapper, ColumnTopic>(), Co
 
     @Transactional
     override fun addTopicToColumn(columnId: Long, topicIds: ArrayList<Long>): Result<*> {
+
         val columnTopics = ArrayList<ColumnTopic>()
-        topicIds.forEach{ columnTopics.add(ColumnTopic(columnId, it))}
+        for(i in 0 until topicIds.size) {
+            val columnTopic = ColumnTopic()
+            columnTopic.columnId = columnId
+            columnTopic.topicId = topicIds[i]
+            columnTopics.add(columnTopic)
+        }
         val i = mapper!!.insertBatch(columnTopics)
         if (i > 0)
             return success<Any>()

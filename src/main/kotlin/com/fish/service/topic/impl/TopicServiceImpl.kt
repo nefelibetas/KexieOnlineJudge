@@ -1,12 +1,14 @@
 package com.fish.service.topic.impl
 
 import com.fish.common.Result
+import com.fish.entity.dto.InsertExampleDTO
 import com.fish.entity.dto.InsertTopicDTO
 import com.fish.entity.dto.UpdateTopicDTO
 import com.fish.entity.pojo.Topic
 import com.fish.entity.pojo.table.LabelTableDef.LABEL
 import com.fish.entity.pojo.table.TopicLabelTableDef.TOPIC_LABEL
 import com.fish.entity.pojo.table.TopicTableDef.TOPIC
+import com.fish.entity.pojo.table.ExampleTableDef.EXAMPLE
 import com.fish.entity.vo.TopicVO
 import com.fish.exception.ServiceException
 import com.fish.exception.ServiceExceptionEnum
@@ -19,20 +21,27 @@ import com.mybatisflex.core.query.QueryWrapper
 import com.mybatisflex.core.update.UpdateChain
 import com.mybatisflex.kotlin.extensions.kproperty.column
 import com.mybatisflex.kotlin.extensions.kproperty.eq
+import com.mybatisflex.kotlin.extensions.sql.eq
 import com.mybatisflex.spring.service.impl.ServiceImpl
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.util.*
+import kotlin.collections.ArrayList
 
 @Service
 class TopicServiceImpl(val exampleMapper: ExampleMapper) : ServiceImpl<TopicMapper, Topic>(), TopicService {
     @Transactional
     override fun addTopicWithExample(insertTopicDTO: InsertTopicDTO): Result<*> {
         val topicId = addTopic(insertTopicDTO)
-        val b = addExamples(insertTopicDTO, topicId)
-        if (b)
+        if (!Objects.isNull(insertTopicDTO.examples)) {
+            val queryWrapper = QueryWrapper.create().select().from(TOPIC).where(TOPIC.TOPIC_ID eq topicId)
+            val size = mapper.selectCountByQuery(queryWrapper)
+            if (size != 1L)
+                throw ServiceException(ServiceExceptionEnum.NOT_FOUND)
+            addExamples(insertTopicDTO.examples!!, topicId)
             return success<Any>()
-        throw ServiceException(ServiceExceptionEnum.OPERATE_ERROR)
+        }
+        return success<Any>()
     }
     @Transactional
     fun addTopic(insertTopicDTO: InsertTopicDTO): Long {
@@ -42,11 +51,11 @@ class TopicServiceImpl(val exampleMapper: ExampleMapper) : ServiceImpl<TopicMapp
         throw ServiceException(ServiceExceptionEnum.OPERATE_ERROR)
     }
     @Transactional
-    fun addExamples(insertTopicDTO: InsertTopicDTO, topicId: Long): Boolean {
-        insertTopicDTO.examples?.forEach {
+    fun addExamples(examples: ArrayList<InsertExampleDTO>, topicId: Long): Boolean {
+        examples.forEach {
             it.topicId = topicId
         }
-        val i = exampleMapper.addExampleBatch(insertTopicDTO.examples!!)
+        val i = exampleMapper.addExampleBatch(examples)
         if (i > 0)
             return true
         throw ServiceException(ServiceExceptionEnum.OPERATE_ERROR)

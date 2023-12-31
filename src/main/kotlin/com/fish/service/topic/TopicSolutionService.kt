@@ -1,7 +1,7 @@
 package com.fish.service.topic
 
 import com.fish.common.Result
-import com.fish.entity.dto.SolutionDTO
+import com.fish.entity.dto.InsertSolutionDTO
 import com.fish.entity.pojo.TopicSolution
 import com.mybatisflex.core.service.IService
 
@@ -9,9 +9,9 @@ interface TopicSolutionService : IService<TopicSolution> {
     /**
      * 添加题解,若内容出错则评论区见
      * @param solution 前端传输的题解数据,具体要求见下方
-     * @sample SolutionDTO
+     * @sample InsertSolutionDTO
      */
-    fun addSolution(solution: SolutionDTO) : Result<*>
+    fun addSolution(solution: InsertSolutionDTO) : Result<*>
     /**
      * 获得题解
      * @param solutionId 题解id

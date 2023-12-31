@@ -1,7 +1,7 @@
 package com.fish.service.label.impl
 
 import com.fish.common.Result
-import com.fish.entity.dto.LabelsDTO
+import com.fish.entity.dto.InsertLabelsDTO
 import com.fish.entity.pojo.Label
 import com.fish.entity.pojo.table.LabelTableDef.LABEL
 import com.fish.exception.ServiceException
@@ -26,7 +26,7 @@ class LabelServiceImpl : ServiceImpl<LabelMapper, Label>(), LabelService {
     }
 
     @Transactional
-    override fun addLabelBatch(labels: LabelsDTO): Result<*> {
+    override fun addLabelBatch(labels: InsertLabelsDTO): Result<*> {
         val i = mapper!!.insertBatch(labels.labels)
         if (i > 0) return success<Any>()
         throw ServiceException(ServiceExceptionEnum.OPERATE_ERROR)

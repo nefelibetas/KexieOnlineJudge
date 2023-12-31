@@ -1,7 +1,7 @@
 package com.fish.service.label
 
 import com.fish.common.Result
-import com.fish.entity.dto.LabelsDTO
+import com.fish.entity.dto.InsertLabelsDTO
 import com.fish.entity.pojo.Label
 import com.mybatisflex.core.paginate.Page
 import com.mybatisflex.core.service.IService
@@ -19,7 +19,7 @@ interface LabelService : IService<Label> {
      * @param labels 标签数组
      * @return 封装好的响应信息
      */
-    fun addLabelBatch(labels: LabelsDTO): Result<*>
+    fun addLabelBatch(labels: InsertLabelsDTO): Result<*>
 
     /**
      * 获取全部标签

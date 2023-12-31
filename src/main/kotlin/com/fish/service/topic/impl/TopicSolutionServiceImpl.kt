@@ -1,7 +1,7 @@
 package com.fish.service.topic.impl
 
 import com.fish.common.Result
-import com.fish.entity.dto.SolutionDTO
+import com.fish.entity.dto.InsertSolutionDTO
 import com.fish.entity.pojo.TopicSolution
 import com.fish.entity.pojo.table.TopicSolutionTableDef.TOPIC_SOLUTION
 import com.fish.exception.ServiceException
@@ -21,7 +21,7 @@ import java.util.*
 @Service
 class TopicSolutionServiceImpl : ServiceImpl<TopicSolutionMapper, TopicSolution>(), TopicSolutionService {
     @Transactional
-    override fun addSolution(solution: SolutionDTO): Result<*> {
+    override fun addSolution(solution: InsertSolutionDTO): Result<*> {
         val i = mapper.addSolution(solution)
         if (i > 0)
             return success<Any>()

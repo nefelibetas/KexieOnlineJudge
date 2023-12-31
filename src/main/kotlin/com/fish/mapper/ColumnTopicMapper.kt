@@ -9,4 +9,6 @@ import com.mybatisflex.core.BaseMapper
  * @author fish
  * @since 2023-11-14
  */
-interface ColumnTopicMapper : BaseMapper<ColumnTopic>
+interface ColumnTopicMapper : BaseMapper<ColumnTopic> {
+    fun addColumnTopicBatch(columnTopicList: ArrayList<ColumnTopic>): Int
+}

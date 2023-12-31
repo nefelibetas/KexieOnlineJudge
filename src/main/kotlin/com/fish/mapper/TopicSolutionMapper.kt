@@ -1,6 +1,6 @@
 package com.fish.mapper
 
-import com.fish.entity.dto.SolutionDTO
+import com.fish.entity.dto.InsertSolutionDTO
 import com.fish.entity.pojo.TopicSolution
 import com.mybatisflex.core.BaseMapper
 import org.apache.ibatis.annotations.Insert
@@ -15,7 +15,7 @@ import org.apache.ibatis.annotations.Select
  */
 interface TopicSolutionMapper : BaseMapper<TopicSolution> {
     @Insert("insert into oj_topic_solutions(`topic_id`, `title`, `content`) value (#{topicId}, #{title}, #{content})")
-    fun addSolution(solution: SolutionDTO) : Int
+    fun addSolution(solution: InsertSolutionDTO) : Int
     @Select("select * from oj_topic_solutions where topic_id = #{topicId} and enabled = true and pined = true")
     fun selectPined(@Param("topicId") topicId: Long) : ArrayList<TopicSolution>
 }

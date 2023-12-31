@@ -32,4 +32,5 @@ class InsertTopicDTO: Serializable {
     val precautions: String? = null
     val from: String? = null
     val examples: ArrayList<InsertExampleDTO>? = null
+    val labelsId: ArrayList<Long>? = null
 }

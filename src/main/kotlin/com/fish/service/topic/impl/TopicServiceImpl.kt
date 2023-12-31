@@ -29,18 +29,11 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 @Service
-class TopicServiceImpl(val exampleMapper: ExampleMapper) : ServiceImpl<TopicMapper, Topic>(), TopicService {
+class TopicServiceImpl(val exampleMapper: ExampleMapper): ServiceImpl<TopicMapper, Topic>(), TopicService {
     @Transactional
     override fun addTopicWithExample(insertTopicDTO: InsertTopicDTO): Result<*> {
         val topicId = addTopic(insertTopicDTO)
-        if (!Objects.isNull(insertTopicDTO.examples)) {
-            val queryWrapper = QueryWrapper.create().select().from(TOPIC).where(TOPIC.TOPIC_ID eq topicId)
-            val size = mapper.selectCountByQuery(queryWrapper)
-            if (size != 1L)
-                throw ServiceException(ServiceExceptionEnum.NOT_FOUND)
-            addExamples(insertTopicDTO.examples!!, topicId)
-            return success<Any>()
-        }
+        addExamples(insertTopicDTO.examples!!, topicId)
         return success<Any>()
     }
     @Transactional

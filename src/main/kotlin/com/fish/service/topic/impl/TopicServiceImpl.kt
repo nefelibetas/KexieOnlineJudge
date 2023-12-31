@@ -14,6 +14,7 @@ import com.fish.exception.ServiceException
 import com.fish.exception.ServiceExceptionEnum
 import com.fish.mapper.ExampleMapper
 import com.fish.mapper.TopicMapper
+import com.fish.service.topic.TopicLabelService
 import com.fish.service.topic.TopicService
 import com.fish.utils.ResultUtil.success
 import com.mybatisflex.core.paginate.Page
@@ -29,11 +30,12 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 @Service
-class TopicServiceImpl(val exampleMapper: ExampleMapper): ServiceImpl<TopicMapper, Topic>(), TopicService {
+class TopicServiceImpl(val exampleMapper: ExampleMapper, val topicLabelService: TopicLabelService): ServiceImpl<TopicMapper, Topic>(), TopicService {
     @Transactional
     override fun addTopicWithExample(insertTopicDTO: InsertTopicDTO): Result<*> {
         val topicId = addTopic(insertTopicDTO)
         addExamples(insertTopicDTO.examples!!, topicId)
+        topicLabelService.addLabelToTopic(topicId, insertTopicDTO.labelsId!!)
         return success<Any>()
     }
     @Transactional

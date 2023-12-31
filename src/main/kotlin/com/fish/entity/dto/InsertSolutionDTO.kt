@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotNull
 import jakarta.validation.constraints.Size
 import java.io.Serializable
 
-class SolutionDTO: Serializable {
+class InsertSolutionDTO: Serializable {
     @NotNull(message = "题目id不能为空")
     val topicId: Long? = null
     @NotNull(message = "标题不能为空")

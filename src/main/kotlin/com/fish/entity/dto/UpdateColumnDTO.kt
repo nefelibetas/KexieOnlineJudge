@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotNull
 import jakarta.validation.constraints.Size
 import java.io.Serializable
 
-class ColumnDTO: Serializable {
+class UpdateColumnDTO: Serializable {
     @NotNull(message = "栏目id不能为空")
     val columnId: String? = null
     @Size(min = 1, max = 32, message = "栏目名要求在1~32字符以内")

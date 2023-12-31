@@ -5,7 +5,7 @@ import jakarta.validation.Valid
 import jakarta.validation.constraints.NotEmpty
 import java.io.Serializable
 
-class LabelsDTO: Serializable {
+class InsertLabelsDTO: Serializable {
     @Valid
     @NotEmpty
     val labels: ArrayList<Label>? = null

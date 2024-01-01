@@ -2,12 +2,6 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.fish.mapper.ColumnTopicMapper">
-    <insert id="addColumnTopicBatch" parameterType="java.util.ArrayList">
-        insert into oj_column_topic(column_id, topic_id)
-        values
-        <foreach collection="columnTopicList" item="columnTopic" separator=",">
-            (#{columnTopic.columnId}, #{columnTopic.topicId})
-        </foreach>
-    </insert>
+<mapper namespace="com.fish.keXieOpenJudge.mapper.column.ColumnTopicMapper">
+
 </mapper>

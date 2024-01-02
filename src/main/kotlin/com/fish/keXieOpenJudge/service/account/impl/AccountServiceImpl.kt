@@ -15,6 +15,7 @@ import com.fish.keXieOpenJudge.utils.RedisUtil
 import com.fish.keXieOpenJudge.utils.ResultUtil.success
 import com.fish.keXieOpenJudge.utils.SecurityUtil
 import com.fish.keXieOpenJudge.common.Result
+import com.fish.keXieOpenJudge.entity.dto.account.PasswordDTO
 import com.mybatisflex.core.paginate.Page
 import com.mybatisflex.core.query.QueryWrapper
 import com.mybatisflex.core.update.UpdateChain
@@ -46,7 +47,7 @@ class AccountServiceImpl(
             throw ServiceException(ServiceExceptionEnum.ACCOUNT_NOT_FOUND)
         }
         val principal = authentication.principal as LoginAccount
-        val redisKey = makeKey(principal.account.userId, principal.account.nickname)
+        val redisKey = makeKey(principal.account.userId!!, principal.account.nickname!!)
         val token = jwtUtil.createToken(redisKey)
         val map = HashMap<String, Any>()
         map["Authorization"] = token
@@ -118,7 +119,23 @@ class AccountServiceImpl(
         throw ServiceException(ServiceExceptionEnum.OPERATE_ERROR)
     }
 
-    protected fun makeKey(userId: String?, nickname: String?): String {
+    @Transactional
+    override fun changePassword(passwordDTO: PasswordDTO): Result<*> {
+        val id = SecurityUtil.getId()
+        val account = mapper.getAccount(id)
+        val matches = passwordEncoder.matches(passwordDTO.oldPwd!!, account.password)
+        if (matches) {
+            val update = UpdateChain.of(Account::class.java)
+                .set(Account::password.column, passwordEncoder.encode(passwordDTO.newPwd)).where(Account::userId eq id).update()
+            if (update) {
+                redisUtil.remove(makeKey(id, account.nickname!!))
+                return success<Any>()
+            }
+        }
+        throw ServiceException(ServiceExceptionEnum.OPERATE_ERROR)
+    }
+
+    protected fun makeKey(userId: String, nickname: String): String {
         return nickname + "_" + userId + "_" + year
     }
 

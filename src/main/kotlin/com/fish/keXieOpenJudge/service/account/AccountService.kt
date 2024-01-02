@@ -5,6 +5,7 @@ import com.fish.keXieOpenJudge.entity.dto.account.RegisterAccountDTO
 import com.fish.keXieOpenJudge.entity.dto.account.UpdateAccountDTO
 import com.fish.keXieOpenJudge.entity.pojo.account.Account
 import com.fish.keXieOpenJudge.common.Result
+import com.fish.keXieOpenJudge.entity.dto.account.PasswordDTO
 import com.mybatisflex.core.paginate.Page
 import com.mybatisflex.core.service.IService
 
@@ -47,5 +48,15 @@ interface AccountService : IService<Account> {
      * @return 封装好的响应信息
      */
     fun changeAccountRole(userId: String, roleId: Long): Result<*>
+    /**
+     * 修改用户状态
+     * @param userId 要修改的用户id
+     * @param action 当前用户状态
+     */
     fun changeStatus(userId: String, action: Boolean): Result<*>
+    /**
+     * 修改密码，要求先验证旧密码
+     * @param passwordDTO 改密对象
+     */
+    fun changePassword(passwordDTO: PasswordDTO): Result<*>
 }

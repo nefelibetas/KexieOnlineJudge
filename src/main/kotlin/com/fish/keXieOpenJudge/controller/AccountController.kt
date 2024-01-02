@@ -8,6 +8,7 @@ import com.fish.keXieOpenJudge.exception.ServiceException
 import com.fish.keXieOpenJudge.exception.ServiceExceptionEnum
 import com.fish.keXieOpenJudge.service.account.AccountService
 import com.fish.keXieOpenJudge.common.Result
+import com.fish.keXieOpenJudge.entity.dto.account.PasswordDTO
 import com.mybatisflex.core.paginate.Page
 import jakarta.validation.Valid
 import org.springframework.web.bind.annotation.*
@@ -41,6 +42,11 @@ class AccountController(val accountService: AccountService) {
     @PutMapping("/user/update")
     fun updateAccountInformation(@RequestBody @Valid updateAccountDTO: UpdateAccountDTO?): Result<*> {
         return accountService.updateAccountInformation(updateAccountDTO!!)
+    }
+
+    @PutMapping("/user/changePassword")
+    fun changePassword(@RequestBody @Valid passwordDTO: PasswordDTO): Result<*> {
+        return accountService.changePassword(passwordDTO)
     }
 
     /**

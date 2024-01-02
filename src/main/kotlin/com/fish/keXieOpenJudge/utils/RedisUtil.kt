@@ -54,7 +54,6 @@ class RedisUtil {
     fun getExpire(key: String): Long {
         return redisTemplate!!.getExpire(key)
     }
-
     /**
      * @param key 键
      * @param time 值
@@ -73,5 +72,13 @@ class RedisUtil {
      */
     fun exists(key: String): Boolean {
         return redisTemplate!!.hasKey(key)
+    }
+
+    /**
+     * 删除key的值
+     * @param key 键
+     */
+    fun remove(key: String): Boolean {
+        return redisTemplate!!.delete(key)
     }
 }

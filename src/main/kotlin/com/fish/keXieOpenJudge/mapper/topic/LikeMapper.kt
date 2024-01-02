@@ -1,6 +1,6 @@
-package com.fish.keXieOpenJudge.mapper.like
+package com.fish.keXieOpenJudge.mapper.topic
 
-import com.fish.keXieOpenJudge.entity.pojo.like.Like
+import com.fish.keXieOpenJudge.entity.pojo.topic.Like
 import com.mybatisflex.core.BaseMapper
 
 /**

@@ -1,4 +1,4 @@
-package com.fish.keXieOpenJudge.entity.pojo.assessment
+package com.fish.keXieOpenJudge.entity.pojo.topic
 
 import com.mybatisflex.annotation.Id
 import com.mybatisflex.annotation.Table
@@ -12,10 +12,7 @@ import java.io.Serializable
  * @since 2023-11-14
  */
 @Table(value = "oj_accepted")
-open class Accepted(
-    userId: String?,
-    topicId: Long?
-): Serializable {
+open class Accepted: Serializable {
     @Id
     @NotNull(message = "用户Id未填写")
     val userId: String? = null

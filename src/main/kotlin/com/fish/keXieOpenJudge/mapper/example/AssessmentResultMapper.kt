@@ -1,6 +1,6 @@
-package com.fish.keXieOpenJudge.mapper.assessment
+package com.fish.keXieOpenJudge.mapper.example
 
-import com.fish.keXieOpenJudge.entity.pojo.assessment.AssessmentResult
+import com.fish.keXieOpenJudge.entity.pojo.example.AssessmentResult
 import com.mybatisflex.core.BaseMapper
 
 /**

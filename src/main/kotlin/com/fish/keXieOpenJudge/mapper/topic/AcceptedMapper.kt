@@ -1,6 +1,6 @@
-package com.fish.keXieOpenJudge.mapper.assessment
+package com.fish.keXieOpenJudge.mapper.topic
 
-import com.fish.keXieOpenJudge.entity.pojo.assessment.Accepted
+import com.fish.keXieOpenJudge.entity.pojo.topic.Accepted
 import com.mybatisflex.core.BaseMapper
 import org.apache.ibatis.annotations.Param
 import org.apache.ibatis.annotations.Select

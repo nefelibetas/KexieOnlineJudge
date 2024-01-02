@@ -1,8 +1,8 @@
-package com.fish.keXieOpenJudge.service.accepted.impl
+package com.fish.keXieOpenJudge.service.topic.impl
 
-import com.fish.keXieOpenJudge.entity.pojo.assessment.Accepted
-import com.fish.keXieOpenJudge.mapper.assessment.AcceptedMapper
-import com.fish.keXieOpenJudge.service.accepted.AcceptedService
+import com.fish.keXieOpenJudge.entity.pojo.topic.Accepted
+import com.fish.keXieOpenJudge.mapper.topic.AcceptedMapper
+import com.fish.keXieOpenJudge.service.topic.AcceptedService
 import com.mybatisflex.spring.service.impl.ServiceImpl
 import org.springframework.stereotype.Service
 

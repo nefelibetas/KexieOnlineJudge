@@ -1,4 +1,4 @@
-package com.fish.keXieOpenJudge.entity.pojo.assessment
+package com.fish.keXieOpenJudge.entity.pojo.example
 
 import com.mybatisflex.annotation.Id
 import com.mybatisflex.annotation.KeyType

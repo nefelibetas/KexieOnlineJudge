@@ -1,6 +1,6 @@
-package com.fish.keXieOpenJudge.service.accepted
+package com.fish.keXieOpenJudge.service.topic
 
-import com.fish.keXieOpenJudge.entity.pojo.assessment.Accepted
+import com.fish.keXieOpenJudge.entity.pojo.topic.Accepted
 import com.mybatisflex.core.service.IService
 
 interface AcceptedService : IService<Accepted> {

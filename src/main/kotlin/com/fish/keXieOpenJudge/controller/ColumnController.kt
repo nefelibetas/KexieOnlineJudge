@@ -58,6 +58,14 @@ class ColumnController(val columnService: ColumnService, val columnTopicService:
     fun getColumn(@PathVariable columnId: Long?): Result<ColumnVO> {
         return columnService.getColumn(columnId!!)
     }
+    @GetMapping("/column/search")
+    fun searchColumn(
+        @RequestParam(required = true) keyword: String,
+        @RequestParam(defaultValue = "1") pageNo: Int,
+        @RequestParam(defaultValue = "5") pageSize: Int,
+        ): Result<Page<ColumnVO>> {
+        return columnService.search(keyword, pageNo, pageSize)
+    }
 
     /**
      * 获取该栏目还能添加的题目

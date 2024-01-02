@@ -15,4 +15,5 @@ interface ColumnService : IService<Column> {
     fun updateColumn(column: UpdateColumnDTO): Result<*>
     fun changeStatus(columnId: Long, action: Boolean): Result<*>
     fun deleteColumn(columnId: Long): Result<*>
+    fun search(keyword: String, pageNo: Int, pageSize: Int): Result<Page<ColumnVO>>
 }

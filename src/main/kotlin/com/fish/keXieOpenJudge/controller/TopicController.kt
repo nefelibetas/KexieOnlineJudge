@@ -9,6 +9,7 @@ import com.fish.keXieOpenJudge.service.topic.TopicService
 import com.fish.keXieOpenJudge.common.Result
 import com.mybatisflex.core.paginate.Page
 import jakarta.validation.Valid
+import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.NotEmpty
 import org.springframework.web.bind.annotation.*
 
@@ -90,7 +91,7 @@ class TopicController(val topicService: TopicService, val topicLabelService: Top
         @PathVariable topicId: Long?,
         @RequestBody @Valid updateTopicDTO: UpdateTopicDTO
     ): Result<*> {
-        return topicService.updateTopic(topicId!!, updateTopicDTO!!)
+        return topicService.updateTopic(topicId!!, updateTopicDTO)
     }
 
     /**
@@ -115,5 +116,13 @@ class TopicController(val topicService: TopicService, val topicLabelService: Top
         return topicService.getTopic(topicId!!)
     }
 
+    @GetMapping("/topic/search")
+    fun search(
+        @RequestParam(required = true) keyword: String,
+        @RequestParam(defaultValue = "1") pageNo: Int,
+        @RequestParam(defaultValue = "20") pageSize: Int
+    ): Result<Page<TopicVO>> {
+        return topicService.search(keyword, pageNo, pageSize)
+    }
 
 }

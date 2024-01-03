@@ -21,6 +21,7 @@ import com.mybatisflex.core.query.QueryWrapper
 import com.mybatisflex.core.update.UpdateChain
 import com.mybatisflex.kotlin.extensions.kproperty.column
 import com.mybatisflex.kotlin.extensions.kproperty.eq
+import com.mybatisflex.kotlin.extensions.sql.eq
 import com.mybatisflex.spring.service.impl.ServiceImpl
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -30,6 +31,8 @@ import java.util.*
 class TopicServiceImpl(val exampleMapper: ExampleMapper, val topicLabelService: TopicLabelService): ServiceImpl<TopicMapper, Topic>(), TopicService {
     @Transactional
     override fun addTopicWithExample(insertTopicDTO: InsertTopicDTO): Result<*> {
+        if (Objects.isNull(insertTopicDTO.examples) || Objects.isNull(insertTopicDTO.labelsId))
+            throw ServiceException(ServiceExceptionEnum.KEY_ARGUMENT_NOT_INPUT)
         val topicId = addTopic(insertTopicDTO)
         addExamples(insertTopicDTO.examples!!, topicId)
         topicLabelService.addLabelToTopic(topicId, insertTopicDTO.labelsId!!)
@@ -103,4 +106,23 @@ class TopicServiceImpl(val exampleMapper: ExampleMapper, val topicLabelService: 
             return success(topicVO)
         throw ServiceException(ServiceExceptionEnum.NOT_FOUND)
     }
+
+    override fun search(keyword: String, pageNo: Int, pageSize: Int): Result<Page<TopicVO>> {
+        val wrapper = QueryWrapper.create()
+            .select(TOPIC.ALL_COLUMNS, LABEL.ALL_COLUMNS).from(TOPIC)
+            .leftJoin<QueryWrapper>(TOPIC_LABEL)
+            .on(TOPIC.TOPIC_ID.eq(TOPIC_LABEL.TOPIC_ID))
+            .and(TOPIC.ENABLED.eq(true))
+            .leftJoin<QueryWrapper>(LABEL)
+            .on(LABEL.LABEL_ID.eq(TOPIC_LABEL.LABEL_ID))
+            .where(TOPIC.TITLE.like(keyword))
+            .or(TOPIC.CONTENT.like(keyword))
+            .or(TOPIC.TOPIC_ID.`in`(
+                QueryWrapper.create()
+                    .select(TOPIC_LABEL.TOPIC_ID).from(TOPIC_LABEL)
+                    .join<QueryWrapper>(LABEL).on(TOPIC_LABEL.LABEL_ID.eq(LABEL.LABEL_ID))
+                    .where(LABEL.LABEL_NAME.like(keyword))
+            ))
+        val topicVOS = mapper!!.paginateAs(Page.of(pageNo, pageSize), wrapper, TopicVO::class.java)
+        return success(topicVOS)    }
 }

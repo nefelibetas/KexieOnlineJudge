@@ -61,4 +61,10 @@ class LabelServiceImpl : ServiceImpl<LabelMapper, Label>(), com.fish.keXieOpenJu
         if (i > 0) return success<Any>()
         throw ServiceException(ServiceExceptionEnum.OPERATE_ERROR)
     }
+
+    override fun search(keyword: String, pageNo: Int, pageSize: Int): Result<Page<Label>> {
+        val wrapper = QueryWrapper.create().select(LABEL.ALL_COLUMNS).from(LABEL).where(LABEL.LABEL_NAME.like(keyword))
+        val labelPage = mapper.paginate(Page.of(pageNo, pageSize), wrapper)
+        return success(labelPage)
+    }
 }

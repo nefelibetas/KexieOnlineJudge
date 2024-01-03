@@ -3,6 +3,7 @@ package com.fish.keXieOpenJudge.service.label
 import com.fish.keXieOpenJudge.entity.dto.label.InsertLabelsDTO
 import com.fish.keXieOpenJudge.entity.pojo.label.Label
 import com.fish.keXieOpenJudge.common.Result
+import com.fish.keXieOpenJudge.entity.vo.TopicVO
 import com.mybatisflex.core.paginate.Page
 import com.mybatisflex.core.service.IService
 
@@ -48,4 +49,10 @@ interface LabelService : IService<Label> {
      * @return 封装好的响应信息
      */
     fun deleteLabel(labelId: Long): Result<*>
+
+    /**
+     * 模糊查询
+     * @param keyword 关键词
+     */
+    fun search(keyword: String, pageNo: Int, pageSize: Int): Result<Page<Label>>
 }

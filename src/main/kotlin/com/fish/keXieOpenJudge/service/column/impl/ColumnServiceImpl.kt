@@ -17,6 +17,7 @@ import com.fish.keXieOpenJudge.service.column.ColumnTopicService
 import com.fish.keXieOpenJudge.utils.ResultUtil.success
 import com.fish.keXieOpenJudge.common.Result
 import com.mybatisflex.core.paginate.Page
+import com.mybatisflex.core.query.QueryColumn
 import com.mybatisflex.core.query.QueryWrapper
 import com.mybatisflex.core.update.UpdateChain
 import com.mybatisflex.kotlin.extensions.kproperty.column
@@ -110,7 +111,10 @@ class ColumnServiceImpl(val columnTopicService: ColumnTopicService) : ServiceImp
 
     @Transactional
     override fun deleteColumn(columnId: Long): Result<*> {
-        val i = mapper!!.deleteById(columnId)
+        val wrapper = QueryWrapper.create()
+            .from(COLUMN).join<QueryWrapper>(COLUMN_TOPIC).on(COLUMN.COLUMN_ID.eq(COLUMN_TOPIC.COLUMN_ID))
+            .where(COLUMN.COLUMN_ID.eq(columnId))
+        val i = mapper!!.deleteByQuery(wrapper)
         if (i > 0)
             return success<Any>()
         throw ServiceException(ServiceExceptionEnum.OPERATE_ERROR)

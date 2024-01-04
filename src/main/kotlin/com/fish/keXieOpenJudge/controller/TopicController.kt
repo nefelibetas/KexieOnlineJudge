@@ -127,9 +127,4 @@ class TopicController(val topicService: TopicService, val topicLabelService: Top
     ): Result<Page<TopicVO>> {
         return topicService.search(keyword, pageNo, pageSize)
     }
-
-    @DeleteMapping("/root/topic/delete/{topicId}")
-    fun deleteTopic(@PathVariable topicId: Long): Result<*> {
-        return topicService.deleteTopic(topicId)
-    }
 }

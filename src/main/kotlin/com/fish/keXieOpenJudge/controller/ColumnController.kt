@@ -1,12 +1,12 @@
 package com.fish.keXieOpenJudge.controller
 
+import com.fish.keXieOpenJudge.common.Result
 import com.fish.keXieOpenJudge.entity.dto.column.InsertColumnDTO
 import com.fish.keXieOpenJudge.entity.dto.column.UpdateColumnDTO
 import com.fish.keXieOpenJudge.entity.vo.ColumnVO
 import com.fish.keXieOpenJudge.entity.vo.TopicVO
 import com.fish.keXieOpenJudge.service.column.ColumnService
 import com.fish.keXieOpenJudge.service.column.ColumnTopicService
-import com.fish.keXieOpenJudge.common.Result
 import com.mybatisflex.core.paginate.Page
 import jakarta.validation.Valid
 import jakarta.validation.constraints.NotEmpty

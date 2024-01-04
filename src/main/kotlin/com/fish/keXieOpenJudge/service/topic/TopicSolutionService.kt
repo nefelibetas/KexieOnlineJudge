@@ -1,8 +1,8 @@
 package com.fish.keXieOpenJudge.service.topic
 
+import com.fish.keXieOpenJudge.common.Result
 import com.fish.keXieOpenJudge.entity.dto.solution.InsertSolutionDTO
 import com.fish.keXieOpenJudge.entity.pojo.topic.TopicSolution
-import com.fish.keXieOpenJudge.common.Result
 import com.mybatisflex.core.service.IService
 
 interface TopicSolutionService : IService<TopicSolution> {

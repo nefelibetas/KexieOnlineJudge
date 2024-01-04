@@ -1,8 +1,8 @@
 package com.fish.keXieOpenJudge.controller
 
+import com.fish.keXieOpenJudge.common.Result
 import com.fish.keXieOpenJudge.entity.dto.label.InsertLabelsDTO
 import com.fish.keXieOpenJudge.entity.pojo.label.Label
-import com.fish.keXieOpenJudge.common.Result
 import com.mybatisflex.core.paginate.Page
 import jakarta.validation.Valid
 import org.springframework.web.bind.annotation.*

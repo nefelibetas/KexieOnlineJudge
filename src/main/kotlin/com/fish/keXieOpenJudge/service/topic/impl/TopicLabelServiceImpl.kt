@@ -1,16 +1,16 @@
 package com.fish.keXieOpenJudge.service.topic.impl
 
+import com.fish.keXieOpenJudge.common.Result
 import com.fish.keXieOpenJudge.entity.pojo.label.Label
 import com.fish.keXieOpenJudge.entity.pojo.label.table.LabelTableDef.LABEL
-import com.fish.keXieOpenJudge.entity.pojo.topic.table.TopicLabelTableDef.TOPIC_LABEL
 import com.fish.keXieOpenJudge.entity.pojo.topic.TopicLabel
+import com.fish.keXieOpenJudge.entity.pojo.topic.table.TopicLabelTableDef.TOPIC_LABEL
 import com.fish.keXieOpenJudge.exception.ServiceException
 import com.fish.keXieOpenJudge.exception.ServiceExceptionEnum
 import com.fish.keXieOpenJudge.mapper.label.LabelMapper
 import com.fish.keXieOpenJudge.mapper.topic.TopicLabelMapper
 import com.fish.keXieOpenJudge.service.topic.TopicLabelService
 import com.fish.keXieOpenJudge.utils.ResultUtil.success
-import com.fish.keXieOpenJudge.common.Result
 import com.mybatisflex.core.paginate.Page
 import com.mybatisflex.core.query.QueryWrapper
 import com.mybatisflex.spring.service.impl.ServiceImpl

@@ -1,9 +1,9 @@
 package com.fish.keXieOpenJudge.advice
 
+import com.fish.keXieOpenJudge.common.Result
 import com.fish.keXieOpenJudge.exception.ServiceException
 import com.fish.keXieOpenJudge.exception.ServiceExceptionEnum
 import com.fish.keXieOpenJudge.utils.ResultUtil.failure
-import com.fish.keXieOpenJudge.common.Result
 import org.slf4j.LoggerFactory
 import org.springframework.dao.DuplicateKeyException
 import org.springframework.security.authentication.BadCredentialsException

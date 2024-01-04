@@ -1,14 +1,14 @@
 package com.fish.keXieOpenJudge.service.topic.impl
 
+import com.fish.keXieOpenJudge.common.Result
 import com.fish.keXieOpenJudge.entity.dto.solution.InsertSolutionDTO
-import com.fish.keXieOpenJudge.entity.pojo.topic.table.TopicSolutionTableDef.TOPIC_SOLUTION
 import com.fish.keXieOpenJudge.entity.pojo.topic.TopicSolution
+import com.fish.keXieOpenJudge.entity.pojo.topic.table.TopicSolutionTableDef.TOPIC_SOLUTION
 import com.fish.keXieOpenJudge.exception.ServiceException
 import com.fish.keXieOpenJudge.exception.ServiceExceptionEnum
 import com.fish.keXieOpenJudge.mapper.topic.TopicSolutionMapper
 import com.fish.keXieOpenJudge.service.topic.TopicSolutionService
 import com.fish.keXieOpenJudge.utils.ResultUtil.success
-import com.fish.keXieOpenJudge.common.Result
 import com.mybatisflex.core.query.QueryWrapper
 import com.mybatisflex.core.update.UpdateChain
 import com.mybatisflex.kotlin.extensions.kproperty.column

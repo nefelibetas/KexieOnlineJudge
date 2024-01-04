@@ -1,14 +1,14 @@
 package com.fish.keXieOpenJudge.controller
 
+import com.fish.keXieOpenJudge.common.Result
 import com.fish.keXieOpenJudge.entity.dto.account.LoginAccountDTO
+import com.fish.keXieOpenJudge.entity.dto.account.PasswordDTO
 import com.fish.keXieOpenJudge.entity.dto.account.RegisterAccountDTO
 import com.fish.keXieOpenJudge.entity.dto.account.UpdateAccountDTO
 import com.fish.keXieOpenJudge.entity.pojo.account.Account
 import com.fish.keXieOpenJudge.exception.ServiceException
 import com.fish.keXieOpenJudge.exception.ServiceExceptionEnum
 import com.fish.keXieOpenJudge.service.account.AccountService
-import com.fish.keXieOpenJudge.common.Result
-import com.fish.keXieOpenJudge.entity.dto.account.PasswordDTO
 import com.mybatisflex.core.paginate.Page
 import jakarta.validation.Valid
 import org.springframework.web.bind.annotation.*

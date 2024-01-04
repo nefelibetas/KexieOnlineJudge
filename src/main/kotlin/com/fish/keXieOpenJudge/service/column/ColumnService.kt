@@ -1,10 +1,10 @@
 package com.fish.keXieOpenJudge.service.column
 
+import com.fish.keXieOpenJudge.common.Result
 import com.fish.keXieOpenJudge.entity.dto.column.InsertColumnDTO
 import com.fish.keXieOpenJudge.entity.dto.column.UpdateColumnDTO
 import com.fish.keXieOpenJudge.entity.pojo.column.Column
 import com.fish.keXieOpenJudge.entity.vo.ColumnVO
-import com.fish.keXieOpenJudge.common.Result
 import com.mybatisflex.core.paginate.Page
 import com.mybatisflex.core.service.IService
 

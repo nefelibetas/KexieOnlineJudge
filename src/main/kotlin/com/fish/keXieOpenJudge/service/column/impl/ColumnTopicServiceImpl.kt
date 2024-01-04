@@ -1,5 +1,6 @@
 package com.fish.keXieOpenJudge.service.column.impl
 
+import com.fish.keXieOpenJudge.common.Result
 import com.fish.keXieOpenJudge.entity.pojo.column.ColumnTopic
 import com.fish.keXieOpenJudge.entity.pojo.column.table.ColumnTopicTableDef.COLUMN_TOPIC
 import com.fish.keXieOpenJudge.entity.pojo.label.table.LabelTableDef.LABEL
@@ -10,7 +11,6 @@ import com.fish.keXieOpenJudge.exception.ServiceException
 import com.fish.keXieOpenJudge.exception.ServiceExceptionEnum
 import com.fish.keXieOpenJudge.mapper.column.ColumnTopicMapper
 import com.fish.keXieOpenJudge.service.column.ColumnTopicService
-import com.fish.keXieOpenJudge.common.Result
 import com.fish.keXieOpenJudge.utils.ResultUtil.success
 import com.mybatisflex.core.paginate.Page
 import com.mybatisflex.core.query.QueryWrapper

@@ -1,10 +1,10 @@
 package com.fish.keXieOpenJudge.service.topic
 
+import com.fish.keXieOpenJudge.common.Result
 import com.fish.keXieOpenJudge.entity.dto.topic.InsertTopicDTO
 import com.fish.keXieOpenJudge.entity.dto.topic.UpdateTopicDTO
 import com.fish.keXieOpenJudge.entity.pojo.topic.Topic
 import com.fish.keXieOpenJudge.entity.vo.TopicVO
-import com.fish.keXieOpenJudge.common.Result
 import com.mybatisflex.core.paginate.Page
 import com.mybatisflex.core.service.IService
 

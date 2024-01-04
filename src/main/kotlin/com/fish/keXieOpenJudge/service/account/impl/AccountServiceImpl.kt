@@ -1,6 +1,8 @@
 package com.fish.keXieOpenJudge.service.account.impl
 
+import com.fish.keXieOpenJudge.common.Result
 import com.fish.keXieOpenJudge.entity.dto.account.LoginAccountDTO
+import com.fish.keXieOpenJudge.entity.dto.account.PasswordDTO
 import com.fish.keXieOpenJudge.entity.dto.account.RegisterAccountDTO
 import com.fish.keXieOpenJudge.entity.dto.account.UpdateAccountDTO
 import com.fish.keXieOpenJudge.entity.pojo.account.Account
@@ -14,8 +16,6 @@ import com.fish.keXieOpenJudge.service.account.AccountService
 import com.fish.keXieOpenJudge.utils.RedisUtil
 import com.fish.keXieOpenJudge.utils.ResultUtil.success
 import com.fish.keXieOpenJudge.utils.SecurityUtil
-import com.fish.keXieOpenJudge.common.Result
-import com.fish.keXieOpenJudge.entity.dto.account.PasswordDTO
 import com.mybatisflex.core.paginate.Page
 import com.mybatisflex.core.query.QueryWrapper
 import com.mybatisflex.core.update.UpdateChain

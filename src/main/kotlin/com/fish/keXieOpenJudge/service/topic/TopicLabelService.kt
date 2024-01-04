@@ -1,8 +1,8 @@
 package com.fish.keXieOpenJudge.service.topic
 
+import com.fish.keXieOpenJudge.common.Result
 import com.fish.keXieOpenJudge.entity.pojo.label.Label
 import com.fish.keXieOpenJudge.entity.pojo.topic.TopicLabel
-import com.fish.keXieOpenJudge.common.Result
 import com.mybatisflex.core.paginate.Page
 import com.mybatisflex.core.service.IService
 

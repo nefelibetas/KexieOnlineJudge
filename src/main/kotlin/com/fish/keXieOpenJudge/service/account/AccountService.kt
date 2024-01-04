@@ -1,11 +1,11 @@
 package com.fish.keXieOpenJudge.service.account
 
+import com.fish.keXieOpenJudge.common.Result
 import com.fish.keXieOpenJudge.entity.dto.account.LoginAccountDTO
+import com.fish.keXieOpenJudge.entity.dto.account.PasswordDTO
 import com.fish.keXieOpenJudge.entity.dto.account.RegisterAccountDTO
 import com.fish.keXieOpenJudge.entity.dto.account.UpdateAccountDTO
 import com.fish.keXieOpenJudge.entity.pojo.account.Account
-import com.fish.keXieOpenJudge.common.Result
-import com.fish.keXieOpenJudge.entity.dto.account.PasswordDTO
 import com.mybatisflex.core.paginate.Page
 import com.mybatisflex.core.service.IService
 

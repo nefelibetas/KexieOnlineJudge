@@ -1,13 +1,14 @@
 package com.fish.keXieOpenJudge.service.label.impl
 
+import com.fish.keXieOpenJudge.common.Result
 import com.fish.keXieOpenJudge.entity.dto.label.InsertLabelsDTO
 import com.fish.keXieOpenJudge.entity.pojo.label.Label
 import com.fish.keXieOpenJudge.entity.pojo.label.table.LabelTableDef.LABEL
+import com.fish.keXieOpenJudge.entity.pojo.topic.table.TopicLabelTableDef.TOPIC_LABEL
 import com.fish.keXieOpenJudge.exception.ServiceException
 import com.fish.keXieOpenJudge.exception.ServiceExceptionEnum
 import com.fish.keXieOpenJudge.mapper.label.LabelMapper
 import com.fish.keXieOpenJudge.utils.ResultUtil.success
-import com.fish.keXieOpenJudge.common.Result
 import com.mybatisflex.core.paginate.Page
 import com.mybatisflex.core.query.QueryWrapper
 import com.mybatisflex.spring.service.impl.ServiceImpl
@@ -57,8 +58,14 @@ class LabelServiceImpl : ServiceImpl<LabelMapper, Label>(), com.fish.keXieOpenJu
 
     @Transactional
     override fun deleteLabel(labelId: Long): Result<*> {
-        val i = mapper!!.deleteById(labelId)
-        if (i > 0) return success<Any>()
+        val wrapper1 = QueryWrapper.create()
+            .from(TOPIC_LABEL).where(TOPIC_LABEL.LABEL_ID.eq(labelId))
+        val i = mapper.deleteByQuery(wrapper1)
+        val wrapper2 = QueryWrapper.create()
+            .from(LABEL).where(LABEL.LABEL_ID.eq(labelId))
+        val j = mapper.deleteByQuery(wrapper2)
+        if ((i and j) > 0)
+            return success<Any>()
         throw ServiceException(ServiceExceptionEnum.OPERATE_ERROR)
     }
 

@@ -1,15 +1,14 @@
 package com.fish.keXieOpenJudge.controller
 
+import com.fish.keXieOpenJudge.common.Result
 import com.fish.keXieOpenJudge.entity.dto.topic.InsertTopicDTO
 import com.fish.keXieOpenJudge.entity.dto.topic.UpdateTopicDTO
 import com.fish.keXieOpenJudge.entity.pojo.label.Label
 import com.fish.keXieOpenJudge.entity.vo.TopicVO
 import com.fish.keXieOpenJudge.service.topic.TopicLabelService
 import com.fish.keXieOpenJudge.service.topic.TopicService
-import com.fish.keXieOpenJudge.common.Result
 import com.mybatisflex.core.paginate.Page
 import jakarta.validation.Valid
-import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.NotEmpty
 import org.springframework.web.bind.annotation.*
 
@@ -112,10 +111,14 @@ class TopicController(val topicService: TopicService, val topicLabelService: Top
      * @return 该id对应的题目
      */
     @GetMapping("/topic/get/{topicId}")
-    fun getTopic(@PathVariable topicId: Long?): Result<TopicVO> {
-        return topicService.getTopic(topicId!!)
+    fun getTopic(@PathVariable topicId: Long): Result<TopicVO> {
+        return topicService.getTopic(topicId)
     }
 
+    /**
+     * 模糊搜索题目
+     * @param keyword 关键词
+     */
     @GetMapping("/topic/search")
     fun search(
         @RequestParam(required = true) keyword: String,
@@ -125,4 +128,8 @@ class TopicController(val topicService: TopicService, val topicLabelService: Top
         return topicService.search(keyword, pageNo, pageSize)
     }
 
+    @DeleteMapping("/root/topic/delete/{topicId}")
+    fun deleteTopic(@PathVariable topicId: Long): Result<*> {
+        return topicService.deleteTopic(topicId)
+    }
 }

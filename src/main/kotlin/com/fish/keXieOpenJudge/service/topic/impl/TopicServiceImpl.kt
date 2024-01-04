@@ -1,12 +1,13 @@
 package com.fish.keXieOpenJudge.service.topic.impl
 
+import com.fish.keXieOpenJudge.common.Result
 import com.fish.keXieOpenJudge.entity.dto.example.InsertExampleDTO
 import com.fish.keXieOpenJudge.entity.dto.topic.InsertTopicDTO
 import com.fish.keXieOpenJudge.entity.dto.topic.UpdateTopicDTO
 import com.fish.keXieOpenJudge.entity.pojo.label.table.LabelTableDef.LABEL
+import com.fish.keXieOpenJudge.entity.pojo.topic.Topic
 import com.fish.keXieOpenJudge.entity.pojo.topic.table.TopicLabelTableDef.TOPIC_LABEL
 import com.fish.keXieOpenJudge.entity.pojo.topic.table.TopicTableDef.TOPIC
-import com.fish.keXieOpenJudge.entity.pojo.topic.Topic
 import com.fish.keXieOpenJudge.entity.vo.TopicVO
 import com.fish.keXieOpenJudge.exception.ServiceException
 import com.fish.keXieOpenJudge.exception.ServiceExceptionEnum
@@ -15,13 +16,11 @@ import com.fish.keXieOpenJudge.mapper.topic.TopicMapper
 import com.fish.keXieOpenJudge.service.topic.TopicLabelService
 import com.fish.keXieOpenJudge.service.topic.TopicService
 import com.fish.keXieOpenJudge.utils.ResultUtil.success
-import com.fish.keXieOpenJudge.common.Result
 import com.mybatisflex.core.paginate.Page
 import com.mybatisflex.core.query.QueryWrapper
 import com.mybatisflex.core.update.UpdateChain
 import com.mybatisflex.kotlin.extensions.kproperty.column
 import com.mybatisflex.kotlin.extensions.kproperty.eq
-import com.mybatisflex.kotlin.extensions.sql.eq
 import com.mybatisflex.spring.service.impl.ServiceImpl
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -124,5 +123,6 @@ class TopicServiceImpl(val exampleMapper: ExampleMapper, val topicLabelService: 
                     .where(LABEL.LABEL_NAME.like(keyword))
             ))
         val topicVOS = mapper!!.paginateAs(Page.of(pageNo, pageSize), wrapper, TopicVO::class.java)
-        return success(topicVOS)    }
+        return success(topicVOS)
+    }
 }

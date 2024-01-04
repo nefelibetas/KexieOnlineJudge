@@ -111,11 +111,13 @@ class ColumnServiceImpl(val columnTopicService: ColumnTopicService) : ServiceImp
 
     @Transactional
     override fun deleteColumn(columnId: Long): Result<*> {
-        val wrapper = QueryWrapper.create()
-            .from(COLUMN).join<QueryWrapper>(COLUMN_TOPIC).on(COLUMN.COLUMN_ID.eq(COLUMN_TOPIC.COLUMN_ID))
-            .where(COLUMN.COLUMN_ID.eq(columnId))
-        val i = mapper!!.deleteByQuery(wrapper)
-        if (i > 0)
+        val wrapper1 = QueryWrapper.create()
+            .from(COLUMN_TOPIC).where(COLUMN_TOPIC.COLUMN_ID.eq(columnId))
+        val i = mapper!!.deleteByQuery(wrapper1)
+        val wrapper2 = QueryWrapper.create()
+            .from(COLUMN).where(COLUMN.COLUMN_ID.eq(columnId))
+        val j = mapper.deleteByQuery(wrapper2)
+        if ((i and j) > 0)
             return success<Any>()
         throw ServiceException(ServiceExceptionEnum.OPERATE_ERROR)
     }

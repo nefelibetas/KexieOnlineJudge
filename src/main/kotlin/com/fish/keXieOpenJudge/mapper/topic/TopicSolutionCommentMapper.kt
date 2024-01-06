@@ -4,7 +4,6 @@ import com.fish.keXieOpenJudge.entity.dto.topic.InsertTopicSolutionCommentDTO
 import com.fish.keXieOpenJudge.entity.pojo.topic.TopicSolutionComment
 import com.mybatisflex.core.BaseMapper
 import org.apache.ibatis.annotations.Insert
-import org.apache.ibatis.annotations.Param
 
 /**
  * 映射层。

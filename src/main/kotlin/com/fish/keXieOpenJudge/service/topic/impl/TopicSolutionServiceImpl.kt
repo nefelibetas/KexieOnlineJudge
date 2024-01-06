@@ -2,9 +2,7 @@ package com.fish.keXieOpenJudge.service.topic.impl
 
 import com.fish.keXieOpenJudge.common.Result
 import com.fish.keXieOpenJudge.entity.dto.topic.InsertTopicSolutionDTO
-import com.fish.keXieOpenJudge.entity.pojo.account.table.AccountTableDef.ACCOUNT
 import com.fish.keXieOpenJudge.entity.pojo.topic.TopicSolution
-import com.fish.keXieOpenJudge.entity.pojo.topic.table.TopicSolutionCommentTableDef.TOPIC_SOLUTION_COMMENT
 import com.fish.keXieOpenJudge.entity.pojo.topic.table.TopicSolutionTableDef.TOPIC_SOLUTION
 import com.fish.keXieOpenJudge.entity.vo.PreviewTopicSolution
 import com.fish.keXieOpenJudge.entity.vo.TopicSolutionVO

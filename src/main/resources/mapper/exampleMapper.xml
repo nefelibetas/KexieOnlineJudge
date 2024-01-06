@@ -10,4 +10,14 @@
             (#{example.topicId}, #{example.input}, #{example.output}, #{example.showed}, #{example.assessed})
         </foreach>
     </insert>
+    <update id="updateExample" parameterType="com.fish.keXieOpenJudge.entity.dto.example.UpdateExampleDTO">
+        update oj_example
+        <set>
+            <if test="input != null">`input` = #{input},</if>
+            <if test="output != null">`output` = #{output},</if>
+            <if test="showed != null">`showed` = #{showed},</if>
+            <if test="assessed != null">`assessed` = #{assessed},</if>
+        </set>
+        where example_id = #{exampleId}
+    </update>
 </mapper>

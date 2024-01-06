@@ -16,8 +16,8 @@ import java.time.LocalDateTime
  * @author fish
  * @since 2023-11-14
  */
-@Table(value = "oj_topic_solutions_comments")
-open class TopicSolutionsComments: Serializable {
+@Table(value = "oj_topic_solution_comment")
+open class TopicSolutionComment: Serializable {
     @Id(keyType = KeyType.Auto)
     val commentId: Long? = null
     val userId: String? = null

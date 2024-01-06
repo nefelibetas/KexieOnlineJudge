@@ -16,7 +16,7 @@ import java.time.LocalDateTime
  * @author fish
  * @since 2023-11-14
  */
-@Table(value = "oj_topic_solutions")
+@Table(value = "oj_topic_solution")
 open class TopicSolution: Serializable {
     @Id(keyType = KeyType.Auto)
     val solutionId: Long? = null

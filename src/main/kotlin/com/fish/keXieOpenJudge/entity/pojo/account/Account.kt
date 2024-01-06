@@ -15,23 +15,7 @@ import java.time.LocalDateTime
  * @since 2023-11-14
  */
 @Table(value = "oj_account")
-open class Account(
-    userId: String?,
-    roleId: Long?,
-    nickname: String?,
-    avatar: String?,
-    studentId: String?,
-    username: String?,
-    password: String?,
-    gender: String?,
-    email: String?,
-    specialty: String?,
-    qq: String?,
-    blogAddress: String?,
-    githubAddress: String?,
-    enabled: Boolean?,
-    createTime: LocalDateTime?
-): Serializable {
+open class Account: Serializable {
     /**
      * 用户id
      */
@@ -95,21 +79,4 @@ open class Account(
     @JsonSerialize(using = LocalDateTimeSerializer::class)
     @JsonDeserialize(using = LocalDateTimeDeserializer::class)
     val createTime: LocalDateTime? = null
-    constructor(): this(
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null
-    )
 }

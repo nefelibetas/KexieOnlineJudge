@@ -3,6 +3,9 @@ package com.fish.keXieOpenJudge.service.topic
 import com.fish.keXieOpenJudge.common.Result
 import com.fish.keXieOpenJudge.entity.dto.solution.InsertSolutionDTO
 import com.fish.keXieOpenJudge.entity.pojo.topic.TopicSolution
+import com.fish.keXieOpenJudge.entity.vo.PreviewTopicSolution
+import com.fish.keXieOpenJudge.entity.vo.TopicSolutionVO
+import com.mybatisflex.core.paginate.Page
 import com.mybatisflex.core.service.IService
 
 interface TopicSolutionService : IService<TopicSolution> {
@@ -16,32 +19,21 @@ interface TopicSolutionService : IService<TopicSolution> {
      * 获得题解
      * @param solutionId 题解id
      */
-    fun getSolution(solutionId: Long) : Result<TopicSolution>
+    fun getSolution(solutionId: Long) : Result<TopicSolutionVO>
     /**
      * 获取一道题目的全部题解
      * @param topicId 题目id
      */
-    fun getAllSolutions(topicId: Long) : Result<ArrayList<TopicSolution>>
+    fun getAllSolutions(topicId: Long, pageNo: Int, pageSize: Int) : Result<Page<PreviewTopicSolution>>
     /**
-     * 设置置顶，这里仅仅考虑单置顶
+     * 设置置顶和取消置顶
      * @param topicId 题目id
      * @param solutionId 题解id
      */
-    fun setPined(topicId: Long, solutionId: Long) : Result<*>
+    fun changePined(topicId: Long, solutionId: Long, action: Boolean) : Result<*>
     /**
-     * 取消置顶
-     * @param topicId 题目id
+     * 启用或禁用题解
      * @param solutionId 题解id
      */
-    fun disablePined(solutionId: Long) : Result<*>
-    /**
-     * 禁用题目
-     * @param solutionId 题目id
-     */
-    fun disableSolution(solutionId: Long) : Result<*>
-    /**
-     * 启用题目
-     * @param solutionId 题目id
-     */
-    fun enableSolution(solutionId: Long) : Result<*>
+    fun changeStatus(topicId: Long, solutionId: Long, action: Boolean) : Result<*>
 }

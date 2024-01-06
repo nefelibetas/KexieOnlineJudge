@@ -3,54 +3,49 @@ package com.fish.keXieOpenJudge.entity.vo
 import com.fish.keXieOpenJudge.entity.pojo.account.Account
 import java.io.Serializable
 
-data class AccountVO(
-    val userId: String?,
+class AccountVO(): Serializable {
+    var userId: String? = null
     /**
      * 昵称
      */
-    val nickname: String?,
+    var nickname: String? = null
     /**
      * 头像
      */
-    val avatar: String?,
+    var avatar: String? = null
     /**
      * 性别
      */
-    val gender: String?,
+    var gender: String? = null
     /**
      * 专业
      */
-    val specialty: String?,
+    var specialty: String? = null
     /**
      * 邮箱
      */
-    val email: String?,
+    var email: String? = null
     /**
      * 博客地址
      */
-    val blogAddress: String?,
+    var blogAddress: String? = null
     /**
      * GitHub地址
      */
-    val githubAddress: String?
-) : Serializable {
+    var githubAddress: String? = null
     /**
      * 角色
      */
-    var role: String? = null
-    constructor(account: Account) : this(
-        account.userId,
-        account.nickname,
-        account.avatar,
-        account.gender,
-        account.specialty,
-        account.email,
-        account.blogAddress,
-        account.githubAddress
-    ) {
-        if (account.roleId == 3L)
-            this.role = "普通用户"
-        else
-            this.role = "管理员"
+    var roleId: String? = null
+    constructor(account: Account) : this() {
+        this.userId = account.userId
+        this.email = account.email
+        this.blogAddress = account.blogAddress
+        this.specialty = account.specialty
+        this.avatar = account.avatar
+        this.gender = account.gender
+        this.githubAddress = account.githubAddress
+        this.nickname = account.nickname
+        this.roleId = account.roleId.toString()
     }
 }

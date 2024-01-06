@@ -22,7 +22,7 @@ open class TopicSolution: Serializable {
     val solutionId: Long? = null
     val topicId: Long? = null
     val title: String? = null
-    val content: String? = null
+    val solutionContent: String? = null
     /**
      * 置顶
      */

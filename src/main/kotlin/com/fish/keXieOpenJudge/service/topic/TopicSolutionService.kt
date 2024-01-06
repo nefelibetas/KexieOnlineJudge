@@ -1,7 +1,7 @@
 package com.fish.keXieOpenJudge.service.topic
 
 import com.fish.keXieOpenJudge.common.Result
-import com.fish.keXieOpenJudge.entity.dto.solution.InsertSolutionDTO
+import com.fish.keXieOpenJudge.entity.dto.topic.InsertTopicSolutionDTO
 import com.fish.keXieOpenJudge.entity.pojo.topic.TopicSolution
 import com.fish.keXieOpenJudge.entity.vo.PreviewTopicSolution
 import com.fish.keXieOpenJudge.entity.vo.TopicSolutionVO
@@ -12,14 +12,14 @@ interface TopicSolutionService : IService<TopicSolution> {
     /**
      * 添加题解,若内容出错则评论区见
      * @param solution 前端传输的题解数据,具体要求见下方
-     * @sample InsertSolutionDTO
+     * @sample InsertTopicSolutionDTO
      */
-    fun addSolution(solution: InsertSolutionDTO) : Result<*>
+    fun addSolution(solution: InsertTopicSolutionDTO) : Result<*>
     /**
      * 获得题解
      * @param solutionId 题解id
      */
-    fun getSolution(solutionId: Long) : Result<TopicSolutionVO>
+    fun getSolution(solutionId: Long, pageNo: Int, pageSize: Int) : Result<TopicSolutionVO>
     /**
      * 获取一道题目的全部题解
      * @param topicId 题目id

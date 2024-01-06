@@ -1,7 +1,7 @@
 package com.fish.keXieOpenJudge.service.topic.impl
 
 import com.fish.keXieOpenJudge.common.Result
-import com.fish.keXieOpenJudge.entity.dto.solution.InsertSolutionDTO
+import com.fish.keXieOpenJudge.entity.dto.topic.InsertTopicSolutionDTO
 import com.fish.keXieOpenJudge.entity.pojo.account.table.AccountTableDef.ACCOUNT
 import com.fish.keXieOpenJudge.entity.pojo.topic.TopicSolution
 import com.fish.keXieOpenJudge.entity.pojo.topic.table.TopicSolutionCommentTableDef.TOPIC_SOLUTION_COMMENT
@@ -11,7 +11,7 @@ import com.fish.keXieOpenJudge.entity.vo.TopicSolutionVO
 import com.fish.keXieOpenJudge.exception.ServiceException
 import com.fish.keXieOpenJudge.exception.ServiceExceptionEnum
 import com.fish.keXieOpenJudge.mapper.topic.TopicSolutionMapper
-import com.fish.keXieOpenJudge.service.comment.CommentService
+import com.fish.keXieOpenJudge.service.topic.TopicSolutionCommentService
 import com.fish.keXieOpenJudge.service.topic.TopicSolutionService
 import com.fish.keXieOpenJudge.utils.ResultUtil.success
 import com.mybatisflex.core.paginate.Page
@@ -25,29 +25,31 @@ import org.springframework.transaction.annotation.Transactional
 import java.util.*
 
 @Service
-class TopicSolutionServiceImpl(val commentService: CommentService): ServiceImpl<TopicSolutionMapper, TopicSolution>(), TopicSolutionService {
+class TopicSolutionServiceImpl(val topicSolutionCommentService: TopicSolutionCommentService): ServiceImpl<TopicSolutionMapper, TopicSolution>(), TopicSolutionService {
     @Transactional
-    override fun addSolution(solution: InsertSolutionDTO): Result<*> {
+    override fun addSolution(solution: InsertTopicSolutionDTO): Result<*> {
         val i = mapper.addSolution(solution)
         if (i > 0)
             return success<Any>()
         throw ServiceException(ServiceExceptionEnum.OPERATE_ERROR)
     }
 
-    override fun getSolution(solutionId: Long): Result<TopicSolutionVO> {
+    override fun getSolution(solutionId: Long, pageNo: Int, pageSize: Int): Result<TopicSolutionVO> {
         if (Objects.isNull(solutionId))
             throw ServiceException(ServiceExceptionEnum.KEY_ARGUMENT_NOT_INPUT)
         val wrapper = QueryWrapper.create()
-            .select(TOPIC_SOLUTION.ALL_COLUMNS, TOPIC_SOLUTION_COMMENT.ALL_COLUMNS, ACCOUNT.ALL_COLUMNS)
+            .select(TOPIC_SOLUTION.SOLUTION_ID, TOPIC_SOLUTION.TITLE, TOPIC_SOLUTION.SOLUTION_CONTENT)
             .from(TOPIC_SOLUTION)
-            .leftJoin<QueryWrapper>(TOPIC_SOLUTION_COMMENT)
-            .on(TOPIC_SOLUTION.SOLUTION_ID.eq(TOPIC_SOLUTION_COMMENT.SOLUTION_ID)).and(TOPIC_SOLUTION_COMMENT.ENABLED.eq(true))
-            .leftJoin<QueryWrapper>(ACCOUNT)
-            .on(TOPIC_SOLUTION_COMMENT.USER_ID.eq(ACCOUNT.USER_ID))
             .where(TOPIC_SOLUTION.SOLUTION_ID.eq(solutionId)).and(TOPIC_SOLUTION.ENABLED.eq(true))
-        val topicSolution = mapper.selectOneByQueryAs(wrapper, TopicSolutionVO::class.java)
-        if (!Objects.isNull(topicSolution))
-            return success(topicSolution)
+        val topicSolution = mapper.selectOneByQuery(wrapper)
+        val topicSolutionVO = TopicSolutionVO()
+        topicSolutionVO.solutionId = topicSolution.solutionId
+        topicSolutionVO.solutionContent = topicSolution.solutionContent
+        topicSolutionVO.title = topicSolution.title
+        val data = topicSolutionCommentService.getFirstComment(solutionId, pageNo, pageSize)
+        topicSolutionVO.comments = data.data
+        if (!Objects.isNull(topicSolutionVO))
+            return success(topicSolutionVO)
         throw ServiceException(ServiceExceptionEnum.NOT_FOUND)
     }
 
@@ -59,8 +61,8 @@ class TopicSolutionServiceImpl(val commentService: CommentService): ServiceImpl<
             .and(TOPIC_SOLUTION.ENABLED.eq(true))
         val solutions = mapper.paginateAs(Page.of(pageNo, pageSize), wrapper, PreviewTopicSolution::class.java)
         for ((index, previewTopicSolution) in solutions.records.withIndex()) {
-            previewTopicSolution.likeNumber = commentService.getLikeNumber(previewTopicSolution.solutionId!!)
-            previewTopicSolution.commentNumber = commentService.getCommentNumber(previewTopicSolution.solutionId)
+            previewTopicSolution.likeNumber = topicSolutionCommentService.getLikeNumber(previewTopicSolution.solutionId!!)
+            previewTopicSolution.commentNumber = topicSolutionCommentService.getCommentNumber(previewTopicSolution.solutionId)
         }
         return success(solutions)
     }

@@ -26,7 +26,7 @@ open class TopicSolutionComment: Serializable {
      * 父评论的id，作为鉴别是否为二级评论的标志
      */
     val parentId: Long? = null
-    val content: String? = null
+    val commentContent: String? = null
     val enabled: Boolean? = null
     @JsonSerialize(using = LocalDateTimeSerializer::class)
     @JsonDeserialize(using = LocalDateTimeDeserializer::class)

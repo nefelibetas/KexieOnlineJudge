@@ -1,10 +1,10 @@
-package com.fish.keXieOpenJudge.entity.dto.solution
+package com.fish.keXieOpenJudge.entity.dto.topic
 
 import jakarta.validation.constraints.NotNull
 import jakarta.validation.constraints.Size
 import java.io.Serializable
 
-class InsertSolutionDTO: Serializable {
+class InsertTopicSolutionDTO: Serializable {
     @NotNull(message = "题目id不能为空")
     val topicId: Long? = null
     @NotNull(message = "标题不能为空")

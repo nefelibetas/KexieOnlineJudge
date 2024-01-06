@@ -4,7 +4,7 @@ import com.fish.keXieOpenJudge.common.Result
 import com.fish.keXieOpenJudge.entity.dto.topic.InsertTopicSolutionCommentDTO
 import com.fish.keXieOpenJudge.entity.pojo.account.table.AccountTableDef.ACCOUNT
 import com.fish.keXieOpenJudge.entity.pojo.topic.TopicSolutionComment
-import com.fish.keXieOpenJudge.entity.pojo.topic.table.LikeTableDef
+import com.fish.keXieOpenJudge.entity.pojo.topic.table.LikeTableDef.LIKE
 import com.fish.keXieOpenJudge.entity.pojo.topic.table.TopicSolutionCommentTableDef.TOPIC_SOLUTION_COMMENT
 import com.fish.keXieOpenJudge.entity.vo.FirstCommentVO
 import com.fish.keXieOpenJudge.entity.vo.SecondCommentVO
@@ -52,11 +52,19 @@ class TopicSolutionCommentServiceImpl(val likeMapper: LikeMapper): ServiceImpl<T
         return mapper.selectCountByQuery(wrapper).toInt()
     }
 
-    override fun getLikeNumber(solutionId: Long): Int {
+    override fun getCommentLikeNumber(commentId: Long): Int {
         val wrapper = QueryWrapper.create()
-            .select(LikeTableDef.LIKE.ALL_COLUMNS).from(LikeTableDef.LIKE)
-            .where(LikeTableDef.LIKE.SOLUTION_ID.eq(solutionId))
-            .and(LikeTableDef.LIKE.COMMENT_ID.isNull)
+            .select(LIKE.ALL_COLUMNS).from(LIKE)
+            .where(LIKE.COMMENT_ID.eq(commentId))
+            .and(LIKE.SOLUTION_ID.isNull)
+        return likeMapper.selectCountByQuery(wrapper).toInt()
+    }
+
+    override fun getSolutionLikeNumber(solutionId: Long): Int {
+        val wrapper = QueryWrapper.create()
+            .select(LIKE.ALL_COLUMNS).from(LIKE)
+            .where(LIKE.SOLUTION_ID.eq(solutionId))
+            .and(LIKE.COMMENT_ID.isNull)
         return likeMapper.selectCountByQuery(wrapper).toInt()
     }
 
@@ -69,7 +77,8 @@ class TopicSolutionCommentServiceImpl(val likeMapper: LikeMapper): ServiceImpl<T
             .and(TOPIC_SOLUTION_COMMENT.SOLUTION_ID.eq(solutionId))
         val firstCommentVO = mapper.paginateAs(Page.of(pageNo, pageSize), wrapper, FirstCommentVO::class.java)
         firstCommentVO.records.forEach {
-            it.number = this.getSecondCommentNumber(it.commentId!!)
+            it.secondNumber = this.getSecondCommentNumber(it.commentId!!)
+            it.likeNumber = this.getCommentLikeNumber(it.commentId)
         }
         return success(firstCommentVO)
     }
@@ -89,7 +98,10 @@ class TopicSolutionCommentServiceImpl(val likeMapper: LikeMapper): ServiceImpl<T
             .leftJoin<QueryWrapper>(ACCOUNT).on(TOPIC_SOLUTION_COMMENT.USER_ID.eq(ACCOUNT.USER_ID))
             .where(TOPIC_SOLUTION_COMMENT.ENABLED.eq(true))
             .and(TOPIC_SOLUTION_COMMENT.PARENT_ID.eq(commentId))
-        val secondCommentVOPage = mapper.paginateAs(Page.of(pageNo, pageSize), wrapper, SecondCommentVO::class.java)
-        return success(secondCommentVOPage)
+        val secondCommentVO = mapper.paginateAs(Page.of(pageNo, pageSize), wrapper, SecondCommentVO::class.java)
+        secondCommentVO.records.forEach {
+            it.likeNumber = this.getCommentLikeNumber(it.commentId!!)
+        }
+        return success(secondCommentVO)
     }
 }

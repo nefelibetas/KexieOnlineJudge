@@ -59,7 +59,7 @@ class TopicSolutionServiceImpl(val topicSolutionCommentService: TopicSolutionCom
             .and(TOPIC_SOLUTION.ENABLED.eq(true))
         val solutions = mapper.paginateAs(Page.of(pageNo, pageSize), wrapper, PreviewTopicSolution::class.java)
         for ((index, previewTopicSolution) in solutions.records.withIndex()) {
-            previewTopicSolution.likeNumber = topicSolutionCommentService.getLikeNumber(previewTopicSolution.solutionId!!)
+            previewTopicSolution.likeNumber = topicSolutionCommentService.getSolutionLikeNumber(previewTopicSolution.solutionId!!)
             previewTopicSolution.commentNumber = topicSolutionCommentService.getCommentNumber(previewTopicSolution.solutionId)
         }
         return success(solutions)

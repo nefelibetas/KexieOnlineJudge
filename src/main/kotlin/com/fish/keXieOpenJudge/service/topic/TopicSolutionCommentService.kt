@@ -12,7 +12,8 @@ interface TopicSolutionCommentService: IService<TopicSolutionComment> {
     fun addComment(insertTopicSolutionCommentDTO: InsertTopicSolutionCommentDTO): Result<*>
     fun deleteComment(commentId: Long): Result<*>
     fun getCommentNumber(solutionId: Long): Int
-    fun getLikeNumber(solutionId: Long): Int
+    fun getSolutionLikeNumber(solutionId: Long): Int
+    fun getCommentLikeNumber(commentId: Long): Int
     fun getFirstComment(solutionId: Long, pageNo: Int, pageSize: Int): Result<Page<FirstCommentVO>>
     fun getSecondCommentNumber(commentId: Long): Int
     fun getSecondComment(commentId: Long, pageNo: Int, pageSize: Int): Result<Page<SecondCommentVO>>

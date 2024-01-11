@@ -30,13 +30,7 @@ mybatis-flex:
 
 logging:
   level:
-    com.fish.mapper.account: debug
-    com.fish.mapper.column: debug
-    com.fish.mapper.exam: debug
-    com.fish.mapper.example: debug
-    com.fish.mapper.label: debug
-    com.fish.mapper.message: debug
-    com.fish.mapper.topic: debug
+      com.fish.keXieOpenJudge.mapper: debug
   file:
     name: D:/log/oj.log
 jwt:

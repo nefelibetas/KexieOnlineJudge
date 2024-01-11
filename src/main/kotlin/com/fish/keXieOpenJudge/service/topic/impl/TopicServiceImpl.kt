@@ -86,7 +86,7 @@ class TopicServiceImpl(val exampleMapper: ExampleMapper, val topicLabelService: 
             .and(TOPIC.ENABLED.eq(true))
             .leftJoin<QueryWrapper>(LABEL)
             .on(LABEL.LABEL_ID.eq(TOPIC_LABEL.LABEL_ID))
-        val topicVOS = mapper!!.paginateAs(Page.of(pageNo, pageSize), wrapper, TopicVO::class.java)
+        val topicVOS = mapper!!.paginateWithRelationsAs(Page.of(pageNo, pageSize), wrapper, TopicVO::class.java)
         return success(topicVOS)
     }
 
@@ -100,7 +100,7 @@ class TopicServiceImpl(val exampleMapper: ExampleMapper, val topicLabelService: 
             .leftJoin<QueryWrapper>(LABEL)
             .on(LABEL.LABEL_ID.eq(TOPIC_LABEL.LABEL_ID))
             .where(TOPIC.ENABLED.eq(true)).and(TOPIC_LABEL.TOPIC_ID.eq(topicId))
-        val topicVO = mapper!!.selectOneByQueryAs(wrapper, TopicVO::class.java)
+        val topicVO = mapper!!.selectOneWithRelationsByQueryAs(wrapper, TopicVO::class.java)
         if (!Objects.isNull(topicVO))
             return success(topicVO)
         throw ServiceException(ServiceExceptionEnum.NOT_FOUND)

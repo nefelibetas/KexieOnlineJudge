@@ -1,15 +1,18 @@
 package com.fish.keXieOpenJudge.entity.vo
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.fasterxml.jackson.databind.annotation.JsonSerialize
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer
 import com.fish.keXieOpenJudge.entity.pojo.label.Label
+import com.mybatisflex.annotation.RelationOneToOne
 import java.io.Serializable
 import java.time.LocalDateTime
 
 data class TopicVO(
     var topicId: Long? = null,
+    @JsonIgnore
     var uploadUserId: String? = null,
     var title: String? = null,
     var content: String? = null,
@@ -24,4 +27,6 @@ data class TopicVO(
     var precautions: String? = null,
     var from: String? = null,
     var labels: ArrayList<Label>? = null,
+    @RelationOneToOne(selfField = "uploadUserId", targetField = "userId", targetTable = "oj_account")
+    var uploadUser: AccountVO? = null
 ) : Serializable

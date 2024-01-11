@@ -1,5 +1,7 @@
 package com.fish.keXieOpenJudge.mapper.exam
 
+import com.fish.keXieOpenJudge.entity.dto.exam.InsertExamDTO
+import com.fish.keXieOpenJudge.entity.dto.exam.UpdateExamDTO
 import com.fish.keXieOpenJudge.entity.pojo.exam.Exam
 import com.mybatisflex.core.BaseMapper
 
@@ -9,4 +11,7 @@ import com.mybatisflex.core.BaseMapper
  * @author fish
  * @since 2023-11-14
  */
-interface ExamMapper : BaseMapper<Exam?>
+interface ExamMapper : BaseMapper<Exam> {
+    fun insertExamDTO(insertExamDTO: InsertExamDTO): Int
+    fun updateExamDTO(updateExamDTO: UpdateExamDTO): Int
+}

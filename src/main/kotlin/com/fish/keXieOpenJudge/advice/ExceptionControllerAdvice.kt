@@ -103,7 +103,7 @@ class ExceptionControllerAdvice {
      * @return 响应出现错误
      * @param <T> 泛型
     </T> */
-    @ExceptionHandler(Exception::class)
+    @ExceptionHandler(Exception::class, RuntimeException::class)
     fun <T> exceptionHandler(exception: Exception?): Result<T> {
         log.error("出现未知异常: ", exception)
         return failure(ServiceExceptionEnum.UNKNOWN_ERROR)

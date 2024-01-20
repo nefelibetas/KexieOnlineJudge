@@ -43,17 +43,17 @@ class AccountServiceImpl(
     override fun login(loginAccountDTO: LoginAccountDTO): Result<HashMap<String, Any>> {
         val authenticationToken = UsernamePasswordAuthenticationToken(loginAccountDTO.email, loginAccountDTO.password)
         val authentication = authenticationManager.authenticate(authenticationToken)
-        if (Objects.isNull(authentication)) {
-            throw ServiceException(ServiceExceptionEnum.ACCOUNT_NOT_FOUND)
+        authentication?.let {
+            val principal = authentication.principal as LoginAccount
+            val redisKey = makeKey(principal.account.userId!!, principal.account.nickname!!)
+            val token = jwtUtil.createToken(redisKey)
+            val map = HashMap<String, Any>()
+            map["Authorization"] = token
+            map["account"] = AccountVO(principal.account)
+            redisUtil.set(redisKey, principal)
+            return success(map)
         }
-        val principal = authentication.principal as LoginAccount
-        val redisKey = makeKey(principal.account.userId!!, principal.account.nickname!!)
-        val token = jwtUtil.createToken(redisKey)
-        val map = HashMap<String, Any>()
-        map["Authorization"] = token
-        map["account"] = AccountVO(principal.account)
-        redisUtil.set(redisKey, principal)
-        return success(map)
+        throw ServiceException(ServiceExceptionEnum.ACCOUNT_NOT_FOUND)
     }
 
     @Transactional
@@ -152,13 +152,9 @@ class AccountServiceImpl(
         if (id == userId)
             throw ServiceException(ServiceExceptionEnum.OPERATE_ERROR)
         val loginAccountRoleId = loginAccount.account.roleId!!
-        if (!Objects.isNull(loginAccountRoleId)) {
-            val account = mapper!!.getAccount(userId)
-            return if (Objects.isNull(roleId) && !Objects.isNull(account.roleId!!))
-                loginAccountRoleId > account.roleId
-            else
-                loginAccountRoleId > roleId!!
-        }
-        return true
+        val account = mapper!!.getAccount(userId)
+        return if (Objects.isNull(roleId) && !Objects.isNull(account.roleId!!))
+            loginAccountRoleId > account.roleId
+        else loginAccountRoleId > roleId!!
     }
 }

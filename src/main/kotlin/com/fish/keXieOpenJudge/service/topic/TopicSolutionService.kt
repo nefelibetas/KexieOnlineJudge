@@ -19,21 +19,21 @@ interface TopicSolutionService : IService<TopicSolution> {
      * 获得题解
      * @param solutionId 题解id
      */
-    fun getSolution(solutionId: Long, pageNo: Int, pageSize: Int) : Result<TopicSolutionVO>
+    fun getSolution(solutionId: Long?, pageNo: Int, pageSize: Int) : Result<TopicSolutionVO>
     /**
      * 获取一道题目的全部题解
      * @param topicId 题目id
      */
-    fun getAllSolutions(topicId: Long, pageNo: Int, pageSize: Int) : Result<Page<PreviewTopicSolution>>
+    fun getAllSolutions(topicId: Long?, pageNo: Int, pageSize: Int) : Result<Page<PreviewTopicSolution>>
     /**
      * 设置置顶和取消置顶
      * @param topicId 题目id
      * @param solutionId 题解id
      */
-    fun changePined(topicId: Long, solutionId: Long, action: Boolean) : Result<*>
+    fun changePined(topicId: Long?, solutionId: Long?, action: Boolean) : Result<*>
     /**
      * 启用或禁用题解
      * @param solutionId 题解id
      */
-    fun changeStatus(topicId: Long, solutionId: Long, action: Boolean) : Result<*>
+    fun changeStatus(topicId: Long?, solutionId: Long?, action: Boolean) : Result<*>
 }

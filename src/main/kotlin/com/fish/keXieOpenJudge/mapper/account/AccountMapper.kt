@@ -16,7 +16,7 @@ import org.apache.ibatis.annotations.Update
  */
 interface AccountMapper : BaseMapper<Account> {
     @Select("select * from oj_account where enabled = true and email = #{email}")
-    fun getAccountByEmail(@Param("email") email: String): Account
+    fun getAccountByEmail(@Param("email") email: String): Account?
     @Update("update oj_account set role_id = #{roleId} where user_id = #{userId}")
     fun changeAccountRole(@Param("userId") userId: String, @Param("roleId") roleId: Long): Int
     @Select("select * from oj_account where enabled =true and user_id = #{userId}")

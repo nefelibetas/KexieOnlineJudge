@@ -50,14 +50,16 @@ class JwtLoginFilter(
             return
         }
         val account = mapper.readValue(json, LoginAccount::class.java)
-        if (Objects.isNull(account)) {
-            failure(response, ServiceExceptionEnum.UN_LOGIN)
+        account?.let {
+            val authenticationToken =
+                UsernamePasswordAuthenticationToken(account, account.account.userId, account.authorities)
+            SecurityContextHolder.getContext().authentication = authenticationToken
+            filterChain.doFilter(request, response)
             return
         }
-        val authenticationToken =
-            UsernamePasswordAuthenticationToken(account, account.account.userId, account.authorities)
-        SecurityContextHolder.getContext().authentication = authenticationToken
-        filterChain.doFilter(request, response)
+        failure(response, ServiceExceptionEnum.UN_LOGIN)
+        return
+
     }
     companion object {
         private val mapper = ObjectMapper()

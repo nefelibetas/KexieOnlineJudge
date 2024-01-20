@@ -20,7 +20,6 @@ import com.mybatisflex.kotlin.extensions.kproperty.eq
 import com.mybatisflex.spring.service.impl.ServiceImpl
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import java.util.*
 
 @Service
 class TopicSolutionServiceImpl(val topicSolutionCommentService: TopicSolutionCommentService): ServiceImpl<TopicSolutionMapper, TopicSolution>(), TopicSolutionService {
@@ -32,33 +31,35 @@ class TopicSolutionServiceImpl(val topicSolutionCommentService: TopicSolutionCom
         throw ServiceException(ServiceExceptionEnum.OPERATE_ERROR)
     }
 
-    override fun getSolution(solutionId: Long, pageNo: Int, pageSize: Int): Result<TopicSolutionVO> {
-        if (Objects.isNull(solutionId))
-            throw ServiceException(ServiceExceptionEnum.KEY_ARGUMENT_NOT_INPUT)
-        val wrapper = QueryWrapper.create()
-            .select(TOPIC_SOLUTION.SOLUTION_ID, TOPIC_SOLUTION.TITLE, TOPIC_SOLUTION.SOLUTION_CONTENT)
-            .from(TOPIC_SOLUTION)
-            .where(TOPIC_SOLUTION.SOLUTION_ID.eq(solutionId)).and(TOPIC_SOLUTION.ENABLED.eq(true))
-        val topicSolution = mapper.selectOneByQuery(wrapper)
-        val topicSolutionVO = TopicSolutionVO()
-        topicSolutionVO.solutionId = topicSolution.solutionId
-        topicSolutionVO.solutionContent = topicSolution.solutionContent
-        topicSolutionVO.title = topicSolution.title
-        val data = topicSolutionCommentService.getFirstComment(solutionId, pageNo, pageSize)
-        topicSolutionVO.comments = data.data
-        if (!Objects.isNull(topicSolutionVO))
-            return success(topicSolutionVO)
-        throw ServiceException(ServiceExceptionEnum.NOT_FOUND)
+    override fun getSolution(solutionId: Long?, pageNo: Int, pageSize: Int): Result<TopicSolutionVO> {
+        solutionId?.let {
+            val wrapper = QueryWrapper.create()
+                .select(TOPIC_SOLUTION.SOLUTION_ID, TOPIC_SOLUTION.TITLE, TOPIC_SOLUTION.SOLUTION_CONTENT)
+                .from(TOPIC_SOLUTION)
+                .where(TOPIC_SOLUTION.SOLUTION_ID.eq(solutionId)).and(TOPIC_SOLUTION.ENABLED.eq(true))
+            val topicSolution = mapper.selectOneByQuery(wrapper)
+            val topicSolutionVO = TopicSolutionVO()
+            val data = topicSolutionCommentService.getFirstComment(solutionId, pageNo, pageSize)
+            topicSolutionVO.comments?.let {
+                topicSolutionVO.solutionId = topicSolution.solutionId
+                topicSolutionVO.solutionContent = topicSolution.solutionContent
+                topicSolutionVO.title = topicSolution.title
+                topicSolutionVO.comments = data.data
+                return success(topicSolutionVO)
+            }
+            throw ServiceException(ServiceExceptionEnum.NOT_FOUND)
+        }
+        throw ServiceException(ServiceExceptionEnum.KEY_ARGUMENT_NOT_INPUT)
     }
 
-    override fun getAllSolutions(topicId: Long, pageNo: Int, pageSize: Int): Result<Page<PreviewTopicSolution>> {
+    override fun getAllSolutions(topicId: Long?, pageNo: Int, pageSize: Int): Result<Page<PreviewTopicSolution>> {
         val wrapper = QueryWrapper.create()
             .select(TOPIC_SOLUTION.ALL_COLUMNS)
             .from(TOPIC_SOLUTION)
             .where(TOPIC_SOLUTION.TOPIC_ID.eq(topicId))
             .and(TOPIC_SOLUTION.ENABLED.eq(true))
         val solutions = mapper.paginateAs(Page.of(pageNo, pageSize), wrapper, PreviewTopicSolution::class.java)
-        for ((index, previewTopicSolution) in solutions.records.withIndex()) {
+        for ((_, previewTopicSolution) in solutions.records.withIndex()) {
             previewTopicSolution.likeNumber = topicSolutionCommentService.getSolutionLikeNumber(previewTopicSolution.solutionId!!)
             previewTopicSolution.commentNumber = topicSolutionCommentService.getCommentNumber(previewTopicSolution.solutionId)
         }
@@ -66,7 +67,7 @@ class TopicSolutionServiceImpl(val topicSolutionCommentService: TopicSolutionCom
     }
 
     @Transactional
-    override fun changeStatus(topicId: Long, solutionId: Long, action: Boolean): Result<*> {
+    override fun changeStatus(topicId: Long?, solutionId: Long?, action: Boolean): Result<*> {
         if (action) {
             val wrapper = QueryWrapper.create().select(TOPIC_SOLUTION.ALL_COLUMNS).from(TOPIC_SOLUTION)
                 .where(TOPIC_SOLUTION.TOPIC_ID.eq(topicId)).and(TOPIC_SOLUTION.PINED.eq(true)).and(TOPIC_SOLUTION.ENABLED.eq(true))
@@ -83,7 +84,7 @@ class TopicSolutionServiceImpl(val topicSolutionCommentService: TopicSolutionCom
         throw ServiceException(ServiceExceptionEnum.OPERATE_ERROR)
     }
 
-    override fun changePined(topicId: Long, solutionId: Long, action: Boolean): Result<*> {
+    override fun changePined(topicId: Long?, solutionId: Long?, action: Boolean): Result<*> {
         if (action) {
             val wrapper = QueryWrapper.create().select(TOPIC_SOLUTION.ALL_COLUMNS).from(TOPIC_SOLUTION)
                 .where(TOPIC_SOLUTION.TOPIC_ID.eq(topicId)).and(TOPIC_SOLUTION.PINED.eq(true)).and(TOPIC_SOLUTION.ENABLED.eq(true))

@@ -31,10 +31,10 @@ class ColumnServiceImpl(val columnTopicService: ColumnTopicService) : ServiceImp
     @Transactional
     override fun addWithTopic(insertColumnDTO: InsertColumnDTO): Result<*> {
         val columnId = addColumn(insertColumnDTO)
-        if (!Objects.isNull(insertColumnDTO.topicIds)) {
+        insertColumnDTO.topicIds?.let {
             val queryWrapper = QueryWrapper.create().select().from(TOPIC).where(TOPIC.TOPIC_ID.`in`(insertColumnDTO.topicIds))
             val size = mapper.selectCountByQuery(queryWrapper)
-            if (size != insertColumnDTO.topicIds!!.size.toLong())
+            if (size != insertColumnDTO.topicIds.size.toLong())
                 throw ServiceException(ServiceExceptionEnum.NOT_FOUND)
             return columnTopicService.addTopicToColumn(columnId, insertColumnDTO.topicIds)
         }
@@ -82,8 +82,9 @@ class ColumnServiceImpl(val columnTopicService: ColumnTopicService) : ServiceImp
             .leftJoin<QueryWrapper>(LABEL)
             .on(LABEL.LABEL_ID.eq(TOPIC_LABEL.LABEL_ID))
         val columnVO = mapper!!.selectOneByQueryAs(wrapper, ColumnVO::class.java)
-        if (!Objects.isNull(columnVO))
+        columnVO?.let {
             return success(columnVO)
+        }
         throw ServiceException(ServiceExceptionEnum.NOT_FOUND)
     }
 

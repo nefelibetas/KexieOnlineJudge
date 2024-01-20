@@ -30,12 +30,15 @@ import java.util.*
 class TopicServiceImpl(val exampleMapper: ExampleMapper, val topicLabelService: TopicLabelService): ServiceImpl<TopicMapper, Topic>(), TopicService {
     @Transactional
     override fun addTopicWithExample(insertTopicDTO: InsertTopicDTO): Result<*> {
-        if (Objects.isNull(insertTopicDTO.examples) || Objects.isNull(insertTopicDTO.labelsId))
-            throw ServiceException(ServiceExceptionEnum.KEY_ARGUMENT_NOT_INPUT)
-        val topicId = addTopic(insertTopicDTO)
-        addExamples(insertTopicDTO.examples!!, topicId)
-        topicLabelService.addLabelToTopic(topicId, insertTopicDTO.labelsId!!)
-        return success<Any>()
+        insertTopicDTO.examples?.let {
+            val topicId = addTopic(insertTopicDTO)
+            addExamples(insertTopicDTO.examples, topicId)
+            insertTopicDTO.labelsId?.let {
+                topicLabelService.addLabelToTopic(topicId, insertTopicDTO.labelsId)
+                return success<Any>()
+            }
+        }
+        throw ServiceException(ServiceExceptionEnum.KEY_ARGUMENT_NOT_INPUT)
     }
     @Transactional
     fun addTopic(insertTopicDTO: InsertTopicDTO): Long {
@@ -56,26 +59,28 @@ class TopicServiceImpl(val exampleMapper: ExampleMapper, val topicLabelService: 
     }
 
     @Transactional
-    override fun changeStatus(topicId: Long, action: Boolean): Result<*> {
-        if (Objects.isNull(topicId))
-            throw ServiceException(ServiceExceptionEnum.KEY_ARGUMENT_NOT_INPUT)
-        val update = UpdateChain.of(Topic::class.java)
-            .set(Topic::enabled.column, action)
-            .where(Topic::topicId eq topicId)
-            .update()
-        if (update)
-            return success<Any>()
-        throw ServiceException(ServiceExceptionEnum.OPERATE_ERROR)
+    override fun changeStatus(topicId: Long?, action: Boolean): Result<*> {
+        topicId?.let {
+            val update = UpdateChain.of(Topic::class.java)
+                .set(Topic::enabled.column, action)
+                .where(Topic::topicId eq topicId)
+                .update()
+            if (update)
+                return success<Any>()
+            throw ServiceException(ServiceExceptionEnum.OPERATE_ERROR)
+        }
+        throw ServiceException(ServiceExceptionEnum.KEY_ARGUMENT_NOT_INPUT)
     }
 
     @Transactional
-    override fun updateTopic(topicId: Long, updateTopicDTO: UpdateTopicDTO): Result<*> {
-        if (Objects.isNull(topicId))
-            throw ServiceException(ServiceExceptionEnum.KEY_ARGUMENT_NOT_INPUT)
-        val i = mapper!!.updateTopic(topicId, updateTopicDTO)
-        if (i > 0)
-            return success<Any>()
-        throw ServiceException(ServiceExceptionEnum.OPERATE_ERROR)
+    override fun updateTopic(topicId: Long?, updateTopicDTO: UpdateTopicDTO): Result<*> {
+        topicId?.let {
+            val i = mapper!!.updateTopic(topicId, updateTopicDTO)
+            if (i > 0)
+                return success<Any>()
+            throw ServiceException(ServiceExceptionEnum.OPERATE_ERROR)
+        }
+        throw ServiceException(ServiceExceptionEnum.KEY_ARGUMENT_NOT_INPUT)
     }
 
     override fun getTopics(pageNo: Int, pageSize: Int): Result<Page<TopicVO>> {
@@ -90,20 +95,23 @@ class TopicServiceImpl(val exampleMapper: ExampleMapper, val topicLabelService: 
         return success(topicVOS)
     }
 
-    override fun getTopic(topicId: Long): Result<TopicVO> {
-        if (Objects.isNull(topicId))
-            throw ServiceException(ServiceExceptionEnum.KEY_ARGUMENT_NOT_INPUT)
-        val wrapper = QueryWrapper.create()
-            .select(TOPIC.ALL_COLUMNS, LABEL.ALL_COLUMNS).from(TOPIC)
-            .leftJoin<QueryWrapper>(TOPIC_LABEL)
-            .on(TOPIC.TOPIC_ID.eq(TOPIC_LABEL.TOPIC_ID))
-            .leftJoin<QueryWrapper>(LABEL)
-            .on(LABEL.LABEL_ID.eq(TOPIC_LABEL.LABEL_ID))
-            .where(TOPIC.ENABLED.eq(true)).and(TOPIC_LABEL.TOPIC_ID.eq(topicId))
-        val topicVO = mapper!!.selectOneWithRelationsByQueryAs(wrapper, TopicVO::class.java)
-        if (!Objects.isNull(topicVO))
-            return success(topicVO)
-        throw ServiceException(ServiceExceptionEnum.NOT_FOUND)
+    override fun getTopic(topicId: Long?): Result<TopicVO> {
+        topicId?.let {
+            val wrapper = QueryWrapper.create()
+                .select(TOPIC.ALL_COLUMNS, LABEL.ALL_COLUMNS).from(TOPIC)
+                .leftJoin<QueryWrapper>(TOPIC_LABEL)
+                .on(TOPIC.TOPIC_ID.eq(TOPIC_LABEL.TOPIC_ID))
+                .leftJoin<QueryWrapper>(LABEL)
+                .on(LABEL.LABEL_ID.eq(TOPIC_LABEL.LABEL_ID))
+                .where(TOPIC.ENABLED.eq(true)).and(TOPIC_LABEL.TOPIC_ID.eq(topicId))
+            val topicVO = mapper!!.selectOneWithRelationsByQueryAs(wrapper, TopicVO::class.java)
+            topicVO?.let {
+                return success(topicVO)
+            }
+            throw ServiceException(ServiceExceptionEnum.NOT_FOUND)
+
+        }
+        throw ServiceException(ServiceExceptionEnum.KEY_ARGUMENT_NOT_INPUT)
     }
 
     override fun search(keyword: String, pageNo: Int, pageSize: Int): Result<Page<TopicVO>> {
@@ -123,6 +131,8 @@ class TopicServiceImpl(val exampleMapper: ExampleMapper, val topicLabelService: 
                     .where(LABEL.LABEL_NAME.like(keyword))
             ))
         val topicVOS = mapper!!.paginateAs(Page.of(pageNo, pageSize), wrapper, TopicVO::class.java)
-        return success(topicVOS)
+        if (topicVOS.records.size > 0)
+            return success(topicVOS)
+        throw ServiceException(ServiceExceptionEnum.NOT_FOUND)
     }
 }

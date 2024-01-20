@@ -21,9 +21,10 @@ class RepeatableRequestFilter: Filter {
         var requestWrapper: HttpServletRequestWrapper? = null
         if (request is HttpServletRequest && StringUtils.startsWithIgnoreCase(request.contentType, MediaType.APPLICATION_JSON_VALUE))
             requestWrapper = RepeatableReadRequestWrapper(request)
-        if (Objects.isNull(requestWrapper))
-            chain!!.doFilter(request, response)
-        else
+        requestWrapper?.let {
             chain!!.doFilter(requestWrapper, response)
+            return
+        }
+        chain!!.doFilter(request, response)
     }
 }

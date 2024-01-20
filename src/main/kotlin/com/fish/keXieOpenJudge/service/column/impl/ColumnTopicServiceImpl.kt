@@ -42,7 +42,6 @@ class ColumnTopicServiceImpl: ServiceImpl<ColumnTopicMapper, ColumnTopic>(), Col
 
     @Transactional
     override fun addTopicToColumn(columnId: Long, topicIds: ArrayList<Long>): Result<*> {
-
         val columnTopics = ArrayList<ColumnTopic>()
         for(i in 0 until topicIds.size) {
             val columnTopic = ColumnTopic()

@@ -27,7 +27,6 @@ import com.mybatisflex.kotlin.extensions.kproperty.eq
 import com.mybatisflex.spring.service.impl.ServiceImpl
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import java.util.Objects
 
 @Service
 class ExamServiceImpl(val examParticipateMapper: ExamParticipateMapper, val examTopicService: ExamTopicService): ServiceImpl<ExamMapper, Exam>(), ExamService {
@@ -70,10 +69,11 @@ class ExamServiceImpl(val examParticipateMapper: ExamParticipateMapper, val exam
             .where(EXAM.EXAM_ID.eq(examId))
         val examVO = mapper.selectOneWithRelationsByQueryAs(wrapper, ExamVO::class.java)
         val queryWrapper = QueryWrapper.create().from(EXAM_PARTICIPATE).where(EXAM_PARTICIPATE.EXAM_ID.eq(examId))
-        if (Objects.isNull(examVO))
-            throw ServiceException(ServiceExceptionEnum.NOT_FOUND)
-        examVO.participantNumber = examParticipateMapper.selectCountByQuery(queryWrapper)
-        return success(examVO)
+        examVO?.let {
+            examVO.participantNumber = examParticipateMapper.selectCountByQuery(queryWrapper)
+            return success(examVO)
+        }
+        throw ServiceException(ServiceExceptionEnum.NOT_FOUND)
     }
 
     @Transactional

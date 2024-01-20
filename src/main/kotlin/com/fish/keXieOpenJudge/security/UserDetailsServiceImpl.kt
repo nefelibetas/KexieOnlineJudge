@@ -18,10 +18,11 @@ class UserDetailsServiceImpl(
 ) : UserDetailsService {
     @Throws(UsernameNotFoundException::class)
     override fun loadUserByUsername(username: String): UserDetails {
-        val account : Account = accountMapper.getAccountByEmail(username)
-        if (Objects.isNull(account))
-            throw ServiceException(ServiceExceptionEnum.ACCOUNT_NOT_FOUND)
-        return LoginAccount(account, getRoles(account.roleId!!))
+        val account = accountMapper.getAccountByEmail(username)
+        account?.let {
+            return LoginAccount(account, getRoles(account.roleId!!))
+        }
+        throw ServiceException(ServiceExceptionEnum.ACCOUNT_NOT_FOUND)
     }
     private fun getRoles(roleId: Long): ArrayList<SystemAuthority?> {
         val role = roleMapper.getRoleById(roleId)

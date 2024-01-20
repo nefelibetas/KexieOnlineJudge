@@ -21,7 +21,7 @@ interface TopicService : IService<Topic> {
      * @param topicId 题目id
      * @return 封装好的响应信息
      */
-    fun changeStatus(topicId: Long, action: Boolean): Result<*>
+    fun changeStatus(topicId: Long?, action: Boolean): Result<*>
 
     /**
      * 更新题目信息
@@ -29,7 +29,7 @@ interface TopicService : IService<Topic> {
      * @param topic 题目传输对象
      * @return 封装好的响应信息
      */
-    fun updateTopic(topicId: Long, updateTopicDTO: UpdateTopicDTO): Result<*>
+    fun updateTopic(topicId: Long?, updateTopicDTO: UpdateTopicDTO): Result<*>
 
     /**
      * 获取所有题目
@@ -42,7 +42,7 @@ interface TopicService : IService<Topic> {
      * @param topicId 题目id
      * @return 封装好的响应信息
      */
-    fun getTopic(topicId: Long): Result<TopicVO>
+    fun getTopic(topicId: Long?): Result<TopicVO>
 
     /**
      * 模糊搜索题目

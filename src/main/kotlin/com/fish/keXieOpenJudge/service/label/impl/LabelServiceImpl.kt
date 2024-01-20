@@ -40,20 +40,23 @@ class LabelServiceImpl : ServiceImpl<LabelMapper, Label>(), com.fish.keXieOpenJu
 
     override fun getLabel(labelId: Long): Result<Label> {
         val label = mapper!!.selectOneById(labelId)
-        if (!Objects.isNull(label))
-            return success(label!!)
+        label?.let {
+            return success(label)
+        }
         throw ServiceException(ServiceExceptionEnum.NOT_FOUND)
     }
 
     @Transactional
     override fun updateLabel(label: Label): Result<*> {
-        if (Objects.isNull(label.labelId))
-            throw ServiceException(ServiceExceptionEnum.KEY_ARGUMENT_NOT_INPUT)
-        val wrapper = QueryWrapper.create().select().from(LABEL)
-            .where(LABEL.LABEL_ID.eq(label.labelId))
-        val i = mapper!!.updateByQuery(label, wrapper)
-        if (i > 0) return success<Any>()
-        throw ServiceException(ServiceExceptionEnum.OPERATE_ERROR)
+        label.labelId?.let {
+            val wrapper = QueryWrapper.create().select().from(LABEL)
+                .where(LABEL.LABEL_ID.eq(label.labelId))
+            val i = mapper!!.updateByQuery(label, wrapper)
+            if (i > 0)
+                return success<Any>()
+            throw ServiceException(ServiceExceptionEnum.OPERATE_ERROR)
+        }
+        throw ServiceException(ServiceExceptionEnum.KEY_ARGUMENT_NOT_INPUT)
     }
 
     @Transactional

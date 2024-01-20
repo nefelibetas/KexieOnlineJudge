@@ -12,19 +12,24 @@ import java.io.Serializable
  * @since 2023-11-14
  */
 @Table(value = "oj_like")
-open class Like: Serializable {
+open class Like(): Serializable {
     @Id(keyType = KeyType.Auto)
     val likeId: Long? = null
     /**
      * 题解id
      */
-    val solutionId: Long? = null
+    var solutionId: Long? = null
     /**
      * 评论id
      */
-    val commentId: Long? = null
+    var commentId: Long? = null
     /**
      * 点赞的用户
      */
-    val userId: String? = null
+    var userId: String? = null
+    constructor(solutionId: Long?, commentId: Long?, userId: String): this() {
+        this.solutionId = solutionId
+        this.commentId = commentId
+        this.userId = userId
+    }
 }

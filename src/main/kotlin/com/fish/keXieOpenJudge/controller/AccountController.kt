@@ -13,6 +13,10 @@ import com.mybatisflex.core.paginate.Page
 import jakarta.validation.Valid
 import org.springframework.web.bind.annotation.*
 
+/**
+ * @author BridgeFish
+ * <div>用户相关的控制器</div>
+ */
 @RestController
 class AccountController(val accountService: AccountService) {
     /**

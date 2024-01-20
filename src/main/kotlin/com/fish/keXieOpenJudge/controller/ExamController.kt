@@ -14,7 +14,11 @@ import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
-
+/**
+ * @author BridgeFish
+ * <br/>
+ * 考试相关的控制器
+ */
 @RestController
 class ExamController(val examService: ExamService) {
     @GetMapping("/exam/gets")

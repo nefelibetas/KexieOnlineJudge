@@ -11,7 +11,11 @@ import com.fish.keXieOpenJudge.service.topic.TopicSolutionService
 import com.mybatisflex.core.paginate.Page
 import jakarta.validation.Valid
 import org.springframework.web.bind.annotation.*
-
+/**
+ * @author BridgeFish
+ * <br/>
+ * 题目中题解（包含题解评论）相关的控制器
+ */
 @RestController
 class SolutionController(val topicSolutionService: TopicSolutionService, val topicSolutionCommentService: TopicSolutionCommentService) {
     @PostMapping("/user/topicSolution/add")

@@ -6,7 +6,11 @@ import com.fish.keXieOpenJudge.entity.pojo.label.Label
 import com.mybatisflex.core.paginate.Page
 import jakarta.validation.Valid
 import org.springframework.web.bind.annotation.*
-
+/**
+ * @author BridgeFish
+ * <br/>
+ * 题目标签相关的控制器
+ */
 @RestController
 class LabelController(val labelService: com.fish.keXieOpenJudge.service.label.LabelService) {
     /**

@@ -11,7 +11,11 @@ import com.mybatisflex.core.paginate.Page
 import jakarta.validation.Valid
 import jakarta.validation.constraints.NotEmpty
 import org.springframework.web.bind.annotation.*
-
+/**
+ * @author BridgeFish
+ * <br/>
+ * 栏目相关的控制器
+ */
 @RestController
 class ColumnController(val columnService: ColumnService, val columnTopicService: ColumnTopicService) {
     /**

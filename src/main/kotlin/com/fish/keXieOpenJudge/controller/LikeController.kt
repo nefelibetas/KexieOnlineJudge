@@ -2,7 +2,6 @@ package com.fish.keXieOpenJudge.controller
 
 import com.fish.keXieOpenJudge.common.Result
 import com.fish.keXieOpenJudge.service.like.LikeService
-import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
@@ -15,13 +14,12 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 class LikeController(val likeService: LikeService) {
-    @PostMapping("/user/like/{userId}")
+    @PostMapping("/user/like")
     fun like(
-        @PathVariable userId: String,
         @RequestParam beLikedId: Long?,
         @RequestParam occasion: String?,
         @RequestParam(defaultValue = "true") action: Boolean
     ): Result<*> {
-        return likeService.like(userId, beLikedId, occasion, action)
+        return likeService.like(beLikedId, occasion, action)
     }
 }

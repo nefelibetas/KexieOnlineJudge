@@ -8,15 +8,17 @@ import com.fish.keXieOpenJudge.exception.ServiceExceptionEnum
 import com.fish.keXieOpenJudge.mapper.topic.LikeMapper
 import com.fish.keXieOpenJudge.service.like.LikeService
 import com.fish.keXieOpenJudge.utils.ResultUtil.success
+import com.fish.keXieOpenJudge.utils.SecurityUtil
 import com.mybatisflex.core.query.QueryWrapper
 import com.mybatisflex.spring.service.impl.ServiceImpl
 import org.springframework.stereotype.Service
 
 @Service
 class LikeServiceImpl: ServiceImpl<LikeMapper, Like>(), LikeService {
-    override fun like(userId: String, beLikedId: Long?, occasion: String?, action: Boolean): Result<*> {
+    override fun like(beLikedId: Long?, occasion: String?, action: Boolean): Result<*> {
         beLikedId?.let {
             occasion?.let {
+                val userId = SecurityUtil.getId()
                 if (action)
                     return doTrue(userId, beLikedId, occasion)
                 else
@@ -25,6 +27,10 @@ class LikeServiceImpl: ServiceImpl<LikeMapper, Like>(), LikeService {
         }
         throw ServiceException(ServiceExceptionEnum.KEY_ARGUMENT_NOT_INPUT)
     }
+
+    /**
+     * 点赞操作
+     */
     private fun doTrue(userId: String, beLikedId: Long?, occasion: String): Result<*> {
         val like = makeEntity(userId, beLikedId, occasion)
         val i = mapper.insert(like)
@@ -32,6 +38,9 @@ class LikeServiceImpl: ServiceImpl<LikeMapper, Like>(), LikeService {
             return success<Any>()
         throw ServiceException(ServiceExceptionEnum.OPERATE_ERROR)
     }
+    /**
+     * 取消点赞操作
+     */
     private fun doFalse(userId: String, beLikedId: Long?, occasion: String): Result<*>{
         val wrapper = makeQueryWrapper(userId, beLikedId, occasion)
         val i = mapper.deleteByQuery(wrapper)
@@ -39,6 +48,9 @@ class LikeServiceImpl: ServiceImpl<LikeMapper, Like>(), LikeService {
             return success<Any>()
         throw ServiceException(ServiceExceptionEnum.OPERATE_ERROR)
     }
+    /**
+     * 构造实例返回
+     */
     private fun makeEntity(userId: String, beLikedId: Long?, occasion: String): Like{
         return when (occasion) {
             Occasion.COMMENT -> Like(userId = userId, commentId = beLikedId, solutionId = null)

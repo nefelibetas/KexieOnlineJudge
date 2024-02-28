@@ -24,7 +24,6 @@ import com.mybatisflex.kotlin.extensions.kproperty.eq
 import com.mybatisflex.spring.service.impl.ServiceImpl
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import java.util.*
 
 @Service
 class TopicServiceImpl(val exampleMapper: ExampleMapper, val topicLabelService: TopicLabelService): ServiceImpl<TopicMapper, Topic>(), TopicService {

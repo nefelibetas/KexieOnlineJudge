@@ -46,6 +46,6 @@ class AccountVO(): Serializable {
         this.gender = account.gender
         this.githubAddress = account.githubAddress
         this.nickname = account.nickname
-        this.roleId = account.roleId.toString()
+        this.roleId = if (account.roleId?.toInt() == 1) "管理员" else "普通用户"
     }
 }

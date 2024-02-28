@@ -28,5 +28,5 @@ data class TopicVO(
     var from: String? = null,
     var labels: ArrayList<Label>? = null,
     @RelationOneToOne(selfField = "uploadUserId", targetField = "userId", targetTable = "oj_account")
-    var uploadUser: AccountVO? = null
+    var uploadUser: UploadAccount? = null
 ) : Serializable

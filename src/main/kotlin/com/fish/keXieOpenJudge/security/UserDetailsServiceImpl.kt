@@ -1,6 +1,5 @@
 package com.fish.keXieOpenJudge.security
 
-import com.fish.keXieOpenJudge.entity.pojo.account.Account
 import com.fish.keXieOpenJudge.exception.ServiceException
 import com.fish.keXieOpenJudge.exception.ServiceExceptionEnum
 import com.fish.keXieOpenJudge.mapper.account.AccountMapper

@@ -3,7 +3,6 @@ package com.fish.keXieOpenJudge.service.exam.impl
 import com.fish.keXieOpenJudge.common.Result
 import com.fish.keXieOpenJudge.entity.dto.exam.InsertExamDTO
 import com.fish.keXieOpenJudge.entity.dto.exam.UpdateExamDTO
-import com.fish.keXieOpenJudge.entity.pojo.account.table.AccountTableDef.ACCOUNT
 import com.fish.keXieOpenJudge.entity.pojo.exam.Exam
 import com.fish.keXieOpenJudge.entity.pojo.exam.table.ExamParticipateTableDef.EXAM_PARTICIPATE
 import com.fish.keXieOpenJudge.entity.pojo.exam.table.ExamTableDef.EXAM

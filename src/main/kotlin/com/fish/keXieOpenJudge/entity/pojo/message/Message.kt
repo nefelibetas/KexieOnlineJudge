@@ -20,11 +20,12 @@ import java.time.LocalDateTime
 open class Message: Serializable {
     @Id(keyType = KeyType.Auto)
     val messageId: Long? = null
-    val commonId: Long? = null
     val typeId: Long? = null
+    val title: String? = null
     val content: String? = null
-    val sendTo: String? = null
+    val sendToUserId: String? = null
     @JsonSerialize(using = LocalDateTimeSerializer::class)
     @JsonDeserialize(using = LocalDateTimeDeserializer::class)
     val sendTime: LocalDateTime? = null
+    var notified: Boolean = true
 }

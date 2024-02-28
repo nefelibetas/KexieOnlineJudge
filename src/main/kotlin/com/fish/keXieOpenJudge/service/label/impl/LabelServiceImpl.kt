@@ -14,7 +14,6 @@ import com.mybatisflex.core.query.QueryWrapper
 import com.mybatisflex.spring.service.impl.ServiceImpl
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import java.util.*
 
 @Service
 class LabelServiceImpl : ServiceImpl<LabelMapper, Label>(), com.fish.keXieOpenJudge.service.label.LabelService {

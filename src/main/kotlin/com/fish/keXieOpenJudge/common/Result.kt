@@ -21,4 +21,5 @@ data class Result<T>(val code: Int,val message: String, val data: T?) : Serializ
     constructor(code: Int, message: String) : this(code, message, null)
 
     constructor(data: T) : this(200, "success", data)
+    constructor(): this(200, "success")
 }

@@ -21,7 +21,7 @@ object ResultUtil {
     </T> */
     @JvmStatic
     fun <T> success(): Result<T> {
-        return Result(200, "success")
+        return Result()
     }
 
     /**

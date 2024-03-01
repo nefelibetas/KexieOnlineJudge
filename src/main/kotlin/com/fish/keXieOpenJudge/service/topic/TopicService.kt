@@ -42,8 +42,7 @@ interface TopicService : IService<Topic> {
      * @param topicId 题目id
      * @return 封装好的响应信息
      */
-    fun getTopic(topicId: Long?): Result<TopicVO>
-
+    fun getTopicVO(topicId: Long?): Result<TopicVO>
     /**
      * 模糊搜索题目
      * @param keyword 关键词

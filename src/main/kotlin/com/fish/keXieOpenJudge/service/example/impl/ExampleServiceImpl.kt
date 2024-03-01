@@ -4,6 +4,7 @@ import com.fish.keXieOpenJudge.common.Result
 import com.fish.keXieOpenJudge.entity.dto.example.InsertExampleDTO
 import com.fish.keXieOpenJudge.entity.dto.example.UpdateExampleDTO
 import com.fish.keXieOpenJudge.entity.pojo.example.Example
+import com.fish.keXieOpenJudge.entity.vo.ExampleVO
 import com.fish.keXieOpenJudge.exception.ServiceException
 import com.fish.keXieOpenJudge.exception.ServiceExceptionEnum
 import com.fish.keXieOpenJudge.mapper.example.ExampleMapper
@@ -28,5 +29,11 @@ class ExampleServiceImpl: ServiceImpl<ExampleMapper, Example>(), ExampleService 
         if (i > 0)
             return success<Any>()
         throw ServiceException(ServiceExceptionEnum.OPERATE_ERROR)
+    }
+    override fun getExamplesById(topicId: Long): List<Example> {
+        return mapper.getExampleById(topicId)
+    }
+    override fun getExampleVoByResultId(resultId: Long): ArrayList<ExampleVO> {
+        return mapper.getExampleVoByResultId(resultId)
     }
 }

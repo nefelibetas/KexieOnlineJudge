@@ -12,12 +12,20 @@ import java.io.Serializable
  * @since 2023-11-14
  */
 @Table(value = "oj_example_result")
-open class ExampleResult: Serializable {
+open class ExampleResult(
+    exampleId: Long,
+    resultId: Long,
+    memory: String,
+    cpuTime: String,
+    realTime: String,
+    assessmentStatus: String?
+): Serializable {
     @Id(keyType = KeyType.Auto)
-    var exampleResultId: Long? = null
-    var exampleId: Long? = null
-    var resultId: Long? = null
-    var memory: Long? = null
-    var time: Long? = null
-    var assessmentStatus: String? = null
+    val exampleResultId: Long? = null
+    val exampleId = exampleId
+    val resultId = resultId
+    val memory = memory
+    val cpuTime = cpuTime
+    val realTime = realTime
+    val assessmentStatus = assessmentStatus
 }

@@ -1,8 +1,6 @@
 package com.fish.keXieOpenJudge.config
 
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.databind.json.JsonMapper
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
+import com.fish.keXieOpenJudge.utils.JsonUtil
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory
@@ -15,10 +13,7 @@ class RedisConfig {
     @Bean
     fun redisTemplate(factory: LettuceConnectionFactory): RedisTemplate<String, Any> {
         val template = RedisTemplate<String, Any>()
-        val mapper: ObjectMapper = JsonMapper.builder()
-            .addModule(JavaTimeModule())
-            .build()
-        val jsonRedisSerializer = Jackson2JsonRedisSerializer(mapper, Any::class.java)
+        val jsonRedisSerializer = Jackson2JsonRedisSerializer(JsonUtil.mapper, Any::class.java)
         val stringRedisSerializer = StringRedisSerializer()
         template.connectionFactory = factory
         template.keySerializer = stringRedisSerializer

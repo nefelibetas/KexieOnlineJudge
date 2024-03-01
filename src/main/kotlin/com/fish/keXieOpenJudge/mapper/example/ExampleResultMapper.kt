@@ -9,4 +9,4 @@ import com.mybatisflex.core.BaseMapper
  * @author fish
  * @since 2023-11-14
  */
-interface ExampleResultMapper : BaseMapper<ExampleResult?>
+interface ExampleResultMapper : BaseMapper<ExampleResult>

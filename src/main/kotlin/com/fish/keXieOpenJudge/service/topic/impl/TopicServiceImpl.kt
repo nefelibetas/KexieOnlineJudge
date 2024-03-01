@@ -94,7 +94,7 @@ class TopicServiceImpl(val exampleMapper: ExampleMapper, val topicLabelService: 
         return success(topicVOS)
     }
 
-    override fun getTopic(topicId: Long?): Result<TopicVO> {
+    override fun getTopicVO(topicId: Long?): Result<TopicVO> {
         topicId?.let {
             val wrapper = QueryWrapper.create()
                 .select(TOPIC.ALL_COLUMNS, LABEL.ALL_COLUMNS).from(TOPIC)

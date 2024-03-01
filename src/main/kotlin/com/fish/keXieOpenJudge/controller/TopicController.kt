@@ -116,7 +116,7 @@ class TopicController(val topicService: TopicService, val topicLabelService: Top
      */
     @GetMapping("/topic/get/{topicId}")
     fun getTopic(@PathVariable topicId: Long): Result<TopicVO> {
-        return topicService.getTopic(topicId)
+        return topicService.getTopicVO(topicId)
     }
 
     /**

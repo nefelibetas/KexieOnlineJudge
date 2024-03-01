@@ -30,7 +30,7 @@ mybatis-flex:
 
 logging:
   level:
-    com.fish.keXieOnlineJudge.mapper: debug
+    com.fish.kexieOnlineJudge.mapper: debug
   file:
     name: D:/log/oj.log
 jwt:

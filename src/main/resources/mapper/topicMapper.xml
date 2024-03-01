@@ -2,8 +2,8 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.fish.keXieOnlineJudge.mapper.topic.TopicMapper">
-    <insert id="addTopic" parameterType="com.fish.keXieOnlineJudge.entity.dto.topic.InsertTopicDTO">
+<mapper namespace="com.fish.kexieOnlineJudge.mapper.topic.TopicMapper">
+    <insert id="addTopic" parameterType="com.fish.kexieOnlineJudge.entity.dto.topic.InsertTopicDTO">
         <selectKey keyProperty="topicId" order="AFTER" resultType="java.lang.Long" statementType="PREPARED">
             select @@IDENTITY as topicId
         </selectKey>
@@ -19,7 +19,7 @@
             <if test="from != null">#{from},</if>
         </trim>
     </insert>
-    <update id="updateTopic" parameterType="com.fish.keXieOnlineJudge.entity.dto.topic.UpdateTopicDTO">
+    <update id="updateTopic" parameterType="com.fish.kexieOnlineJudge.entity.dto.topic.UpdateTopicDTO">
         update oj_topic
         <set>
             <if test="updateTopic.title != null">`title` = #{updateTopic.title},</if>

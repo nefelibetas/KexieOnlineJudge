@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.fish.keXieOnlineJudge.mapper.example.ExampleMapper">
+<mapper namespace="com.fish.kexieOnlineJudge.mapper.example.ExampleMapper">
     <insert id="addExampleBatch" parameterType="java.util.ArrayList">
         insert into oj_example(`topic_id`, `input`, `output`, `showed`, `assessed`)
         values
@@ -10,7 +10,7 @@
             (#{example.topicId}, #{example.input}, #{example.output}, #{example.showed}, #{example.assessed})
         </foreach>
     </insert>
-    <update id="updateExample" parameterType="com.fish.keXieOnlineJudge.entity.dto.example.UpdateExampleDTO">
+    <update id="updateExample" parameterType="com.fish.kexieOnlineJudge.entity.dto.example.UpdateExampleDTO">
         update oj_example
         <set>
             <if test="input != null">`input` = #{input},</if>

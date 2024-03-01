@@ -2,8 +2,8 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.fish.keXieOnlineJudge.mapper.column.ColumnMapper">
-    <update id="updateInfo" parameterType="com.fish.keXieOnlineJudge.entity.dto.column.UpdateColumnDTO">
+<mapper namespace="com.fish.kexieOnlineJudge.mapper.column.ColumnMapper">
+    <update id="updateInfo" parameterType="com.fish.kexieOnlineJudge.entity.dto.column.UpdateColumnDTO">
         update oj_column
         <set>
             <if test="columnName != null">`column_name` = #{columnName}</if>
@@ -11,7 +11,7 @@
         </set>
         where column_id = #{columnId}
     </update>
-    <insert id="insertColumn" parameterType="com.fish.keXieOnlineJudge.entity.dto.column.InsertColumnDTO">
+    <insert id="insertColumn" parameterType="com.fish.kexieOnlineJudge.entity.dto.column.InsertColumnDTO">
         <selectKey keyProperty="columnId" order="AFTER" resultType="java.lang.Long" statementType="PREPARED">
             select @@IDENTITY as columnId
         </selectKey>

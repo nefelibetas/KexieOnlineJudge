@@ -18,7 +18,8 @@ java {
 ext {
     extra["snakeyaml.version"]  = "2.2"
 }
-
+val springCloudVersion by extra("2022.0.5")
+val springBootVersion by extra("3.1.6")
 
 configurations {
     compileOnly {
@@ -37,7 +38,9 @@ dependencies {
     implementation("io.jsonwebtoken:jjwt:0.12.3")
     implementation("javax.xml.bind:jaxb-api:2.4.0-b180830.0359")
     implementation("com.mybatis-flex:mybatis-flex-spring-boot-starter:1.6.5")
+    implementation("com.mybatis-flex:mybatis-flex-kotlin-extensions:1.0.5")
     implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.20")
+    implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
     // runtimeOnly
     runtimeOnly("com.mysql:mysql-connector-j")
     // annotation
@@ -47,6 +50,12 @@ dependencies {
     testImplementation("org.springframework.security:spring-security-test")
     // kapt
     kapt("com.mybatis-flex:mybatis-flex-processor:1.6.5")
+}
+dependencyManagement {
+    imports {
+        mavenBom("org.springframework.cloud:spring-cloud-dependencies:$springCloudVersion")
+        mavenBom("org.springframework.boot:spring-boot-dependencies:$springBootVersion")
+    }
 }
 
 tasks.withType<KotlinCompile> {

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fish.keXieOpenJudge.mapper.exam.ExamMapper">
+    <insert id="insertExamDTO" parameterType="com.fish.keXieOpenJudge.entity.dto.exam.InsertExamDTO">
+        <selectKey keyProperty="examId" order="AFTER" resultType="java.lang.Long" statementType="PREPARED">
+            select @@IDENTITY as examId
+        </selectKey>
+        insert into oj_exam(`host_id`, `describe`) value (#{hostId}, #{describe})
+    </insert>
+    <update id="updateExamDTO" parameterType="com.fish.keXieOpenJudge.entity.dto.exam.UpdateExamDTO">
+        update oj_exam
+        <set>
+            <if test="opened != null">`opened` = #{opened},</if>
+            <if test="ranked != null">`ranked` = #{ranked},</if>
+            <if test="describe != null">`describe` = #{describe},</if>
+            <if test="startTime != null">`start_time` = #{startTime},</if>
+            <if test="endTime != null">`end_time` = #{endTime},</if>
+        </set>
+        where exam_id = #{examId}
+    </update>
+</mapper>

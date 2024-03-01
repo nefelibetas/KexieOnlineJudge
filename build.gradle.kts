@@ -10,7 +10,7 @@ plugins {
 
 group = "com.fish"
 version = "0.0.1"
-description = "KexieOpenJudge"
+description = "KexieOnlineJudge"
 java {
     sourceCompatibility = JavaVersion.VERSION_17
 }

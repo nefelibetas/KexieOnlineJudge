@@ -21,7 +21,7 @@ class ExamVO: Serializable {
     @JsonDeserialize(using = LocalDateTimeDeserializer::class)
     val endTime: LocalDateTime? = null
     @RelationOneToOne(selfField = "hostId", targetField = "userId", targetTable = "oj_account")
-    var host: AccountVO? = null
+    var host: UploadAccount? = null
     var topicVOS: ArrayList<TopicVO>? = null
     var participantNumber: Long? = null
 }

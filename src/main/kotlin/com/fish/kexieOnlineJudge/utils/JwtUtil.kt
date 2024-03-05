@@ -72,7 +72,7 @@ class JwtUtil {
         /**
          * jwt主题
          */
-        const val SUBJECT = "KexieOpenJudgeAccount"
+        const val SUBJECT = "KexieOnlineJudgeAccount"
         /**
          * 加密算法
          */

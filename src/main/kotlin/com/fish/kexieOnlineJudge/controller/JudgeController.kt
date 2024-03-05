@@ -3,6 +3,7 @@ package com.fish.kexieOnlineJudge.controller
 import com.fish.kexieOnlineJudge.common.Result
 import com.fish.kexieOnlineJudge.entity.dto.judge.JudgeDTO
 import com.fish.kexieOnlineJudge.entity.dto.judge.RunTestDTO
+import com.fish.kexieOnlineJudge.entity.vo.JudgeResultVO
 import com.fish.kexieOnlineJudge.entity.vo.TestResultVO
 import com.fish.kexieOnlineJudge.service.example.JudgeService
 import org.springframework.web.bind.annotation.PostMapping
@@ -19,7 +20,7 @@ class JudgeController(val judgeService: JudgeService) {
      * 全部通过 -> 通过
      */
     @PostMapping("/user/code/judge")
-    fun doJudge(@RequestBody judgeDTO: JudgeDTO): Result<*> = judgeService.runJudge(judgeDTO)
+    fun doJudge(@RequestBody judgeDTO: JudgeDTO): Result<JudgeResultVO> = judgeService.runJudge(judgeDTO)
     /**
      * 运行测试
      *

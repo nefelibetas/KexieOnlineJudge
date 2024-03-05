@@ -95,6 +95,7 @@ class MessageServiceImpl: ServiceImpl<MessageMapper, Message>(), MessageService 
      * 通知设置已读
      */
     override fun changeMessageStatus(messageId: String): Result<*> {
+        // TODO: 未与用户关联
         val update = UpdateChain.of(Message::class.java)
             .set(Message::notified.column, false)
             .where(Message::messageId.eq(messageId))

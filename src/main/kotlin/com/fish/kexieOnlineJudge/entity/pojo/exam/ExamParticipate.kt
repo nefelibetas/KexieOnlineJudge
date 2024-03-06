@@ -14,6 +14,7 @@ import java.io.Serializable
 open class ExamParticipate: Serializable {
     @Id
     val examId: Long? = null
+
     @Id
     val participantId: String? = null
 }

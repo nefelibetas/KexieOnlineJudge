@@ -1,3 +1,44 @@
+# <center> KexieOnlineJudger 😆</center>
+
+## 📓 简介
+
+一个简单(😇)的OJ后端，由kotlin语言开发，构建工具选用Gradle 8.4(下次打死也不用😅)。
+
+技术栈：
+
+* 基本后端框架：SpringBoot 3.1.6
+  * web
+  * data-redis
+  * security
+  * validation
+  * json
+* API文档生成： springdoc
+* JWT：jjwt-0.12.3
+* ORM：Mybatis-flex
+* OpenFeign：基于RestTemplate的Http请求库
+
+预期开发于取代原先社团使用的oj系统，这里是业务后端，代码运行的沙箱环境见：[sb-judger - 使用 Go 语言开发的轻量 OnlineJudge Server.](https://github.com/msqtt/sb-judger?tab=readme-ov-file) 
+
+## 🚀 开始
+
+### 🔧 安装
+
+1. 下载代码
+
+~~~bash
+git clone https://github.com/nefelibetas/KexieOnlineJudge
+~~~
+
+2. 导入idea
+
+![image-20240306174011936](README.assets/image-20240306174011936.png)
+
+3. 修改配置文件
+
+`修改关于数据库、日志文件导出的配置`
+
+## 🛠 API
+
 * 用户相关功能
   * 登录 √
   * 注册 √

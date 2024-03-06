@@ -43,7 +43,7 @@ class JudgeServiceImpl(
      * 1. 见`preJudge`, 如果存在hash值相同的, 可以直接把存在数据库中的结果和样例测试结果一并返回
      * 2. 见hash未匹配时的最后返回
      */
-    fun makeJudgeResultVO(assessmentResult: AssessmentResult): JudgeResultVO{
+    private fun makeJudgeResultVO(assessmentResult: AssessmentResult): JudgeResultVO{
         return JudgeResultVO(
             status = assessmentResult.status!!,
             allMemory = assessmentResult.allMemory!!,
@@ -55,7 +55,7 @@ class JudgeServiceImpl(
     /**
      * 构造Feign的参数, 用于向沙箱服务发请求
      */
-    fun makeFeignParameter(judgeDTO: JudgeDTO): RunJudgeDTO {
+    private fun makeFeignParameter(judgeDTO: JudgeDTO): RunJudgeDTO {
         val examples = exampleService.getExamplesById(judgeDTO.topicId)
         val topic = topicService.getById(judgeDTO.topicId)
         val cases = ArrayList<Case>()
@@ -77,7 +77,7 @@ class JudgeServiceImpl(
      *
      * 在正式判题之前，先从数据库中检查hash
      */
-    fun preJudge(judgeDTO: JudgeDTO, hash: String): JudgeResultVO? {
+    private fun preJudge(judgeDTO: JudgeDTO, hash: String): JudgeResultVO? {
         val assessmentResultFromMatch = assessmentResultService.matchHashByTopicId(judgeDTO.topicId, hash)
         assessmentResultFromMatch?.let {
             return makeJudgeResultVO(it)
@@ -85,12 +85,18 @@ class JudgeServiceImpl(
         return null
     }
 
-    fun makeAssessmentResult(judgeDTO: JudgeDTO, judgeResultDTO: RunJudgeResultDTO, hash: String): AssessmentResult {
+    /**
+     * 构造测评结果
+     */
+    private fun makeAssessmentResult(judgeDTO: JudgeDTO, judgeResultDTO: RunJudgeResultDTO, hash: String): AssessmentResult {
         val id = getId()
         return AssessmentResult(id, hash, judgeDTO, judgeResultDTO)
     }
 
-    fun makeExampleResultList(assessmentResult: AssessmentResult, judgeResultDTO: RunJudgeResultDTO): ArrayList<ExampleResult> {
+    /**
+     * 构造测试样例结果集合
+     */
+    private fun makeExampleResultList(assessmentResult: AssessmentResult, judgeResultDTO: RunJudgeResultDTO): ArrayList<ExampleResult> {
         val resultId = assessmentResult.resultId
         val exampleResultList = ArrayList<ExampleResult>()
         judgeResultDTO.codeResults.forEach {
@@ -105,6 +111,22 @@ class JudgeServiceImpl(
             exampleResultList.add(exampleResult)
         }
         return exampleResultList
+    }
+
+    private fun getResultOfSaveToDB(judgeDTO: JudgeDTO, judgeResultDTO: RunJudgeResultDTO, hash: String): JudgeResultVO {
+        // 构造需要插入到数据库中的总测评结果
+        val assessmentResult = makeAssessmentResult(judgeDTO, judgeResultDTO, hash)
+        val addAssessmentResultFlag = assessmentResultService.addAssessmentResult(assessmentResult)
+        if (addAssessmentResultFlag) {
+            // 构造需要插入到数据库中的单独样例结果
+            val exampleResultList = makeExampleResultList(assessmentResult, judgeResultDTO)
+            val addExampleResultFlag = exampleResultService.addExampleResult(exampleResultList)
+            if (addExampleResultFlag)
+            // 最后构造判题结果VO返回给前端
+                return makeJudgeResultVO(assessmentResult)
+            throw ServiceException(ServiceExceptionEnum.OPERATE_ERROR)
+        }
+        throw ServiceException(ServiceExceptionEnum.OPERATE_ERROR)
     }
 
     @Transactional
@@ -122,19 +144,7 @@ class JudgeServiceImpl(
         val judgeResultDTO: RunJudgeResultDTO
         try {
             judgeResultDTO = judgeFeign.runJudge(runJudgeDTO)
-            // 构造需要插入到数据库中的总测评结果
-            val assessmentResult = makeAssessmentResult(judgeDTO, judgeResultDTO, hash)
-            val addAssessmentResultFlag = assessmentResultService.addAssessmentResult(assessmentResult)
-            if (addAssessmentResultFlag) {
-                // 构造需要插入到数据库中的单独样例结果
-                val exampleResultList = makeExampleResultList(assessmentResult, judgeResultDTO)
-                val addExampleResultFlag = exampleResultService.addExampleResult(exampleResultList)
-                if (addExampleResultFlag)
-                    // 最后构造判题结果VO返回给前端
-                    return success(makeJudgeResultVO(assessmentResult))
-                throw ServiceException(ServiceExceptionEnum.OPERATE_ERROR)
-            }
-            throw ServiceException(ServiceExceptionEnum.OPERATE_ERROR)
+            return success(getResultOfSaveToDB(judgeDTO, judgeResultDTO, hash))
         } catch (classCaseException: ClassCastException) {
             throw ServiceException(ServiceExceptionEnum.JUDGE_SERVER_ERROR)
         }

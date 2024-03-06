@@ -24,8 +24,9 @@ class JudgeController(val judgeService: JudgeService) {
     /**
      * 运行测试
      *
-     * 返回允许结果
+     * 返回运行结果
      */
     @PostMapping("/user/code/run")
     fun doRun(@RequestBody runTestDTO: RunTestDTO): Result<TestResultVO> = judgeService.runTest(runTestDTO)
+
 }

@@ -27,5 +27,5 @@ open class Message: Serializable {
     @JsonSerialize(using = LocalDateTimeSerializer::class)
     @JsonDeserialize(using = LocalDateTimeDeserializer::class)
     val sendTime: LocalDateTime? = null
-    var notified: Boolean = true
+    var isRead: Boolean = false
 }

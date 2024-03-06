@@ -31,28 +31,14 @@ class MessageServiceImpl: ServiceImpl<MessageMapper, Message>(), MessageService 
     }
 
     /**
-     * 对于公告(1) -> 不允许有目标发送用户
-     *
-     * 对于通知(2) -> 必须要有目标发送用户
+     * typeId为1或2时有效
      *
      * 其他则为无效情况
      */
     private fun isLogical(message: Message): Boolean{
         val typeId = message.typeId?.toInt()
         when (typeId) {
-            2 -> {
-                message.sendToUserId?.let {
-                    return true
-                }
-                return false
-            }
-            1 -> {
-                message.notified = false
-                message.sendToUserId?.let {
-                    return false
-                }
-                return true
-            }
+            1, 2 -> return true
             else -> throw ServiceException(ServiceExceptionEnum.SELECT_NOT_IN)
         }
     }
@@ -72,7 +58,7 @@ class MessageServiceImpl: ServiceImpl<MessageMapper, Message>(), MessageService 
     override fun getNotification(pageNo: Int, pageSize: Int): Result<Page<Notification>> {
         val id = SecurityUtil.getId()
         val wrapper = QueryWrapper.create()
-            .select(MESSAGE.MESSAGE_ID, MESSAGE.TITLE, MESSAGE.CONTENT, MESSAGE.SEND_TIME, MESSAGE.NOTIFIED).from(MESSAGE)
+            .select(MESSAGE.MESSAGE_ID, MESSAGE.TITLE, MESSAGE.CONTENT, MESSAGE.SEND_TIME, MESSAGE.IS_READ).from(MESSAGE)
             .where(MESSAGE.TYPE_ID.eq(2))
             .and(MESSAGE.SEND_TO_USER_ID.eq(id))
         val messageVOPage = mapper.paginateAs(Page(pageNo, pageSize), wrapper, Notification::class.java)
@@ -87,7 +73,7 @@ class MessageServiceImpl: ServiceImpl<MessageMapper, Message>(), MessageService 
             .select().from(MESSAGE)
             .where(MESSAGE.TYPE_ID.eq(2))
             .and(MESSAGE.SEND_TO_USER_ID.eq(id))
-            .and(MESSAGE.NOTIFIED.eq(true))
+            .and(MESSAGE.IS_READ.eq(false))
         val number = mapper.selectCountByQuery(wrapper)
         return success(number.toInt())
     }
@@ -95,9 +81,14 @@ class MessageServiceImpl: ServiceImpl<MessageMapper, Message>(), MessageService 
      * 通知设置已读
      */
     override fun changeMessageStatus(messageId: String): Result<*> {
+        val message = mapper.selectOneById(messageId)
+        if (message.typeId != 2L)
+            throw ServiceException(ServiceExceptionEnum.OPERATE_ERROR)
+        val userId = SecurityUtil.getId()
         val update = UpdateChain.of(Message::class.java)
-            .set(Message::notified.column, false)
+            .set(Message::isRead.column, true)
             .where(Message::messageId.eq(messageId))
+            .and(Message::sendToUserId.eq(userId))
             .update()
         if (update)
             return success<Any>()

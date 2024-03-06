@@ -37,9 +37,9 @@ dependencies {
     implementation("com.zaxxer:HikariCP")
     implementation("io.jsonwebtoken:jjwt:0.12.3")
     implementation("javax.xml.bind:jaxb-api:2.4.0-b180830.0359")
-    implementation("com.mybatis-flex:mybatis-flex-spring-boot-starter:1.6.5")
+    implementation("com.mybatis-flex:mybatis-flex-spring-boot-starter:1.7.3")
     implementation("com.mybatis-flex:mybatis-flex-kotlin-extensions:1.0.5")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.20")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.22")
     implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
     // runtimeOnly
     runtimeOnly("com.mysql:mysql-connector-j")
@@ -49,7 +49,7 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.security:spring-security-test")
     // kapt
-    kapt("com.mybatis-flex:mybatis-flex-processor:1.6.5")
+    kapt("com.mybatis-flex:mybatis-flex-processor:1.7.3")
 }
 dependencyManagement {
     imports {

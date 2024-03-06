@@ -33,6 +33,9 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-json")
+    // swagger
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-api:2.3.0")
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0")
     // 其他库
     implementation("com.zaxxer:HikariCP")
     implementation("io.jsonwebtoken:jjwt:0.12.3")

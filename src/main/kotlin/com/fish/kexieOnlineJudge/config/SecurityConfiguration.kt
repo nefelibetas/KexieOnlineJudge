@@ -25,6 +25,7 @@ class SecurityConfiguration(val jwtLoginFilter: JwtLoginFilter) {
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
         http.authorizeHttpRequests { registry ->
              registry.requestMatchers("/login", "/register").permitAll()
+//                     .requestMatchers("/v3/api-docs").permitAll()
                      .requestMatchers("/label/**").permitAll()
                      .requestMatchers("/column/**").permitAll()
                      .requestMatchers("/topic/**").permitAll()

@@ -31,7 +31,6 @@ git clone https://github.com/nefelibetas/KexieOnlineJudge
 
 2. 导入idea
 
-![image-20240306174011936](README.assets/image-20240306174011936.png)
 
 3. 修改配置文件
 

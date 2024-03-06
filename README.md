@@ -1,4 +1,4 @@
-# <center> KexieOnlineJudger 😆</center>
+# <p style="text-align: center"> KexieOnlineJudger 😆</p>
 
 ## 📓 简介
 

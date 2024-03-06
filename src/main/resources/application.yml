@@ -3,12 +3,12 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.zaxxer.hikari.HikariDataSource
-    username: developer
-    password: Qx310320.n
-    url: jdbc:mysql://121.41.115.29:3306/kexie_open_judge?useUnicode=true&characterEncoding=UTF-8
+    username: username
+    password: password
+    url: jdbc:mysql://your_url/kexie_open_judge?useUnicode=true&characterEncoding=UTF-8
   data:
     redis:
-      host: 121.41.115.29
+      host: your_url
       database: 0
       port: 6379
       timeout: 3000ms
